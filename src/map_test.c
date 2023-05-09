@@ -1,6 +1,6 @@
 //#include ici quand qu'il y aura besoin
 #include "map_test.h"
-int map_test[map_w][map_h] = {
+int extern map_test[map_w][map_h] = {
 	{1,1,1,1,1,1,1,1,1,1,1,1,1}
 	{1,0,0,0,0,0,0,0,0,0,0,0,1}
 	{1,0,1,0,1,0,0,0,1,1,1,0,1}

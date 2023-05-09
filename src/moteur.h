@@ -18,14 +18,12 @@
 //param. de jeu
 #define tile_size 8
 #define wall_size 8
-
-#define player_x 0
-#define player_y 0
-//#define player_z 0
-#define player_dir 0
 #define player_height 4
 #define player_speed 2
 
-
+int compute_table(void);
+int load_map(void);
+int draw_background(void);
+int draw_walls(void);
 
 #endif /* moteur.h */
