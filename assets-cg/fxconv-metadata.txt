@@ -1,0 +1,3 @@
+*.png:
+  type: bopti-image
+  name_regex: (.*)\.png img_\1

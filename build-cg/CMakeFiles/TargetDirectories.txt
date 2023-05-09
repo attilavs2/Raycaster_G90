@@ -1,0 +1,3 @@
+/home/fr/Raycaster/build-cg/CMakeFiles/myaddin.dir
+/home/fr/Raycaster/build-cg/CMakeFiles/edit_cache.dir
+/home/fr/Raycaster/build-cg/CMakeFiles/rebuild_cache.dir
