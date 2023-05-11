@@ -17,6 +17,8 @@ CMakeFiles/myaddin.dir/src/main.c.obj
  /home/fr/.local/share/fxsdk/sysroot/sh3eb-elf/include/gint/image.h
  /home/fr/.local/share/fxsdk/sysroot/sh3eb-elf/include/gint/keyboard.h
  /home/fr/.local/share/fxsdk/sysroot/sh3eb-elf/include/gint/keycodes.h
+ /home/fr/.local/share/fxsdk/sysroot/sh3eb-elf/include/stdlib.h
+ /home/fr/.local/share/fxsdk/sysroot/sh3eb-elf/include/bits/exit.h
  /home/fr/Raycaster/src/moteur.h
 
 CMakeFiles/myaddin.dir/src/map_test.c.obj
@@ -40,7 +42,6 @@ CMakeFiles/myaddin.dir/src/moteur.c.obj
  /home/fr/.local/share/fxsdk/sysroot/sh3eb-elf/include/gint/keyboard.h
  /home/fr/.local/share/fxsdk/sysroot/sh3eb-elf/include/gint/keycodes.h
  /home/fr/Raycaster/src/moteur.h
- /home/fr/Raycaster/src/sprites.h
  /home/fr/Raycaster/src/map_test.h
  /home/fr/.local/share/fxsdk/sysroot/sh3eb-elf/include/math.h
  /home/fr/.local/share/fxsdk/sysroot/sh3eb-elf/include/openlibm_math.h

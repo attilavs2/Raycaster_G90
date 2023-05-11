@@ -16,6 +16,8 @@ CMakeFiles/myaddin.dir/src/main.c.obj: ../src/main.c \
   /home/fr/.local/share/fxsdk/sysroot/sh3eb-elf/include/gint/image.h \
   /home/fr/.local/share/fxsdk/sysroot/sh3eb-elf/include/gint/keyboard.h \
   /home/fr/.local/share/fxsdk/sysroot/sh3eb-elf/include/gint/keycodes.h \
+  /home/fr/.local/share/fxsdk/sysroot/sh3eb-elf/include/stdlib.h \
+  /home/fr/.local/share/fxsdk/sysroot/sh3eb-elf/include/bits/exit.h \
   ../src/moteur.h
 
 CMakeFiles/myaddin.dir/src/map_test.c.obj: ../src/map_test.c \
@@ -37,7 +39,6 @@ CMakeFiles/myaddin.dir/src/moteur.c.obj: ../src/moteur.c \
   /home/fr/.local/share/fxsdk/sysroot/sh3eb-elf/include/gint/keyboard.h \
   /home/fr/.local/share/fxsdk/sysroot/sh3eb-elf/include/gint/keycodes.h \
   ../src/moteur.h \
-  ../src/sprites.h \
   ../src/map_test.h \
   /home/fr/.local/share/fxsdk/sysroot/sh3eb-elf/include/math.h \
   /home/fr/.local/share/fxsdk/sysroot/sh3eb-elf/include/openlibm_math.h \
@@ -71,8 +72,6 @@ CMakeFiles/myaddin.dir/src/sprites.c.obj: ../src/sprites.c \
 
 /home/fr/.local/share/fxsdk/sysroot/sh3eb-elf/include/math.h:
 
-../src/sprites.h:
-
 ../src/map_test.c:
 
 ../src/moteur.h:
@@ -97,9 +96,9 @@ CMakeFiles/myaddin.dir/src/sprites.c.obj: ../src/sprites.c \
 
 /home/fr/.local/share/fxsdk/sysroot/sh3eb-elf/include/gint/defs/call.h:
 
-/home/fr/.local/share/fxsdk/sysroot/sh3eb-elf/include/stdlib.h:
-
 ../src/moteur.c:
+
+/home/fr/.local/share/fxsdk/sysroot/sh3eb-elf/include/stdlib.h:
 
 /home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/include/stdint-gcc.h:
 

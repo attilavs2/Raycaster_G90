@@ -1,5 +1,5 @@
-#ifndef maptest.h
-#define maptest.h
+#ifndef map_test.h
+//#define map_test.h
 
 #define map_w 13
 #define map_h 13
@@ -7,4 +7,4 @@
 #define startpos_y 0
 #define startdir 0 //en degrés
 
-#endif /* maptest.h */
+#endif /* map_test.h */

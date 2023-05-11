@@ -1,5 +1,5 @@
 #ifndef moteur.h
-#define moteur.h
+//#define moteur.h
 
 #define pi 3.1415
 
@@ -21,9 +21,18 @@
 #define player_height 4
 #define player_speed 2
 
+int deg_to_rad(float angle_deg);
+
 int compute_table(void);
 int load_map(void);
 int draw_background(void);
 int draw_walls(void);
+//temp
+#define map_w 13
+#define map_h 13
+#define startpos_x 0
+#define startpos_y 0
+#define startdir 0 //en degrés
+#define wall_color 0xF0F0
 
 #endif /* moteur.h */

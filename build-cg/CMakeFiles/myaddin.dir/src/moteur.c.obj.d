@@ -13,8 +13,7 @@ CMakeFiles/myaddin.dir/src/moteur.c.obj: /home/fr/Raycaster/src/moteur.c \
  /home/fr/.local/share/fxsdk/sysroot/sh3eb-elf/include/gint/image.h \
  /home/fr/.local/share/fxsdk/sysroot/sh3eb-elf/include/gint/keyboard.h \
  /home/fr/.local/share/fxsdk/sysroot/sh3eb-elf/include/gint/keycodes.h \
- /home/fr/Raycaster/src/moteur.h /home/fr/Raycaster/src/sprites.h \
- /home/fr/Raycaster/src/map_test.h \
+ /home/fr/Raycaster/src/moteur.h /home/fr/Raycaster/src/map_test.h \
  /home/fr/.local/share/fxsdk/sysroot/sh3eb-elf/include/math.h \
  /home/fr/.local/share/fxsdk/sysroot/sh3eb-elf/include/openlibm_math.h \
  /home/fr/.local/share/fxsdk/sysroot/sh3eb-elf/include/openlibm_defs.h \

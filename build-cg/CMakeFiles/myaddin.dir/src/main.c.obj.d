@@ -13,4 +13,6 @@ CMakeFiles/myaddin.dir/src/main.c.obj: /home/fr/Raycaster/src/main.c \
  /home/fr/.local/share/fxsdk/sysroot/sh3eb-elf/include/gint/image.h \
  /home/fr/.local/share/fxsdk/sysroot/sh3eb-elf/include/gint/keyboard.h \
  /home/fr/.local/share/fxsdk/sysroot/sh3eb-elf/include/gint/keycodes.h \
+ /home/fr/.local/share/fxsdk/sysroot/sh3eb-elf/include/stdlib.h \
+ /home/fr/.local/share/fxsdk/sysroot/sh3eb-elf/include/bits/exit.h \
  /home/fr/Raycaster/src/moteur.h
