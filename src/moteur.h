@@ -28,7 +28,12 @@ int load_map(void);
 int draw_background(void);
 int draw_walls(void);
 //temp
-int generate_horizon_gradient(void);
+int generate_horizon_gradient(void); //bout collectivisé de Lephe
+#define RGB24(hex) \
+    (((hex & 0xf80000) >> 8) | \
+     ((hex & 0x00fc00) >> 5) | \
+     ((hex & 0x0000f8) >> 3))
+
 #define map_w 13
 #define map_h 13
 #define startpos_x 0

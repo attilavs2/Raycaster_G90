@@ -164,7 +164,7 @@ int draw_walls(void) {
 	extern int player_x;
 	extern int player_y;
 	extern int player_dir;
-	extern unsigned short horizon_colors[];
+	extern unsigned short horizon_colors[];//bout collectivisé de Lephe
 	//extern char map_test[][]; marche pas (?)
 	char map_test[map_w][map_h] = {
 	{1,1,1,1,1,1,1,1,1,1,1,1,1},
@@ -282,7 +282,7 @@ int draw_walls(void) {
 		if (couleur >= 512) {
 			couleur = 512;
 		}
-		drect(castcolumn, wall_haut, castcolumn, (wall_haut - wall_bas + 1), horizon_colors[couleur]);
+		drect(castcolumn, wall_haut, castcolumn, (wall_haut - wall_bas + 1), horizon_colors[couleur]);//bout collectivisé de Lephe
 		++castarc;
 		if (castarc > 360) {
 			castarc -= 360;

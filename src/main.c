@@ -6,7 +6,7 @@
 
 int player_x;
 int player_y;
-//short int player_z; pour un futur fort fort lointain, pas pour la CGJ 2023
+//int player_z; pour un futur fort fort lointain, pas pour la CGJ 2023
 int player_dir;
 
 float cos_table[360];
@@ -19,7 +19,7 @@ float tab_mur_x[180];
 float tab_mur_y[180];
 float distors_table[60];
 
-extern unsigned short horizon_colors[512];
+unsigned short horizon_colors[512];//bout collectivisé de Lephe
 
 int main(void){
 	dclear(C_WHITE);
