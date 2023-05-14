@@ -29,10 +29,10 @@ The CXX compiler identification is GNU, found in "/home/fr/Raycaster/build-cg/CM
 Detecting C compiler ABI info compiled with the following output:
 Change Dir: /home/fr/Raycaster/build-cg/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_7efda/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_7efda.dir/build.make CMakeFiles/cmTC_7efda.dir/build
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_76af5/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_76af5.dir/build.make CMakeFiles/cmTC_76af5.dir/build
 gmake[1]: Entering directory '/home/fr/Raycaster/build-cg/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_7efda.dir/CMakeCCompilerABI.c.obj
-/home/fr/.local/bin/sh-elf-gcc -DTARGET_FXCG50  -v -m4-nofpu -mb -ffreestanding -nostdlib -Wa,--dsp -o CMakeFiles/cmTC_7efda.dir/CMakeCCompilerABI.c.obj -c /usr/share/cmake-3.22/Modules/CMakeCCompilerABI.c
+Building C object CMakeFiles/cmTC_76af5.dir/CMakeCCompilerABI.c.obj
+/home/fr/.local/bin/sh-elf-gcc -DTARGET_FXCG50  -v -m4-nofpu -mb -ffreestanding -nostdlib -Wa,--dsp -o CMakeFiles/cmTC_76af5.dir/CMakeCCompilerABI.c.obj -c /usr/share/cmake-3.22/Modules/CMakeCCompilerABI.c
 Using built-in specs.
 COLLECT_AS_OPTIONS='--dsp'
 COLLECT_GCC=/home/fr/.local/bin/sh-elf-gcc
@@ -41,8 +41,8 @@ Configured with: ../gcc-11.1.0/configure --prefix=/home/fr/.local/share/fxsdk/sy
 Thread model: single
 Supported LTO compression algorithms: zlib
 gcc version 11.1.0 (GCC) 
-COLLECT_GCC_OPTIONS='-D' 'TARGET_FXCG50' '-v' '-m4-nofpu' '-mb' '-ffreestanding' '-nostdlib' '-o' 'CMakeFiles/cmTC_7efda.dir/CMakeCCompilerABI.c.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_7efda.dir/'
- /home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/cc1 -quiet -v -imultilib m4-nofpu -D TARGET_FXCG50 /usr/share/cmake-3.22/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_7efda.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -m4-nofpu -mb -version -ffreestanding -o /tmp/ccUjAeGJ.s
+COLLECT_GCC_OPTIONS='-D' 'TARGET_FXCG50' '-v' '-m4-nofpu' '-mb' '-ffreestanding' '-nostdlib' '-o' 'CMakeFiles/cmTC_76af5.dir/CMakeCCompilerABI.c.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_76af5.dir/'
+ /home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/cc1 -quiet -v -imultilib m4-nofpu -D TARGET_FXCG50 /usr/share/cmake-3.22/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_76af5.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -m4-nofpu -mb -version -ffreestanding -o /tmp/ccR2Fgdf.s
 GNU C17 (GCC) version 11.1.0 (sh3eb-elf)
 	compiled by GNU C version 11.3.0, GMP version 6.1.0, MPFR version 3.1.4, MPC version 1.0.3, isl version isl-0.18-GMP
 
@@ -59,14 +59,14 @@ GNU C17 (GCC) version 11.1.0 (sh3eb-elf)
 
 GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
 Compiler executable checksum: 3efe24ae9486ed48c9a096bc9a8745f3
-COLLECT_GCC_OPTIONS='-D' 'TARGET_FXCG50' '-v' '-m4-nofpu' '-mb' '-ffreestanding' '-nostdlib' '-o' 'CMakeFiles/cmTC_7efda.dir/CMakeCCompilerABI.c.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_7efda.dir/'
- /home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/../../../../sh3eb-elf/bin/as -big --isa=sh4a-nofpu --dsp -o CMakeFiles/cmTC_7efda.dir/CMakeCCompilerABI.c.obj /tmp/ccUjAeGJ.s
+COLLECT_GCC_OPTIONS='-D' 'TARGET_FXCG50' '-v' '-m4-nofpu' '-mb' '-ffreestanding' '-nostdlib' '-o' 'CMakeFiles/cmTC_76af5.dir/CMakeCCompilerABI.c.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_76af5.dir/'
+ /home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/../../../../sh3eb-elf/bin/as -big --isa=sh4a-nofpu --dsp -o CMakeFiles/cmTC_76af5.dir/CMakeCCompilerABI.c.obj /tmp/ccR2Fgdf.s
 COMPILER_PATH=/home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/:/home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/:/home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/:/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/:/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/:/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/../../../../sh3eb-elf/bin/
 LIBRARY_PATH=/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/m4-nofpu/:/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/../../../../sh3eb-elf/lib/m4-nofpu/:/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/:/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/../../../../sh3eb-elf/lib/
-COLLECT_GCC_OPTIONS='-D' 'TARGET_FXCG50' '-v' '-m4-nofpu' '-mb' '-ffreestanding' '-nostdlib' '-o' 'CMakeFiles/cmTC_7efda.dir/CMakeCCompilerABI.c.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_7efda.dir/CMakeCCompilerABI.c.'
-Linking C executable cmTC_7efda
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7efda.dir/link.txt --verbose=1
-/home/fr/.local/bin/sh-elf-gcc  -v -nostdlib -Wl,--no-warn-rwx-segments CMakeFiles/cmTC_7efda.dir/CMakeCCompilerABI.c.obj -o cmTC_7efda  -lgcc 
+COLLECT_GCC_OPTIONS='-D' 'TARGET_FXCG50' '-v' '-m4-nofpu' '-mb' '-ffreestanding' '-nostdlib' '-o' 'CMakeFiles/cmTC_76af5.dir/CMakeCCompilerABI.c.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_76af5.dir/CMakeCCompilerABI.c.'
+Linking C executable cmTC_76af5
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_76af5.dir/link.txt --verbose=1
+/home/fr/.local/bin/sh-elf-gcc  -v -nostdlib -Wl,--no-warn-rwx-segments CMakeFiles/cmTC_76af5.dir/CMakeCCompilerABI.c.obj -o cmTC_76af5  -lgcc 
 Using built-in specs.
 COLLECT_GCC=/home/fr/.local/bin/sh-elf-gcc
 COLLECT_LTO_WRAPPER=/home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/lto-wrapper
@@ -77,10 +77,10 @@ Supported LTO compression algorithms: zlib
 gcc version 11.1.0 (GCC) 
 COMPILER_PATH=/home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/:/home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/:/home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/:/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/:/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/:/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/../../../../sh3eb-elf/bin/
 LIBRARY_PATH=/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/:/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/../../../../sh3eb-elf/lib/
-COLLECT_GCC_OPTIONS='-v' '-nostdlib' '-o' 'cmTC_7efda' '-dumpdir' 'cmTC_7efda.'
- /home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/collect2 -plugin /home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/liblto_plugin.so -plugin-opt=/home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccfnesca.res -m shelf -o cmTC_7efda -L/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0 -L/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/../../../../sh3eb-elf/lib --no-warn-rwx-segments CMakeFiles/cmTC_7efda.dir/CMakeCCompilerABI.c.obj -lgcc
+COLLECT_GCC_OPTIONS='-v' '-nostdlib' '-o' 'cmTC_76af5' '-dumpdir' 'cmTC_76af5.'
+ /home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/collect2 -plugin /home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/liblto_plugin.so -plugin-opt=/home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccOVluOG.res -m shelf -o cmTC_76af5 -L/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0 -L/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/../../../../sh3eb-elf/lib --no-warn-rwx-segments CMakeFiles/cmTC_76af5.dir/CMakeCCompilerABI.c.obj -lgcc
 /home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/../../../../sh3eb-elf/bin/ld: warning: cannot find entry symbol start; defaulting to 0000000000001000
-COLLECT_GCC_OPTIONS='-v' '-nostdlib' '-o' 'cmTC_7efda' '-dumpdir' 'cmTC_7efda.'
+COLLECT_GCC_OPTIONS='-v' '-nostdlib' '-o' 'cmTC_76af5' '-dumpdir' 'cmTC_76af5.'
 gmake[1]: Leaving directory '/home/fr/Raycaster/build-cg/CMakeFiles/CMakeTmp'
 
 
@@ -102,10 +102,10 @@ Parsed C implicit link information from above output:
   link line regex: [^( *|.*[/\])(sh-elf-ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
   ignore line: [Change Dir: /home/fr/Raycaster/build-cg/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_7efda/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_7efda.dir/build.make CMakeFiles/cmTC_7efda.dir/build]
+  ignore line: [Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_76af5/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_76af5.dir/build.make CMakeFiles/cmTC_76af5.dir/build]
   ignore line: [gmake[1]: Entering directory '/home/fr/Raycaster/build-cg/CMakeFiles/CMakeTmp']
-  ignore line: [Building C object CMakeFiles/cmTC_7efda.dir/CMakeCCompilerABI.c.obj]
-  ignore line: [/home/fr/.local/bin/sh-elf-gcc -DTARGET_FXCG50  -v -m4-nofpu -mb -ffreestanding -nostdlib -Wa --dsp -o CMakeFiles/cmTC_7efda.dir/CMakeCCompilerABI.c.obj -c /usr/share/cmake-3.22/Modules/CMakeCCompilerABI.c]
+  ignore line: [Building C object CMakeFiles/cmTC_76af5.dir/CMakeCCompilerABI.c.obj]
+  ignore line: [/home/fr/.local/bin/sh-elf-gcc -DTARGET_FXCG50  -v -m4-nofpu -mb -ffreestanding -nostdlib -Wa --dsp -o CMakeFiles/cmTC_76af5.dir/CMakeCCompilerABI.c.obj -c /usr/share/cmake-3.22/Modules/CMakeCCompilerABI.c]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_AS_OPTIONS='--dsp']
   ignore line: [COLLECT_GCC=/home/fr/.local/bin/sh-elf-gcc]
@@ -114,8 +114,8 @@ Parsed C implicit link information from above output:
   ignore line: [Thread model: single]
   ignore line: [Supported LTO compression algorithms: zlib]
   ignore line: [gcc version 11.1.0 (GCC) ]
-  ignore line: [COLLECT_GCC_OPTIONS='-D' 'TARGET_FXCG50' '-v' '-m4-nofpu' '-mb' '-ffreestanding' '-nostdlib' '-o' 'CMakeFiles/cmTC_7efda.dir/CMakeCCompilerABI.c.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_7efda.dir/']
-  ignore line: [ /home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/cc1 -quiet -v -imultilib m4-nofpu -D TARGET_FXCG50 /usr/share/cmake-3.22/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_7efda.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -m4-nofpu -mb -version -ffreestanding -o /tmp/ccUjAeGJ.s]
+  ignore line: [COLLECT_GCC_OPTIONS='-D' 'TARGET_FXCG50' '-v' '-m4-nofpu' '-mb' '-ffreestanding' '-nostdlib' '-o' 'CMakeFiles/cmTC_76af5.dir/CMakeCCompilerABI.c.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_76af5.dir/']
+  ignore line: [ /home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/cc1 -quiet -v -imultilib m4-nofpu -D TARGET_FXCG50 /usr/share/cmake-3.22/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_76af5.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -m4-nofpu -mb -version -ffreestanding -o /tmp/ccR2Fgdf.s]
   ignore line: [GNU C17 (GCC) version 11.1.0 (sh3eb-elf)]
   ignore line: [	compiled by GNU C version 11.3.0  GMP version 6.1.0  MPFR version 3.1.4  MPC version 1.0.3  isl version isl-0.18-GMP]
   ignore line: []
@@ -132,14 +132,14 @@ Parsed C implicit link information from above output:
   ignore line: []
   ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
   ignore line: [Compiler executable checksum: 3efe24ae9486ed48c9a096bc9a8745f3]
-  ignore line: [COLLECT_GCC_OPTIONS='-D' 'TARGET_FXCG50' '-v' '-m4-nofpu' '-mb' '-ffreestanding' '-nostdlib' '-o' 'CMakeFiles/cmTC_7efda.dir/CMakeCCompilerABI.c.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_7efda.dir/']
-  ignore line: [ /home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/../../../../sh3eb-elf/bin/as -big --isa=sh4a-nofpu --dsp -o CMakeFiles/cmTC_7efda.dir/CMakeCCompilerABI.c.obj /tmp/ccUjAeGJ.s]
+  ignore line: [COLLECT_GCC_OPTIONS='-D' 'TARGET_FXCG50' '-v' '-m4-nofpu' '-mb' '-ffreestanding' '-nostdlib' '-o' 'CMakeFiles/cmTC_76af5.dir/CMakeCCompilerABI.c.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_76af5.dir/']
+  ignore line: [ /home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/../../../../sh3eb-elf/bin/as -big --isa=sh4a-nofpu --dsp -o CMakeFiles/cmTC_76af5.dir/CMakeCCompilerABI.c.obj /tmp/ccR2Fgdf.s]
   ignore line: [COMPILER_PATH=/home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/:/home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/:/home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/:/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/:/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/:/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/../../../../sh3eb-elf/bin/]
   ignore line: [LIBRARY_PATH=/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/m4-nofpu/:/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/../../../../sh3eb-elf/lib/m4-nofpu/:/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/:/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/../../../../sh3eb-elf/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-D' 'TARGET_FXCG50' '-v' '-m4-nofpu' '-mb' '-ffreestanding' '-nostdlib' '-o' 'CMakeFiles/cmTC_7efda.dir/CMakeCCompilerABI.c.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_7efda.dir/CMakeCCompilerABI.c.']
-  ignore line: [Linking C executable cmTC_7efda]
-  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7efda.dir/link.txt --verbose=1]
-  ignore line: [/home/fr/.local/bin/sh-elf-gcc  -v -nostdlib -Wl --no-warn-rwx-segments CMakeFiles/cmTC_7efda.dir/CMakeCCompilerABI.c.obj -o cmTC_7efda  -lgcc ]
+  ignore line: [COLLECT_GCC_OPTIONS='-D' 'TARGET_FXCG50' '-v' '-m4-nofpu' '-mb' '-ffreestanding' '-nostdlib' '-o' 'CMakeFiles/cmTC_76af5.dir/CMakeCCompilerABI.c.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_76af5.dir/CMakeCCompilerABI.c.']
+  ignore line: [Linking C executable cmTC_76af5]
+  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_76af5.dir/link.txt --verbose=1]
+  ignore line: [/home/fr/.local/bin/sh-elf-gcc  -v -nostdlib -Wl --no-warn-rwx-segments CMakeFiles/cmTC_76af5.dir/CMakeCCompilerABI.c.obj -o cmTC_76af5  -lgcc ]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=/home/fr/.local/bin/sh-elf-gcc]
   ignore line: [COLLECT_LTO_WRAPPER=/home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/lto-wrapper]
@@ -150,21 +150,21 @@ Parsed C implicit link information from above output:
   ignore line: [gcc version 11.1.0 (GCC) ]
   ignore line: [COMPILER_PATH=/home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/:/home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/:/home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/:/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/:/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/:/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/../../../../sh3eb-elf/bin/]
   ignore line: [LIBRARY_PATH=/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/:/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/../../../../sh3eb-elf/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-nostdlib' '-o' 'cmTC_7efda' '-dumpdir' 'cmTC_7efda.']
-  link line: [ /home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/collect2 -plugin /home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/liblto_plugin.so -plugin-opt=/home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccfnesca.res -m shelf -o cmTC_7efda -L/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0 -L/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/../../../../sh3eb-elf/lib --no-warn-rwx-segments CMakeFiles/cmTC_7efda.dir/CMakeCCompilerABI.c.obj -lgcc]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-nostdlib' '-o' 'cmTC_76af5' '-dumpdir' 'cmTC_76af5.']
+  link line: [ /home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/collect2 -plugin /home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/liblto_plugin.so -plugin-opt=/home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccOVluOG.res -m shelf -o cmTC_76af5 -L/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0 -L/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/../../../../sh3eb-elf/lib --no-warn-rwx-segments CMakeFiles/cmTC_76af5.dir/CMakeCCompilerABI.c.obj -lgcc]
     arg [/home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/collect2] ==> ignore
     arg [-plugin] ==> ignore
     arg [/home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/liblto_plugin.so] ==> ignore
     arg [-plugin-opt=/home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/lto-wrapper] ==> ignore
-    arg [-plugin-opt=-fresolution=/tmp/ccfnesca.res] ==> ignore
+    arg [-plugin-opt=-fresolution=/tmp/ccOVluOG.res] ==> ignore
     arg [-m] ==> ignore
     arg [shelf] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_7efda] ==> ignore
+    arg [cmTC_76af5] ==> ignore
     arg [-L/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0] ==> dir [/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0]
     arg [-L/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/../../../../sh3eb-elf/lib] ==> dir [/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/../../../../sh3eb-elf/lib]
     arg [--no-warn-rwx-segments] ==> ignore
-    arg [CMakeFiles/cmTC_7efda.dir/CMakeCCompilerABI.c.obj] ==> ignore
+    arg [CMakeFiles/cmTC_76af5.dir/CMakeCCompilerABI.c.obj] ==> ignore
     arg [-lgcc] ==> lib [gcc]
   collapse library dir [/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0] ==> [/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0]
   collapse library dir [/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/../../../../sh3eb-elf/lib] ==> [/home/fr/.local/share/fxsdk/sysroot/sh3eb-elf/lib]
@@ -177,10 +177,10 @@ Parsed C implicit link information from above output:
 Detecting CXX compiler ABI info compiled with the following output:
 Change Dir: /home/fr/Raycaster/build-cg/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_45d6d/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_45d6d.dir/build.make CMakeFiles/cmTC_45d6d.dir/build
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_6cda2/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_6cda2.dir/build.make CMakeFiles/cmTC_6cda2.dir/build
 gmake[1]: Entering directory '/home/fr/Raycaster/build-cg/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_45d6d.dir/CMakeCXXCompilerABI.cpp.obj
-/home/fr/.local/bin/sh-elf-g++ -DTARGET_FXCG50  -v -m4-nofpu -mb -ffreestanding -nostdlib -Wa,--dsp -o CMakeFiles/cmTC_45d6d.dir/CMakeCXXCompilerABI.cpp.obj -c /usr/share/cmake-3.22/Modules/CMakeCXXCompilerABI.cpp
+Building CXX object CMakeFiles/cmTC_6cda2.dir/CMakeCXXCompilerABI.cpp.obj
+/home/fr/.local/bin/sh-elf-g++ -DTARGET_FXCG50  -v -m4-nofpu -mb -ffreestanding -nostdlib -Wa,--dsp -o CMakeFiles/cmTC_6cda2.dir/CMakeCXXCompilerABI.cpp.obj -c /usr/share/cmake-3.22/Modules/CMakeCXXCompilerABI.cpp
 Using built-in specs.
 COLLECT_AS_OPTIONS='--dsp'
 COLLECT_GCC=/home/fr/.local/bin/sh-elf-g++
@@ -189,8 +189,8 @@ Configured with: ../gcc-11.1.0/configure --prefix=/home/fr/.local/share/fxsdk/sy
 Thread model: single
 Supported LTO compression algorithms: zlib
 gcc version 11.1.0 (GCC) 
-COLLECT_GCC_OPTIONS='-D' 'TARGET_FXCG50' '-v' '-m4-nofpu' '-mb' '-ffreestanding' '-nostdlib' '-o' 'CMakeFiles/cmTC_45d6d.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_45d6d.dir/'
- /home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/cc1plus -quiet -v -imultilib m4-nofpu -D TARGET_FXCG50 /usr/share/cmake-3.22/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_45d6d.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -m4-nofpu -mb -version -ffreestanding -o /tmp/cctvGel0.s
+COLLECT_GCC_OPTIONS='-D' 'TARGET_FXCG50' '-v' '-m4-nofpu' '-mb' '-ffreestanding' '-nostdlib' '-o' 'CMakeFiles/cmTC_6cda2.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_6cda2.dir/'
+ /home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/cc1plus -quiet -v -imultilib m4-nofpu -D TARGET_FXCG50 /usr/share/cmake-3.22/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_6cda2.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -m4-nofpu -mb -version -ffreestanding -o /tmp/ccJMFkLz.s
 GNU C++17 (GCC) version 11.1.0 (sh3eb-elf)
 	compiled by GNU C version 11.3.0, GMP version 6.1.0, MPFR version 3.1.4, MPC version 1.0.3, isl version isl-0.18-GMP
 
@@ -210,14 +210,14 @@ GNU C++17 (GCC) version 11.1.0 (sh3eb-elf)
 
 GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
 Compiler executable checksum: a86c43b782cf2ebaa4fbc44e5ff022a0
-COLLECT_GCC_OPTIONS='-D' 'TARGET_FXCG50' '-v' '-m4-nofpu' '-mb' '-ffreestanding' '-nostdlib' '-o' 'CMakeFiles/cmTC_45d6d.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_45d6d.dir/'
- /home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/../../../../sh3eb-elf/bin/as -big --isa=sh4a-nofpu --dsp -o CMakeFiles/cmTC_45d6d.dir/CMakeCXXCompilerABI.cpp.obj /tmp/cctvGel0.s
+COLLECT_GCC_OPTIONS='-D' 'TARGET_FXCG50' '-v' '-m4-nofpu' '-mb' '-ffreestanding' '-nostdlib' '-o' 'CMakeFiles/cmTC_6cda2.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_6cda2.dir/'
+ /home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/../../../../sh3eb-elf/bin/as -big --isa=sh4a-nofpu --dsp -o CMakeFiles/cmTC_6cda2.dir/CMakeCXXCompilerABI.cpp.obj /tmp/ccJMFkLz.s
 COMPILER_PATH=/home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/:/home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/:/home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/:/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/:/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/:/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/../../../../sh3eb-elf/bin/
 LIBRARY_PATH=/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/m4-nofpu/:/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/../../../../sh3eb-elf/lib/m4-nofpu/:/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/:/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/../../../../sh3eb-elf/lib/
-COLLECT_GCC_OPTIONS='-D' 'TARGET_FXCG50' '-v' '-m4-nofpu' '-mb' '-ffreestanding' '-nostdlib' '-o' 'CMakeFiles/cmTC_45d6d.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_45d6d.dir/CMakeCXXCompilerABI.cpp.'
-Linking CXX executable cmTC_45d6d
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_45d6d.dir/link.txt --verbose=1
-/home/fr/.local/bin/sh-elf-g++  -v -nostdlib -Wl,--no-warn-rwx-segments CMakeFiles/cmTC_45d6d.dir/CMakeCXXCompilerABI.cpp.obj -o cmTC_45d6d  -lgcc 
+COLLECT_GCC_OPTIONS='-D' 'TARGET_FXCG50' '-v' '-m4-nofpu' '-mb' '-ffreestanding' '-nostdlib' '-o' 'CMakeFiles/cmTC_6cda2.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_6cda2.dir/CMakeCXXCompilerABI.cpp.'
+Linking CXX executable cmTC_6cda2
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6cda2.dir/link.txt --verbose=1
+/home/fr/.local/bin/sh-elf-g++  -v -nostdlib -Wl,--no-warn-rwx-segments CMakeFiles/cmTC_6cda2.dir/CMakeCXXCompilerABI.cpp.obj -o cmTC_6cda2  -lgcc 
 Using built-in specs.
 COLLECT_GCC=/home/fr/.local/bin/sh-elf-g++
 COLLECT_LTO_WRAPPER=/home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/lto-wrapper
@@ -228,10 +228,10 @@ Supported LTO compression algorithms: zlib
 gcc version 11.1.0 (GCC) 
 COMPILER_PATH=/home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/:/home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/:/home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/:/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/:/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/:/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/../../../../sh3eb-elf/bin/
 LIBRARY_PATH=/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/:/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/../../../../sh3eb-elf/lib/
-COLLECT_GCC_OPTIONS='-v' '-nostdlib' '-o' 'cmTC_45d6d' '-dumpdir' 'cmTC_45d6d.'
- /home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/collect2 -plugin /home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/liblto_plugin.so -plugin-opt=/home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccHGr2Nd.res -m shelf -o cmTC_45d6d -L/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0 -L/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/../../../../sh3eb-elf/lib --no-warn-rwx-segments CMakeFiles/cmTC_45d6d.dir/CMakeCXXCompilerABI.cpp.obj -lgcc
+COLLECT_GCC_OPTIONS='-v' '-nostdlib' '-o' 'cmTC_6cda2' '-dumpdir' 'cmTC_6cda2.'
+ /home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/collect2 -plugin /home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/liblto_plugin.so -plugin-opt=/home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/lto-wrapper -plugin-opt=-fresolution=/tmp/cctvex6Y.res -m shelf -o cmTC_6cda2 -L/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0 -L/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/../../../../sh3eb-elf/lib --no-warn-rwx-segments CMakeFiles/cmTC_6cda2.dir/CMakeCXXCompilerABI.cpp.obj -lgcc
 /home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/../../../../sh3eb-elf/bin/ld: warning: cannot find entry symbol start; defaulting to 0000000000001000
-COLLECT_GCC_OPTIONS='-v' '-nostdlib' '-o' 'cmTC_45d6d' '-dumpdir' 'cmTC_45d6d.'
+COLLECT_GCC_OPTIONS='-v' '-nostdlib' '-o' 'cmTC_6cda2' '-dumpdir' 'cmTC_6cda2.'
 gmake[1]: Leaving directory '/home/fr/Raycaster/build-cg/CMakeFiles/CMakeTmp'
 
 
@@ -259,10 +259,10 @@ Parsed CXX implicit link information from above output:
   link line regex: [^( *|.*[/\])(sh-elf-ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
   ignore line: [Change Dir: /home/fr/Raycaster/build-cg/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_45d6d/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_45d6d.dir/build.make CMakeFiles/cmTC_45d6d.dir/build]
+  ignore line: [Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_6cda2/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_6cda2.dir/build.make CMakeFiles/cmTC_6cda2.dir/build]
   ignore line: [gmake[1]: Entering directory '/home/fr/Raycaster/build-cg/CMakeFiles/CMakeTmp']
-  ignore line: [Building CXX object CMakeFiles/cmTC_45d6d.dir/CMakeCXXCompilerABI.cpp.obj]
-  ignore line: [/home/fr/.local/bin/sh-elf-g++ -DTARGET_FXCG50  -v -m4-nofpu -mb -ffreestanding -nostdlib -Wa --dsp -o CMakeFiles/cmTC_45d6d.dir/CMakeCXXCompilerABI.cpp.obj -c /usr/share/cmake-3.22/Modules/CMakeCXXCompilerABI.cpp]
+  ignore line: [Building CXX object CMakeFiles/cmTC_6cda2.dir/CMakeCXXCompilerABI.cpp.obj]
+  ignore line: [/home/fr/.local/bin/sh-elf-g++ -DTARGET_FXCG50  -v -m4-nofpu -mb -ffreestanding -nostdlib -Wa --dsp -o CMakeFiles/cmTC_6cda2.dir/CMakeCXXCompilerABI.cpp.obj -c /usr/share/cmake-3.22/Modules/CMakeCXXCompilerABI.cpp]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_AS_OPTIONS='--dsp']
   ignore line: [COLLECT_GCC=/home/fr/.local/bin/sh-elf-g++]
@@ -271,8 +271,8 @@ Parsed CXX implicit link information from above output:
   ignore line: [Thread model: single]
   ignore line: [Supported LTO compression algorithms: zlib]
   ignore line: [gcc version 11.1.0 (GCC) ]
-  ignore line: [COLLECT_GCC_OPTIONS='-D' 'TARGET_FXCG50' '-v' '-m4-nofpu' '-mb' '-ffreestanding' '-nostdlib' '-o' 'CMakeFiles/cmTC_45d6d.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_45d6d.dir/']
-  ignore line: [ /home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/cc1plus -quiet -v -imultilib m4-nofpu -D TARGET_FXCG50 /usr/share/cmake-3.22/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_45d6d.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -m4-nofpu -mb -version -ffreestanding -o /tmp/cctvGel0.s]
+  ignore line: [COLLECT_GCC_OPTIONS='-D' 'TARGET_FXCG50' '-v' '-m4-nofpu' '-mb' '-ffreestanding' '-nostdlib' '-o' 'CMakeFiles/cmTC_6cda2.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_6cda2.dir/']
+  ignore line: [ /home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/cc1plus -quiet -v -imultilib m4-nofpu -D TARGET_FXCG50 /usr/share/cmake-3.22/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_6cda2.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -m4-nofpu -mb -version -ffreestanding -o /tmp/ccJMFkLz.s]
   ignore line: [GNU C++17 (GCC) version 11.1.0 (sh3eb-elf)]
   ignore line: [	compiled by GNU C version 11.3.0  GMP version 6.1.0  MPFR version 3.1.4  MPC version 1.0.3  isl version isl-0.18-GMP]
   ignore line: []
@@ -292,14 +292,14 @@ Parsed CXX implicit link information from above output:
   ignore line: []
   ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
   ignore line: [Compiler executable checksum: a86c43b782cf2ebaa4fbc44e5ff022a0]
-  ignore line: [COLLECT_GCC_OPTIONS='-D' 'TARGET_FXCG50' '-v' '-m4-nofpu' '-mb' '-ffreestanding' '-nostdlib' '-o' 'CMakeFiles/cmTC_45d6d.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_45d6d.dir/']
-  ignore line: [ /home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/../../../../sh3eb-elf/bin/as -big --isa=sh4a-nofpu --dsp -o CMakeFiles/cmTC_45d6d.dir/CMakeCXXCompilerABI.cpp.obj /tmp/cctvGel0.s]
+  ignore line: [COLLECT_GCC_OPTIONS='-D' 'TARGET_FXCG50' '-v' '-m4-nofpu' '-mb' '-ffreestanding' '-nostdlib' '-o' 'CMakeFiles/cmTC_6cda2.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_6cda2.dir/']
+  ignore line: [ /home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/../../../../sh3eb-elf/bin/as -big --isa=sh4a-nofpu --dsp -o CMakeFiles/cmTC_6cda2.dir/CMakeCXXCompilerABI.cpp.obj /tmp/ccJMFkLz.s]
   ignore line: [COMPILER_PATH=/home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/:/home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/:/home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/:/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/:/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/:/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/../../../../sh3eb-elf/bin/]
   ignore line: [LIBRARY_PATH=/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/m4-nofpu/:/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/../../../../sh3eb-elf/lib/m4-nofpu/:/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/:/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/../../../../sh3eb-elf/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-D' 'TARGET_FXCG50' '-v' '-m4-nofpu' '-mb' '-ffreestanding' '-nostdlib' '-o' 'CMakeFiles/cmTC_45d6d.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_45d6d.dir/CMakeCXXCompilerABI.cpp.']
-  ignore line: [Linking CXX executable cmTC_45d6d]
-  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_45d6d.dir/link.txt --verbose=1]
-  ignore line: [/home/fr/.local/bin/sh-elf-g++  -v -nostdlib -Wl --no-warn-rwx-segments CMakeFiles/cmTC_45d6d.dir/CMakeCXXCompilerABI.cpp.obj -o cmTC_45d6d  -lgcc ]
+  ignore line: [COLLECT_GCC_OPTIONS='-D' 'TARGET_FXCG50' '-v' '-m4-nofpu' '-mb' '-ffreestanding' '-nostdlib' '-o' 'CMakeFiles/cmTC_6cda2.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_6cda2.dir/CMakeCXXCompilerABI.cpp.']
+  ignore line: [Linking CXX executable cmTC_6cda2]
+  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6cda2.dir/link.txt --verbose=1]
+  ignore line: [/home/fr/.local/bin/sh-elf-g++  -v -nostdlib -Wl --no-warn-rwx-segments CMakeFiles/cmTC_6cda2.dir/CMakeCXXCompilerABI.cpp.obj -o cmTC_6cda2  -lgcc ]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=/home/fr/.local/bin/sh-elf-g++]
   ignore line: [COLLECT_LTO_WRAPPER=/home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/lto-wrapper]
@@ -310,21 +310,21 @@ Parsed CXX implicit link information from above output:
   ignore line: [gcc version 11.1.0 (GCC) ]
   ignore line: [COMPILER_PATH=/home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/:/home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/:/home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/:/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/:/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/:/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/../../../../sh3eb-elf/bin/]
   ignore line: [LIBRARY_PATH=/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/:/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/../../../../sh3eb-elf/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-nostdlib' '-o' 'cmTC_45d6d' '-dumpdir' 'cmTC_45d6d.']
-  link line: [ /home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/collect2 -plugin /home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/liblto_plugin.so -plugin-opt=/home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccHGr2Nd.res -m shelf -o cmTC_45d6d -L/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0 -L/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/../../../../sh3eb-elf/lib --no-warn-rwx-segments CMakeFiles/cmTC_45d6d.dir/CMakeCXXCompilerABI.cpp.obj -lgcc]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-nostdlib' '-o' 'cmTC_6cda2' '-dumpdir' 'cmTC_6cda2.']
+  link line: [ /home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/collect2 -plugin /home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/liblto_plugin.so -plugin-opt=/home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/lto-wrapper -plugin-opt=-fresolution=/tmp/cctvex6Y.res -m shelf -o cmTC_6cda2 -L/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0 -L/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/../../../../sh3eb-elf/lib --no-warn-rwx-segments CMakeFiles/cmTC_6cda2.dir/CMakeCXXCompilerABI.cpp.obj -lgcc]
     arg [/home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/collect2] ==> ignore
     arg [-plugin] ==> ignore
     arg [/home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/liblto_plugin.so] ==> ignore
     arg [-plugin-opt=/home/fr/.local/share/fxsdk/sysroot/libexec/gcc/sh3eb-elf/11.1.0/lto-wrapper] ==> ignore
-    arg [-plugin-opt=-fresolution=/tmp/ccHGr2Nd.res] ==> ignore
+    arg [-plugin-opt=-fresolution=/tmp/cctvex6Y.res] ==> ignore
     arg [-m] ==> ignore
     arg [shelf] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_45d6d] ==> ignore
+    arg [cmTC_6cda2] ==> ignore
     arg [-L/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0] ==> dir [/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0]
     arg [-L/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/../../../../sh3eb-elf/lib] ==> dir [/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/../../../../sh3eb-elf/lib]
     arg [--no-warn-rwx-segments] ==> ignore
-    arg [CMakeFiles/cmTC_45d6d.dir/CMakeCXXCompilerABI.cpp.obj] ==> ignore
+    arg [CMakeFiles/cmTC_6cda2.dir/CMakeCXXCompilerABI.cpp.obj] ==> ignore
     arg [-lgcc] ==> lib [gcc]
   collapse library dir [/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0] ==> [/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0]
   collapse library dir [/home/fr/.local/share/fxsdk/sysroot/lib/gcc/sh3eb-elf/11.1.0/../../../../sh3eb-elf/lib] ==> [/home/fr/.local/share/fxsdk/sysroot/sh3eb-elf/lib]

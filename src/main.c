@@ -19,24 +19,28 @@ float tab_mur_x[180];
 float tab_mur_y[180];
 float distors_table[60];
 
+extern unsigned short horizon_colors[512];
+
 int main(void){
 	dclear(C_WHITE);
 	compute_table();
+	generate_horizon_gradient();
 	load_map();
 	while (true) {
 		dclear(C_WHITE);
 		draw_background();
 		draw_walls();
-		if (keydown(0x86)) {
+		dupdate();
+		if (keydown(KEY_UP)) {
 			//flemme d'implémanter le mouvement, verrai quand ça compile
 		}
-		if (keydown(0x85)) {
+		if (keydown(KEY_LEFT)) {
 			player_dir -= 5;
 		}
-		if (keydown(0x76)) {
+		if (keydown(KEY_RIGHT)) {
 			player_dir += 5;
 		}
-		if (keydown(0x74)) {
+		if (keydown(KEY_MENU)) {
 			exit(1);
 		}
 	}

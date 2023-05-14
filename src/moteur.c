@@ -7,6 +7,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+//int wall_c_table[235] = {}
+
 /*int Rgb_to_RGB565_hex(int RGB) {
 	int hex_color = 0x0001;
 	int r = 0;
@@ -23,8 +25,34 @@
 int deg_to_rad(float angle_deg) {
 	return((angle_deg * pi) / 180);
 }
+int generate_horizon_gradient(void) //code éhontément collectivisé de Lephe, dans After Burner
+{
+	int hc = 0;
+	extern unsigned short horizon_colors[];
 
-int compute_table(void) { 
+	for (int i = 0; i < 256; i++) {
+		horizon_colors[hc++] = RGB24(0x438747);
+	}
+	for (int i = 0; i < 32; i++) {
+		int r = 0x68 + (0x3f - 0x68) * i / 32;
+		int g = 0x8c + (0x66 - 0x8c) * i / 32;
+		int b = 0xd6 + (0xb3 - 0xd6) * i / 32;
+		horizon_colors[hc++] = RGB24(((r << 16) | (g << 8) | b));
+	}
+	for (int i = 0; i < 64; i++) {
+		horizon_colors[hc++] = RGB24(0x3f66b3);
+	};
+	for (int i = 0; i < 64; i++) {
+		int r = 0x3f + (0x0c - 0x3f) * i / 64;
+		int g = 0x66 + (0x29 - 0x66) * i / 64;
+		int b = 0xb3 + (0x61 - 0xb3) * i / 64;
+		horizon_colors[hc++] = RGB24(((r << 16) | (g << 8) | b));
+	}
+	for (int i = 0; i < 96; i++) {
+		horizon_colors[hc++] = RGB24(0x0c2961);
+	}
+}
+int compute_table(void) {
 	extern float cos_table[];
 	extern float sin_table[];
 	extern float tan_table[];
@@ -73,6 +101,7 @@ int compute_table(void) {
 	for (i = -30; i <= 30; ++i) {
 		distors_table[i + 30] = 1 / cos(deg_to_rad(i));
 	}
+	return 1;
 }
 int load_map(void) {
 	extern int player_x;
@@ -82,10 +111,12 @@ int load_map(void) {
 	player_y = startpos_y;
 	player_dir = startdir;
 	//faudrait d'autres trucs quand y aura plusieurs maps
+	return 1;
 }
 int draw_background(void) {
 	//très simple pour le moment, je vais sans doute améliorer
 	drect(1, 1, 384, 108, couleur_ciel);
+	return 1;
 }
 int draw_walls(void) {
 	int vertical_grid;
@@ -133,7 +164,8 @@ int draw_walls(void) {
 	extern int player_x;
 	extern int player_y;
 	extern int player_dir;
-	//extern char map_test[][];
+	extern unsigned short horizon_colors[];
+	//extern char map_test[][]; marche pas (?)
 	char map_test[map_w][map_h] = {
 	{1,1,1,1,1,1,1,1,1,1,1,1,1},
 	{1,0,0,0,0,0,0,0,0,0,0,0,1},
@@ -148,7 +180,7 @@ int draw_walls(void) {
 	{1,0,0,0,0,0,1,0,0,1,0,0,1},
 	{1,0,1,0,1,0,1,0,0,0,0,0,1},
 	{1,1,1,1,1,1,1,1,1,1,1,1,1}
-	};
+	}; //bodge
 	castcolumn = 0;
 	castarc = player_dir - 30;
 	if (castarc > 360) {
@@ -242,16 +274,19 @@ int draw_walls(void) {
 		if (wall_bas >= viewport_h) {
 			wall_bas = viewport_h - 1;
 		}
-		wall_dist = floor(wall_dist);
-		/*couleur = floor(255 - (wall_dist / max_dist) * 255);
+		couleur = floor(255 - (wall_dist / max_dist) * 255);
 		if (couleur <= 20) {
 			couleur = 20;
-		}*/
-		drect(castcolumn, wall_haut, 1, (wall_bas - wall_haut + 1), wall_color);
+		}
+		couleur = floor( 2.007843137254902 * couleur);
+		if (couleur >= 512) {
+			couleur = 512;
+		}
+		drect(castcolumn, wall_haut, castcolumn, (wall_haut - wall_bas + 1), horizon_colors[couleur]);
 		++castarc;
 		if (castarc > 360) {
 			castarc -= 360;
 		}
 	}
-	dupdate();
+	return 1;
 }

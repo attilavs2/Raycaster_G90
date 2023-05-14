@@ -4,10 +4,10 @@
 #define pi 3.1415
 
 //param. graphiques
-#define screen_w 384
-#define screen_h 216
-#define viewport_w 384
-#define viewport_h 216
+#define screen_w 396
+#define screen_h 224
+#define viewport_w 396
+#define viewport_h 224
 //#define fps_cap 30
 #define FOV 60
 #define max_dist 160 // peut-être un peu élevé
@@ -28,11 +28,12 @@ int load_map(void);
 int draw_background(void);
 int draw_walls(void);
 //temp
+int generate_horizon_gradient(void);
 #define map_w 13
 #define map_h 13
 #define startpos_x 0
 #define startpos_y 0
 #define startdir 0 //en degrés
-#define wall_color 0xF0F0
+#define wall_color 0xAAAA
 
 #endif /* moteur.h */
