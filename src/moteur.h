@@ -10,30 +10,30 @@
 #define viewport_h 224
 //#define fps_cap 30
 #define FOV 60
-#define max_dist 160 // peut-être un peu élevé
+#define max_dist 640 // peut-être un peu élevé
 #define player_pj_pl_dist 277 //distance du joueur au plan de projection
 
 #define couleur_ciel 0x0ADF
 
 //param. de jeu
-#define tile_size 8
-#define wall_size 8
-#define player_height 4
-#define player_speed 2
+#define tile_size 32
+#define wall_size 32
+#define player_height 16
+#define player_speed 8
 
-int deg_to_rad(float angle_deg);
+float deg_to_rad(float angle_deg);
 
-int compute_table(void);
-int load_map(void);
-int draw_background(void);
-int draw_walls(void);
+void compute_table();
+int load_map();
+void draw_background();
+void draw_walls();
 //temp
-int generate_horizon_gradient(void); //bout collectivisé de Lephe
+/*int generate_horizon_gradient(void); //bout collectivisé de Lephe
 #define RGB24(hex) \
     (((hex & 0xf80000) >> 8) | \
      ((hex & 0x00fc00) >> 5) | \
      ((hex & 0x0000f8) >> 3))
-
+*/
 #define map_w 13
 #define map_h 13
 #define startpos_x 0
