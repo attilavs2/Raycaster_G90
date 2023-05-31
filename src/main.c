@@ -45,7 +45,7 @@
 //
 int player_x;
 int player_y;
-//int player_z; pour un futur fort fort lointain, pas pour la CGJ 2023
+//int player_z; pour un futur fort fort lointain, pas pour le CPC 2023
 int player_dir;
 
 int cos_table[360];
@@ -58,14 +58,9 @@ int tab_mur_x[180];
 int tab_mur_y[180];
 int distors_table[60];
 
-//unsigned short horizon_colors[512];//bout collectivisé de Lephe
-
 int main(void){
 	dclear(C_WHITE);
-	compute_table();
-	/**/dtext(150, 140, C_BLACK, "Coucou 2");
-	/**/dupdate();
-	/**/getkey();
+	//compute_table();
 	float angle_60;
 	angle_60 = FOV / viewport_h;
 	char angle_30;
@@ -86,28 +81,44 @@ int main(void){
 	angle_5 = floor(angle_60 / 12);
 	angle_10 = floor(angle_60 / 6);
 	angle_45 = floor(angle_60 * 0.75);
+	
+	int temp;
+	temp = 0;
+
 	///generate_horizon_gradient();
 	load_map();
-	dtext(1, 1, C_BLACK, "projet CGJ 23 : Raycaster");
+
+	//draw_sprites(8);
+
+	dtext(100, 100, C_BLACK, "projet CPC 23 : Raycaster");
+
 	dupdate();
+	
 	getkey();
 	while (true) {
-		dclear(C_WHITE);
+		dclear(C_WHITE); //nrmlmnt 0x5ACB, changé pour debug
 		//draw_background();
 		draw_walls();
+
+		/*dtext(1, temp, C_WHITE, "coucou"); //passé
+		temp++;
+		if (temp >= 240) {
+			temp = 0;
+		}*/
 		dupdate();
 		/*if (keydown(KEY_UP)) {
 			//flemme d'implémanter le mouvement, verrai quand le rendu marche
-		}*/
-		/*if (keydown(KEY_LEFT) == true) {
+		}
+		if (keydown(KEY_LEFT)) {
 			player_dir -= 5;
 		}
-		if (keydown(KEY_RIGHT) == true) {
+		if (keydown(KEY_RIGHT)) {
 			player_dir += 5;
 		}
-		if (keydown(KEY_MENU) == true) {
+		if (keydown(KEY_MENU)) {
 			return 1;
 		}*/
 		getkey();
+		return 1;
 	}
 }
