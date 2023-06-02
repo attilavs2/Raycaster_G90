@@ -11,13 +11,12 @@
 //#define fps_cap 30
 #define FOV 60
 #define max_dist 320 //en fraction de tile
-#define player_pj_pl_dist 145 //distance du joueur au plan de projection
+#define player_pj_pl_dist 277 //distance du joueur au plan de projection
 
 #define couleur_ciel 0x0ADF
 
 //param. de jeu
 #define tile_size 32
-#define wall_size 32
 #define player_height 16
 #define player_speed 8
 
