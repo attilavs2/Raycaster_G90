@@ -165,7 +165,7 @@ void draw_walls() {
 	extern int player_dir;
 	extern char map_test[map_w][map_h];
 	castcolumn = 0;
-	castarc = player_dir - 30;
+	castarc = player_dir - angle_30;
 	if (castarc < 1) {
 		castarc += angle_360;
 	}
