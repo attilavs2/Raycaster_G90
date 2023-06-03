@@ -11,7 +11,7 @@
 
 unsigned short table_couleur[235] = {
 	0x10a2,0x18a3,0x18a3,0x18c3,0x18c3,0x18c3,0x18c3,
-	0x18e3, 0x1e3,0x20e4,0x20e4,0x2104,0x2104,0x2104,
+	0x18e3,0x18e3,0x20e4,0x20e4,0x2104,0x2104,0x2104,
 	0x2104,0x2124,0x2124,0x2124,0x2925,0x2945,0x2945,
 	0x2945,0x2945,0x2965,0x2965,0x2965,0x3166,0x3186,
 	0x3186,0x3186,0x3186,0x31a6,0x31a6,0x31a6,0x39a7,
@@ -44,7 +44,7 @@ unsigned short table_couleur[235] = {
 	0xef7d,0xef7d,0xef7d,0xef7d,0xef9d,0xef9d,0xf79e,
 	0xf79e,0xf7be,0xf7be,0xf7be,0xf7be,0xf7de,0xf7de,
 	0xffdf,0xffdf,0xffff,0xffff
-};
+};//optimisation par deux assez facile a voir
 
 float deg_to_rad(float angle_deg) {
 	return((angle_deg * pi) / 180);
@@ -97,7 +97,7 @@ void compute_table() {
 		i++;
 	}
 	for (i = -30; i <= 30; i++) {
-		distors_table[i + 30] = floor(64*1 / cos(deg_to_rad(i)));
+		distors_table[i + 30] = floor(64*(1 / cos(deg_to_rad(i))));
 	}
 }
 int load_map() {
@@ -232,7 +232,8 @@ void draw_walls() {
 				x_raypos = floor(vertical_grid / tile_size);
 				y_raypos = floor(y_intersect / tile_size);
 				mapindex = floor(y_raypos * map_w + x_raypos);
-				if (x_raypos >= map_w || y_raypos >= map_h || x_raypos > max_dist || y_raypos > max_dist) {
+				if (x_raypos >= map_w || y_raypos >= map_h || x_raypos <= 0 || y_raypos <= 0 
+					|| x_raypos > max_dist || y_raypos > max_dist) {
 					dist_to_h_hit = max_dist;
 					break;
 				}
@@ -263,22 +264,15 @@ void draw_walls() {
 		if (wall_bas >= viewport_h) {
 			wall_bas = viewport_h - 1;
 		}
-		//wall_bas = (wall_bas - wall_haut) + 1;
-		couleur = floor(255 - (wall_dist / max_dist) * 255) - 20;
-		if (couleur <= 0) {
-			couleur = 0;
-		}
-		if (couleur > 235) {
-			couleur = 225;
-		}
-		//dline(castcolumn, wall_haut, castcolumn, (wall_bas - wall_haut) + 1, table_couleur[couleur]);
+		wall_bas = (wall_bas - wall_haut) + 1;
+
 		if (floor(wall_dist) <= max_dist) {
-			couleur = floor(255 - (wall_dist / max_dist) * 255)-20;
+			couleur = floor(255 - (wall_dist / 320) * 255)-20;
 			if (couleur <= 0) {
 				couleur = 0;
 			}
 			if (couleur > 235) {
-				couleur = 225;
+				couleur = 235;
 			}
 			/*switch (wall_type) {
 			case 1: {
@@ -295,6 +289,7 @@ void draw_walls() {
 		else {
 			drect(castcolumn, wall_haut, castcolumn, wall_bas, 0x5ACB);
 		}
+		dupdate();
 		castarc += 1;
 		castcolumn++;
 		if (castarc > 360) {

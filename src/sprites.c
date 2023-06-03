@@ -20,7 +20,7 @@
 //		{0, 0, 3, 3, 0x0000}
 // }
 //
-char lsprites[32][32]; //les pnjs (ennemis)
+
 void draw_sprites(float x) {
 	// 1 - lister les sprites en render distance
 	// 2 - vérifier la distance/si c'est derrière un mur
@@ -32,13 +32,13 @@ void draw_sprites(float x) {
 	// 
 	// 
 	// /!\ ce qui il y a pour le moment est temporaire /!\
-	//(et cassé aussi)
+	// (et cassé aussi)
 	extern unsigned short sprite_caillou[24][6];
 	int i;
 	dtext(70, 100, C_WHITE, "coucou sprites");
 	dupdate();
 	getkey();
-	for (i = 0; i <= 24;) {
+	for (i = 0; i <= 23;) { //dessine juste les lignes comme décrites dans sprite_caillou[][]
 		dline(floor(sprite_caillou[i][1] * x), floor(sprite_caillou[i][2] * x), floor(sprite_caillou[i][3] * x),
 			  floor(sprite_caillou[i][4] * x), sprite_caillou[i][5]);
 		i++;

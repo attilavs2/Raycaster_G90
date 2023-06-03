@@ -8,7 +8,7 @@
 // 
 // Game design : Fcalva
 // Programmation : Fcalva
-// Art : Redoki303, Fcalva
+// "Art" : Fcalva
 // 
 // 
 // 
@@ -40,8 +40,16 @@
 // -Gameplay
 // -PNJs
 // -Sans de undertale (me demandez pas pourquoi, c'est un mec sur discord qui a proposé)
-// 
-// 
+// ================================================
+// au 03/06 :
+// A faire là tout de suite :
+// - Bien réparer correctement les murs
+// - Sprites
+// Plan :
+// -Sol
+// -Ennemis
+// -Maps
+// -Textures
 //
 int player_x;
 int player_y;
@@ -58,9 +66,9 @@ int tab_mur_x[180];
 int tab_mur_y[180];
 int distors_table[60];
 
-int main(void){
+int main() {
 	dclear(C_WHITE);
-	//compute_table();
+	compute_table();
 	float angle_60;
 	angle_60 = FOV / viewport_h;
 	char angle_30;
@@ -82,13 +90,10 @@ int main(void){
 	angle_10 = floor(angle_60 / 6);
 	angle_45 = floor(angle_60 * 0.75);
 	
-	int temp;
-	temp = 0;
+	/**/int temp;
+	/**/temp = 0;
 
-	///generate_horizon_gradient();
 	load_map();
-
-	//draw_sprites(8);
 
 	dtext(100, 100, C_BLACK, "projet CPC 23 : Raycaster");
 
@@ -98,7 +103,10 @@ int main(void){
 	while (true) {
 		dclear(C_WHITE); //nrmlmnt 0x5ACB, changé pour debug
 		//draw_background();
+		
 		draw_walls();
+
+		//draw_sprites(1);
 
 		/*dtext(1, temp, C_WHITE, "coucou"); //passé
 		temp++;
@@ -108,8 +116,8 @@ int main(void){
 		dupdate();
 		/*if (keydown(KEY_UP)) {
 			//flemme d'implémanter le mouvement, verrai quand le rendu marche
-		}
-		if (keydown(KEY_LEFT)) {
+		}*/
+		/*if (keydown(KEY_LEFT)) {
 			player_dir -= 5;
 		}
 		if (keydown(KEY_RIGHT)) {
