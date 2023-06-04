@@ -15,7 +15,8 @@ char map_test[map_w][map_h] = {
 	{1,0,1,0,1,0,1,0,0,0,0,0,1},
 	{1,1,1,1,1,1,1,1,1,1,1,1,1}
 };
-char map_test_sprites[map_w][map_h] = {
+//=== Unitilisé ===
+/*char map_test_sprites[map_w][map_h] = {
 	{0,0,0,0,0,0,0,0,0,0,0,0,0},
 	{0,0,0,0,0,0,0,0,0,0,0,0,0},
 	{0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -29,7 +30,7 @@ char map_test_sprites[map_w][map_h] = {
 	{0,0,0,0,0,0,0,0,0,0,0,0,0},
 	{0,0,0,0,0,0,0,0,0,0,0,0,0},
 	{0,0,0,0,0,0,0,0,0,0,0,0,0}
-}; //objets
+};
 char map_test_lsprites[map_w][map_h] = {
 	{0,0,0,0,0,0,0,0,0,0,0,0,0},
 	{0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -44,4 +45,4 @@ char map_test_lsprites[map_w][map_h] = {
 	{0,0,0,0,0,0,0,0,0,0,0,0,0},
 	{0,0,0,0,0,0,0,0,0,0,0,0,0},
 	{0,0,0,0,0,0,0,0,0,0,0,0,0}
-}; //enfait pas une map directe de la o� sont les mobs, mais des endroits de spawn
+};*/ //enfait pas une map directe de la où sont les mobs, mais des endroits de spawn

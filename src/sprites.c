@@ -7,38 +7,40 @@
 #include "map_test.h"
 #include "sprites.h"
 
-//Je compte utiliser des sprites décrits en vecteurs, étant donné que c'est bien plus 
-// facile à agrandir et réduire.
+//Je compte utiliser des sprites dÃ©crits en vecteurs, Ã©tant donnÃ© que c'est bien plus 
+// facile Ã  agrandir et rÃ©duire.
 // 2 maps de sprites : Les sprites de la map (tonneaux, torches, cadavres...)
 // Et les sprites de PNJs, donc d'ennemis et amicaux si jamais il y en a
 // 
-// Les sprites sont définis en vecteurs, en array de 64 (max, multiple de 4 requis) x5, 
-// une ligne par trait, en vecteurs (les 4 prèmieres valeurs), 0;0 étant le coin en haut 
-// a gauche, sur une zone de 32x32. Le 5 ème nombre est la couleur de la ligne
-// Ex : Une ligne de 0;0 à 3;3 :
+// Les sprites sont dÃ©finis en vecteurs, en array de 64 (max, multiple de 4 requis) x5, 
+// une ligne par trait, en vecteurs (les 4 premieres valeurs), 0;0 Ã©tant le coin en haut 
+// a gauche, sur une zone de 32x32. Le 5 Ã¨me nombre est la couleur de la ligne
+// Ex : Une ligne de 0;0 Ã  3;3 :
 // unsigned short ligne[1][5]{
 //		{0, 0, 3, 3, 0x0000}
 // }
 //
 
+//char lsprites[32][32]; //les pnjs (ennemis)
+
 void draw_sprites(float x) {
 	// 1 - lister les sprites en render distance
-	// 2 - vérifier la distance/si c'est derrière un mur
+	// 2 - vÃ©rifier la distance/si c'est derriÃ¨re un mur
 	// 3 - trier par distance
 	// 4 - passage a la moulinette de la perspective de la taille
-	// 5 - vérifier les recouvrement éventuels
-	// 6 - dessiner en commençant par derrière
+	// 5 - vÃ©rifier les recouvrement Ã©ventuels
+	// 6 - dessiner en commenÃ§ant par derriÃ¨re
 	// 
 	// 
 	// 
 	// /!\ ce qui il y a pour le moment est temporaire /!\
-	// (et cassé aussi)
+	//(et cassÃ© aussi)
 	extern unsigned short sprite_caillou[24][6];
 	int i;
 	dtext(70, 100, C_WHITE, "coucou sprites");
 	dupdate();
 	getkey();
-	for (i = 0; i <= 23;) { //dessine juste les lignes comme décrites dans sprite_caillou[][]
+	for (i = 0; i <= 24;) {
 		dline(floor(sprite_caillou[i][1] * x), floor(sprite_caillou[i][2] * x), floor(sprite_caillou[i][3] * x),
 			  floor(sprite_caillou[i][4] * x), sprite_caillou[i][5]);
 		i++;
@@ -71,7 +73,3 @@ unsigned short sprite_caillou[24][6] = {
 	{ 0, 0, 0, 0, 0x0000},
 	{ 0, 0, 0, 0, 0x0000}
 };
-
-
-
-//#include <sprites.h>

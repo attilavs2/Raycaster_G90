@@ -5,6 +5,6 @@
 #define map_h 13
 #define startpos_x 0
 #define startpos_y 0
-#define startdir 0 //en degrés
+#define startdir 0 //en degrÃ©s
 
 #endif /* map_test.h */

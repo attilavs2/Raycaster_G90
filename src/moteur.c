@@ -7,7 +7,7 @@
 
 #include "moteur.h"
 #include "sprites.h"
-#include "map_test.h"
+//#include "map_test.h"
 
 unsigned short table_couleur[235] = {
 	0x10a2,0x18a3,0x18a3,0x18c3,0x18c3,0x18c3,0x18c3,
@@ -45,6 +45,22 @@ unsigned short table_couleur[235] = {
 	0xf79e,0xf7be,0xf7be,0xf7be,0xf7be,0xf7de,0xf7de,
 	0xffdf,0xffdf,0xffff,0xffff
 };//optimisation par deux assez facile a voir
+
+char map_test[map_w][map_h] = {
+	{1,1,1,1,1,1,1,1,1,1,1,1,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,1,0,1,0,0,0,1,1,1,0,1},
+	{1,0,0,0,0,2,0,0,0,0,1,0,1},
+	{1,0,0,2,0,2,0,0,0,0,1,0,1},
+	{1,0,0,0,0,0,0,0,0,0,1,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,1,0,1,0,1,0,0,0,0,0,1},
+	{1,0,0,0,0,0,1,0,0,1,0,0,1},
+	{1,0,1,0,1,0,1,0,0,0,0,0,1},
+	{1,1,1,1,1,1,1,1,1,1,1,1,1}
+};
 
 float deg_to_rad(float angle_deg) {
 	return((angle_deg * pi) / 180);
@@ -112,8 +128,8 @@ int load_map() {
 	return 1;
 }
 void draw_background() {
-	//très simple pour le moment, je vais sans doute améliorer
-	//ajout le 28 10h : pas de dehors donc pas d'arrière plan
+	//trÃ¨s simple pour le moment, je vais sans doute amÃ©liorer
+	//ajout le 28 10h : pas de dehors donc pas d'arriÃ¨re plan
 	drect(1, 1, viewport_w, viewport_h*0.5 , couleur_ciel);
 }
 void draw_walls() {
@@ -139,18 +155,18 @@ void draw_walls() {
 	int couleur;
 	int proj_wall_h;
 	int half_viewport_h = viewport_h / 2;
-	char angle_30;//il y en a peut être des inutilisés, a voir
-	char angle_15;
-	char angle_90;
-	char angle_180;
-	char angle_270;
-	char angle_360;
-	char angle_5;
-	char angle_10;
-	char angle_45;
-	char wall_type; //type de mur touché par le raycast
+	char wall_type; //type de mur touchÃ© par le raycast
 	float wall_dist;
 	float scale_factor;
+	extern char angle_30;//il y en a peut Ãªtre des inutilisÃ©s, a voir
+	extern char angle_15;
+	extern char angle_90;
+	extern char angle_180;
+	extern char angle_270;
+	extern char angle_360;
+	extern char angle_5;
+	extern char angle_10;
+	extern char angle_45;
 	extern int cos_table[];
 	extern int sin_table[];
 	extern int tan_table[];
@@ -165,7 +181,7 @@ void draw_walls() {
 	extern int player_dir;
 	extern char map_test[map_w][map_h];
 	castcolumn = 0;
-	castarc = player_dir - angle_30;
+	castarc = player_dir - 30;
 	if (castarc < 1) {
 		castarc += angle_360;
 	}
@@ -264,15 +280,24 @@ void draw_walls() {
 		if (wall_bas >= viewport_h) {
 			wall_bas = viewport_h - 1;
 		}
+		//wall_bas = (wall_bas - wall_haut) + 1;
+		couleur = floor(255 - (wall_dist / max_dist) * 255) - 20;
+		if (couleur <= 0) {
+			couleur = 0;
+		}
+		if (couleur > 235) {
+			couleur = 225;
+		}
+		
 		wall_bas = (wall_bas - wall_haut) + 1;
 
 		if (floor(wall_dist) <= max_dist) {
-			couleur = floor(255 - (wall_dist / 320) * 255)-20;
+			couleur = floor(255 - (wall_dist / max_dist) * 255)-20;
 			if (couleur <= 0) {
 				couleur = 0;
 			}
 			if (couleur > 235) {
-				couleur = 235;
+				couleur = 225;
 			}
 			/*switch (wall_type) {
 			case 1: {
@@ -284,12 +309,11 @@ void draw_walls() {
 				break;
 			}
 			}*/
-			drect(castcolumn, wall_haut, castcolumn, wall_bas, table_couleur[couleur]);
+			drect(castcolumn, wall_haut, castcolumn, (wall_haut - wall_bas) + 1, table_couleur[couleur]);
 		}
 		else {
-			drect(castcolumn, wall_haut, castcolumn, wall_bas, 0x5ACB);
+			drect(castcolumn, wall_haut, castcolumn, (wall_haut - wall_bas) + 1, 0x5ACB);
 		}
-		dupdate();
 		castarc += 1;
 		castcolumn++;
 		if (castarc > 360) {

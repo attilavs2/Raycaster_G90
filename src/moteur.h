@@ -27,11 +27,11 @@ int load_map();
 void draw_background();
 void draw_walls();
 
-/*#define map_w 13
+#define map_w 13
 #define map_h 13
 #define startpos_x 0
 #define startpos_y 0
-#define startdir 0 //en degrés*/
+#define startdir 0 //en degrés
 #define wall_color 0xAAAA
 
 #endif /* moteur.h */
