@@ -1,5 +1,5 @@
-#ifndef moteur.h
-//#define moteur.h
+#ifndef moteur
+#define moteur
 
 #define pi 3.1415
 

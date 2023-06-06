@@ -164,6 +164,9 @@ void draw_walls() {
 	extern int player_y;
 	extern int player_dir;
 	extern char map_test[map_w][map_h];
+
+	int temp = 0;
+
 	castcolumn = 0;
 	castarc = player_dir - 30;
 	if (castarc < 1) {
@@ -293,11 +296,17 @@ void draw_walls() {
 				break;
 			}
 			}*/
-			drect(castcolumn, wall_haut, castcolumn, (wall_haut - wall_bas) + 1, table_couleur[couleur]);
+			drect(castcolumn, wall_haut, castcolumn, wall_bas, 0xAAAA); //nrmlnt : table_couleur[couleur]
 		}
 		else {
-			drect(castcolumn, wall_haut, castcolumn, (wall_haut - wall_bas) + 1, 0x5ACB);
+			drect(castcolumn, wall_haut, castcolumn, wall_bas, 0x5ACB);
 		}
+		/**/if(temp >= 2){
+			dtext(castcolumn,castcolumn*2, C_BLACK, "coucou");
+			temp = 0;
+		}
+		/**/temp++;
+		/**/dupdate();
 		castarc += 1;
 		castcolumn++;
 		if (castarc > 360) {

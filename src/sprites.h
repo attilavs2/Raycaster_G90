@@ -1,5 +1,5 @@
-#ifndef sprites.h
-//#define sprites.h
+#ifndef sprites
+#define sprites
 
 void draw_sprites(float x);
 
