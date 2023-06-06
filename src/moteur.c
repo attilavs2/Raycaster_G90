@@ -7,7 +7,7 @@
 
 #include "moteur.h"
 #include "sprites.h"
-//#include "map_test.h"
+#include "map_test.h"
 
 unsigned short table_couleur[235] = {
 	0x10a2,0x18a3,0x18a3,0x18c3,0x18c3,0x18c3,0x18c3,
@@ -45,22 +45,6 @@ unsigned short table_couleur[235] = {
 	0xf79e,0xf7be,0xf7be,0xf7be,0xf7be,0xf7de,0xf7de,
 	0xffdf,0xffdf,0xffff,0xffff
 };//optimisation par deux assez facile a voir
-
-char map_test[map_w][map_h] = {
-	{1,1,1,1,1,1,1,1,1,1,1,1,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,1,0,1,0,0,0,1,1,1,0,1},
-	{1,0,0,0,0,2,0,0,0,0,1,0,1},
-	{1,0,0,2,0,2,0,0,0,0,1,0,1},
-	{1,0,0,0,0,0,0,0,0,0,1,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,1,0,1,0,1,0,0,0,0,0,1},
-	{1,0,0,0,0,0,1,0,0,1,0,0,1},
-	{1,0,1,0,1,0,1,0,0,0,0,0,1},
-	{1,1,1,1,1,1,1,1,1,1,1,1,1}
-};
 
 float deg_to_rad(float angle_deg) {
 	return((angle_deg * pi) / 180);

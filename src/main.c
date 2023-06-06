@@ -1,8 +1,11 @@
-#include <gint/display.h>
-#include <gint/keyboard.h>
 #include <stdlib.h>
 
+#include <gint/display.h>
+#include <gint/keyboard.h>
+
 #include "moteur.h"
+#include "map_test.h"
+#include "sprites.h"
 
 //====== Raycaster (faut trouver un nom) =====
 // 

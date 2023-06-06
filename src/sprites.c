@@ -4,8 +4,9 @@
 #include <gint/display.h>
 #include <gint/keyboard.h>
 
-#include "map_test.h"
+//#include "map_test.h" //pas besoin pour le moment
 #include "sprites.h"
+#include "moteur.h"
 
 //Je compte utiliser des sprites décrits en vecteurs, étant donné que c'est bien plus 
 // facile à agrandir et réduire.
