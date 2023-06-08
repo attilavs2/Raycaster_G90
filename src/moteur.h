@@ -8,6 +8,8 @@
 #define screen_h 224
 #define viewport_w 396
 #define viewport_h 224
+// ! doit être changé avec viewport_w !
+#define ang_360p 2377 //viewport_w * 6 + 1
 //#define fps_cap 30
 #define FOV 60
 #define max_dist 640 //en fraction de tuiles, 20 tuiles en ce moment

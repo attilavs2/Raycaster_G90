@@ -61,33 +61,32 @@ int player_y;
 //int player_z; pour un futur fort fort lointain, pas pour ce premier jeu avec ce moteur
 int player_dir;
 
-int cos_table[360];
-int sin_table[360];
-int tan_table[360];
-int acos_table[360];
-int asin_table[360];
-int atan_table[360];
-int tab_mur_x[180];
-int tab_mur_y[180];
-float distors_table[60];
+unsigned short angle_60;
+unsigned short angle_30;
+unsigned short angle_15;
+unsigned short angle_90;
+unsigned short angle_180;
+unsigned short angle_270;
+unsigned short angle_360;
+unsigned short angle_5;
+unsigned short angle_10;
+unsigned short angle_45;
 
-float angle_60;
-char angle_30;
-char angle_15;
-char angle_90;
-char angle_180;
-char angle_270;
-char angle_360;
-char angle_5;
-char angle_10;
-char angle_45;
+int cos_table[ang_360p];
+int sin_table[ang_360p];
+int tan_table[ang_360p];
+int acos_table[ang_360p];
+int asin_table[ang_360p];
+int atan_table[ang_360p];
+int tab_mur_x[ang_360p];
+int tab_mur_y[ang_360p];
+float distors_table[ang_360p];
 
 int main(void){
 	dclear(C_WHITE);
-	
-	compute_table();
-	
-	angle_60 = FOV / viewport_w;
+	dtext( 1, 1, C_BLACK, "Chargement...");
+	dupdate();
+	angle_60 = viewport_w;
 	angle_30 = floor(angle_60 * 0.5);
 	angle_15 = floor(angle_60 * 0.25);
 	angle_90 = floor(angle_60 * 1.5);
@@ -97,6 +96,8 @@ int main(void){
 	angle_5 = floor(angle_60 / 12);
 	angle_10 = floor(angle_60 / 6);
 	angle_45 = floor(angle_60 * 0.75);
+
+	compute_table();
 	
 	int temp;
 	temp = 0;
@@ -106,11 +107,11 @@ int main(void){
 
 	//draw_sprites(8);
 
+	dclear(C_WHITE);
 	dtext(100, 100, C_BLACK, "projet CPC 23 : Raycaster");
-
 	dupdate();
-	
 	getkey();
+	
 	while (true) {
 		dclear(C_WHITE); //nrmlmnt 0x5ACB, changé pour debug
 		//draw_background();

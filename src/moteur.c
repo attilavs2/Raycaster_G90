@@ -51,18 +51,27 @@ float deg_to_rad(float angle_deg) {
 }
 
 void compute_table() {
-	extern int cos_table[360];
-	extern int sin_table[360];
-	extern int tan_table[360];
-	extern int acos_table[360];
-	extern int asin_table[360];
-	extern int atan_table[360];
-	extern int tab_mur_x[180];
-	extern int tab_mur_y[180];
-	extern float distors_table[60];
+	extern unsigned short angle_30;//il y en a des inutilisés
+	extern unsigned short angle_15;
+	extern unsigned short angle_90;
+	extern unsigned short angle_180;
+	extern unsigned short angle_270;
+	extern unsigned short angle_360;
+	extern unsigned short angle_5;
+	extern unsigned short angle_10;
+	extern unsigned short angle_45;
+	extern int cos_table[ang_360p];
+	extern int sin_table[ang_360p];
+	extern int tan_table[ang_360p];
+	extern int acos_table[ang_360p];
+	extern int asin_table[ang_360p];
+	extern int atan_table[ang_360p];
+	extern int tab_mur_x[ang_360p];
+	extern int tab_mur_y[ang_360p];
+	extern float distors_table[ang_360p];
 	int i = 0;
 	float rad_i = 0;
-	while (i != 360) {
+	while (i != angle_360) {
 		rad_i = deg_to_rad(i);
 		cos_table[i] = floor(64*cos(rad_i));
 		sin_table[i] = floor(64*sin(rad_i));
@@ -70,7 +79,7 @@ void compute_table() {
 		acos_table[i] = floor(64*(acos(rad_i)));
 		asin_table[i] = floor(64*(asin(rad_i)));
 		atan_table[i] = floor(64*(atan(rad_i)));
-		if (i >= 90 && i < 270) {
+		if (i >= 90 && i < angle_270) {
 			tab_mur_x[i] = floor(tile_size / tan(i)*64);
 			if (tab_mur_x[i] > 0) {
 				tab_mur_x[i] = -tab_mur_x[i];
@@ -82,7 +91,7 @@ void compute_table() {
 				tab_mur_x[i] = -tab_mur_x[i];
 			}
 		}
-		if (i >= 0 && i < 180) {
+		if (i >= 0 && i < angle_180) {
 			tab_mur_y[i] = floor(tile_size / tan(i) * 64);
 			if (tab_mur_y[i] < 0) {
 				tab_mur_y[i] = -tab_mur_y[i];
@@ -96,8 +105,8 @@ void compute_table() {
 		}
 		i++;
 	}
-	for (i = -30; i <= 30;) {
-		distors_table[i + 30] = 1 / cos(deg_to_rad(i));
+	for (i = -30; i <= angle_30;) {
+		distors_table[i + angle_30] = 1 / cos(deg_to_rad(i));
 		i++;
 	}
 }
@@ -139,28 +148,30 @@ void draw_walls() {
 	int wall_bas;
 	int couleur;
 	int half_viewport_h = viewport_h / 2;
+	int rgh_xdist;
+	int rgh_ydist; 
 	char wall_type; //type de mur touché par le raycast
 	float wall_dist;
 	float scale_factor;
 	float proj_wall_h;
-	extern char angle_30;//il y en a peut être des inutilisés, a voir
-	extern char angle_15;
-	extern char angle_90;
-	extern char angle_180;
-	extern char angle_270;
-	extern char angle_360;
-	extern char angle_5;
-	extern char angle_10;
-	extern char angle_45;
-	extern int cos_table[360];
-	extern int sin_table[360];
-	extern int tan_table[360];
-	extern int acos_table[360];
-	extern int asin_table[360];
-	extern int atan_table[360];
-	extern int tab_mur_x[180];
-	extern int tab_mur_y[180];
-	extern float distors_table[60];
+	extern unsigned short angle_30;//il y en a peut être des inutilisés, a voir
+	extern unsigned short angle_15;
+	extern unsigned short angle_90;
+	extern unsigned short angle_180;
+	extern unsigned short angle_270;
+	extern unsigned short angle_360;
+	extern unsigned short angle_5;
+	extern unsigned short angle_10;
+	extern unsigned short angle_45;
+	extern int cos_table[ang_360p];
+	extern int sin_table[ang_360p];
+	extern int tan_table[ang_360p];
+	extern int acos_table[ang_360p];
+	extern int asin_table[ang_360p];
+	extern int atan_table[ang_360p];
+	extern int tab_mur_x[ang_360p];
+	extern int tab_mur_y[ang_360p];
+	extern float distors_table[ang_360p];
 	extern int player_x;
 	extern int player_y;
 	extern int player_dir;
@@ -198,8 +209,11 @@ void draw_walls() {
 			while (true) {
 				x_raypos = floor(x_intersect / tile_size);
 				y_raypos = floor(horizontal_grid / tile_size);
-				mapindex = floor(y_raypos * map_w + x_raypos);
-				if (x_raypos >= map_w || y_raypos >= map_h) {
+				mapindex = floor(y_raypos * map_w + x_raypos); 
+				rgh_xdist = abs(x_raypos - (tile_size * player_x));
+				rgh_ydist = abs(y_raypos- (tile_size * player_y));
+				if (x_raypos >= map_w || y_raypos >= map_h || x_raypos <= 0 || y_raypos <= 0 
+					|| rgh_xdist > max_dist || rgh_ydist > max_dist) {
 					dist_to_h_hit = max_dist;
 					break;
 				}
@@ -279,7 +293,7 @@ void draw_walls() {
 		
 		wall_bas = (wall_bas - wall_haut) + 1;
 
-		if (floor(wall_dist) <= max_dist) {
+		if (floor(wall_dist) < max_dist) {
 			couleur = floor(255 - (wall_dist / max_dist) * 255)-20;
 			if (couleur <= 0) {
 				couleur = 0;
