@@ -69,7 +69,7 @@ int asin_table[360];
 int atan_table[360];
 int tab_mur_x[180];
 int tab_mur_y[180];
-int distors_table[60];
+float distors_table[60];
 
 float angle_60;
 char angle_30;
@@ -87,7 +87,7 @@ int main(void){
 	
 	compute_table();
 	
-	angle_60 = FOV / viewport_h;
+	angle_60 = FOV / viewport_w;
 	angle_30 = floor(angle_60 * 0.5);
 	angle_15 = floor(angle_60 * 0.25);
 	angle_90 = floor(angle_60 * 1.5);

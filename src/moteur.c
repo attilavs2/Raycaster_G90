@@ -51,15 +51,15 @@ float deg_to_rad(float angle_deg) {
 }
 
 void compute_table() {
-	extern int cos_table[];
-	extern int sin_table[];
-	extern int tan_table[];
-	extern int acos_table[];
-	extern int asin_table[];
-	extern int atan_table[];
-	extern int tab_mur_x[];
-	extern int tab_mur_y[];
-	extern int distors_table[];
+	extern int cos_table[360];
+	extern int sin_table[360];
+	extern int tan_table[360];
+	extern int acos_table[360];
+	extern int asin_table[360];
+	extern int atan_table[360];
+	extern int tab_mur_x[180];
+	extern int tab_mur_y[180];
+	extern float distors_table[60];
 	int i = 0;
 	float rad_i = 0;
 	while (i != 360) {
@@ -96,8 +96,9 @@ void compute_table() {
 		}
 		i++;
 	}
-	for (i = -30; i <= 30; i++) {
-		distors_table[i + 30] = floor(64*(1 / cos(deg_to_rad(i))));
+	for (i = -30; i <= 30;) {
+		distors_table[i + 30] = 1 / cos(deg_to_rad(i));
+		i++;
 	}
 }
 int load_map() {
@@ -137,11 +138,11 @@ void draw_walls() {
 	int wall_haut;
 	int wall_bas;
 	int couleur;
-	int proj_wall_h;
 	int half_viewport_h = viewport_h / 2;
 	char wall_type; //type de mur touché par le raycast
 	float wall_dist;
 	float scale_factor;
+	float proj_wall_h;
 	extern char angle_30;//il y en a peut être des inutilisés, a voir
 	extern char angle_15;
 	extern char angle_90;
@@ -151,15 +152,15 @@ void draw_walls() {
 	extern char angle_5;
 	extern char angle_10;
 	extern char angle_45;
-	extern int cos_table[];
-	extern int sin_table[];
-	extern int tan_table[];
-	extern int acos_table[];
-	extern int asin_table[];
-	extern int atan_table[];
-	extern int tab_mur_x[];
-	extern int tab_mur_y[];
-	extern int distors_table[];
+	extern int cos_table[360];
+	extern int sin_table[360];
+	extern int tan_table[360];
+	extern int acos_table[360];
+	extern int asin_table[360];
+	extern int atan_table[360];
+	extern int tab_mur_x[180];
+	extern int tab_mur_y[180];
+	extern float distors_table[60];
 	extern int player_x;
 	extern int player_y;
 	extern int player_dir;
@@ -257,10 +258,10 @@ void draw_walls() {
 		else {
 			wall_dist = dist_to_v_hit;
 		}
-		wall_dist /= distors_table[castcolumn] * 0.015625;
-		proj_wall_h = floor(tile_size * player_pj_pl_dist / wall_dist);
-		wall_bas = half_viewport_h + (proj_wall_h * 0.5);
-		wall_haut = half_viewport_h + (proj_wall_h * 0.5);
+		wall_dist = wall_dist / distors_table[castcolumn];
+		proj_wall_h = (tile_size * player_pj_pl_dist / wall_dist)*0.5;
+		wall_bas = floor(half_viewport_h + proj_wall_h);
+		wall_haut = floor(half_viewport_h + proj_wall_h);
 		if (wall_haut < 0) {
 			wall_haut = 0;
 		}
@@ -296,13 +297,13 @@ void draw_walls() {
 				break;
 			}
 			}*/
-			drect(castcolumn, wall_haut, castcolumn, wall_bas, 0xAAAA); //nrmlnt : table_couleur[couleur]
+			drect( castcolumn, wall_haut, castcolumn, wall_bas, 0xAAAA); //nrmlnt : table_couleur[couleur]
 		}
 		else {
-			drect(castcolumn, wall_haut, castcolumn, wall_bas, 0x5ACB);
+			drect( castcolumn, wall_haut, castcolumn, wall_bas, 0x5ACB);
 		}
 		/**/if(temp >= 2){
-			dtext(castcolumn,castcolumn*2, C_BLACK, "coucou");
+			dpixel( castcolumn, castcolumn, C_BLACK);
 			temp = 0;
 		}
 		/**/temp++;

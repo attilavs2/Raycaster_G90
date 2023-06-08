@@ -10,7 +10,7 @@
 #define viewport_h 224
 //#define fps_cap 30
 #define FOV 60
-#define max_dist 320 //en fraction de tile
+#define max_dist 640 //en fraction de tuiles, 20 tuiles en ce moment
 #define player_pj_pl_dist 277 //distance du joueur au plan de projection
 
 #define couleur_ciel 0x0ADF
