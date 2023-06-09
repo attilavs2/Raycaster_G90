@@ -78,11 +78,11 @@ int tan_table[ang_360p];
 int acos_table[ang_360p];
 int asin_table[ang_360p];
 int atan_table[ang_360p];
-int tab_mur_x[ang_360p];
-int tab_mur_y[ang_360p];
+float tab_mur_x[ang_360p];
+float tab_mur_y[ang_360p];
 float distors_table[ang_360p];
 
-int main(void){
+int main(){
 	dclear(C_WHITE);
 	dtext( 1, 1, C_BLACK, "Chargement...");
 	dupdate();
@@ -105,24 +105,24 @@ int main(void){
 	///generate_horizon_gradient();
 	load_map();
 
-	//draw_sprites(8);
-
 	dclear(C_WHITE);
 	dtext(100, 100, C_BLACK, "projet CPC 23 : Raycaster");
+	
+	/*draw_sprites(8);
 	dupdate();
 	getkey();
-	
+	return 1;*/
+
 	while (true) {
 		dclear(C_WHITE); //nrmlmnt 0x5ACB, changé pour debug
 		//draw_background();
 		draw_walls();
 
-		dtext(1, temp, C_WHITE, "coucou"); //passé
+		/*dtext(1, temp, C_WHITE, "coucou"); //passé
 		temp++;
 		if (temp >= 240) {
 			temp = 0;
-		}
-		dupdate();
+		}*/
 		/*if (keydown(KEY_UP)) {
 			//flemme d'implémanter le mouvement, verrai quand le rendu marche
 		}*/
@@ -135,6 +135,8 @@ int main(void){
 		if (keydown(KEY_MENU)) {
 			return 1;
 		}
+
+		dupdate();
 		getkey();
 		return 1;
 	}

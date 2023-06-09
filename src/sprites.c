@@ -42,8 +42,8 @@ void draw_sprites(float x) {
 	dupdate();
 	getkey();
 	for (i = 0; i <= 24;) {
-		dline(floor(sprite_caillou[i][1] * x), floor(sprite_caillou[i][2] * x), floor(sprite_caillou[i][3] * x),
-			  floor(sprite_caillou[i][4] * x), sprite_caillou[i][5]);
+		dline( (floor(sprite_caillou[i][1] * x) + 1), (floor(sprite_caillou[i][2] * x) + 1),
+		 (floor(sprite_caillou[i][3] * x) + 1), (floor(sprite_caillou[i][4] * x) + 1), sprite_caillou[i][5]);
 		i++;
 	}
 }

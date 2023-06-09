@@ -66,39 +66,39 @@ void compute_table() {
 	extern int acos_table[ang_360p];
 	extern int asin_table[ang_360p];
 	extern int atan_table[ang_360p];
-	extern int tab_mur_x[ang_360p];
-	extern int tab_mur_y[ang_360p];
+	extern float tab_mur_x[ang_360p];
+	extern float tab_mur_y[ang_360p];
 	extern float distors_table[ang_360p];
 	int i = 0;
 	float rad_i = 0;
 	while (i != angle_360) {
 		rad_i = deg_to_rad(i);
-		cos_table[i] = floor(64*cos(rad_i));
-		sin_table[i] = floor(64*sin(rad_i));
-		tan_table[i] = floor(64*tan(rad_i));
-		acos_table[i] = floor(64*(acos(rad_i)));
-		asin_table[i] = floor(64*(asin(rad_i)));
-		atan_table[i] = floor(64*(atan(rad_i)));
+		cos_table[i] = floor( 64 * cos(rad_i));
+		sin_table[i] = floor( 64 * sin(rad_i));
+		tan_table[i] = floor( 64 * tan(rad_i));
+		acos_table[i] = floor( 64 * acos(rad_i));
+		asin_table[i] = floor( 64 * asin(rad_i));
+		atan_table[i] = floor( 64 * atan(rad_i));
 		if (i >= 90 && i < angle_270) {
-			tab_mur_x[i] = floor(tile_size / tan(i)*64);
+			tab_mur_x[i] = tile_size / tan(rad_i);
 			if (tab_mur_x[i] > 0) {
 				tab_mur_x[i] = -tab_mur_x[i];
 			}
 		}
 		else {
-			tab_mur_x[i] = floor(tile_size / tan(i) * 64);
+			tab_mur_x[i] = tile_size / tan(rad_i);
 			if (tab_mur_x[i] < 0) {
 				tab_mur_x[i] = -tab_mur_x[i];
 			}
 		}
 		if (i >= 0 && i < angle_180) {
-			tab_mur_y[i] = floor(tile_size / tan(i) * 64);
+			tab_mur_y[i] = tile_size / tan(rad_i);
 			if (tab_mur_y[i] < 0) {
 				tab_mur_y[i] = -tab_mur_y[i];
 			}
 		}
 		else {
-			tab_mur_y[i] = floor(tile_size / tan(i) * 64);
+			tab_mur_y[i] = tile_size / tan(rad_i);
 			if (tab_mur_y[i] > 0) {
 				tab_mur_y[i] = -tab_mur_y[i];
 			}
@@ -133,8 +133,8 @@ void draw_walls() {
 	int dist_to_n_h_grid; //a changer si max_dist (distance de rendu) > 255
 	int x_intersect;
 	int y_intersect;
-	int dist_to_n_x_intersect;
-	int dist_to_n_y_intersect;
+	float dist_to_n_x_intersect;
+	float dist_to_n_y_intersect;
 	int x_raypos;
 	int y_raypos;
 	int dist_to_v_hit;
@@ -169,25 +169,23 @@ void draw_walls() {
 	extern int acos_table[ang_360p];
 	extern int asin_table[ang_360p];
 	extern int atan_table[ang_360p];
-	extern int tab_mur_x[ang_360p];
-	extern int tab_mur_y[ang_360p];
+	extern float tab_mur_x[ang_360p];
+	extern float tab_mur_y[ang_360p];
 	extern float distors_table[ang_360p];
 	extern int player_x;
 	extern int player_y;
 	extern int player_dir;
 	extern char map_test[map_w][map_h];
 
-	int temp = 0;
-
-	castcolumn = 0;
-	castarc = player_dir - 30;
+	castarc = player_dir - angle_30;
 	if (castarc < 1) {
 		castarc += angle_360;
 	}
 	if (castarc > 360) {
 		castarc -= angle_360;
 	}
-	while (castcolumn < viewport_w) {
+
+	for ( castcolumn = 0; castcolumn < viewport_w;) {
 		if (castarc > 0 && castarc < angle_180) {
 			horizontal_grid = floor(player_y / tile_size) * tile_size + tile_size;
 			dist_to_n_h_grid = tile_size;
@@ -201,11 +199,12 @@ void draw_walls() {
 			x_intersect = xtemp + player_x;
 			horizontal_grid--;
 		}
+
 		if (castarc == 0 || castarc == angle_180) {
 			dist_to_h_hit = max_dist;
 		}
 		else {
-			dist_to_n_x_intersect = floor((tab_mur_x[castarc]) * 0.015625);
+			dist_to_n_x_intersect = tab_mur_x[castarc];
 			while (true) {
 				x_raypos = floor(x_intersect / tile_size);
 				y_raypos = floor(horizontal_grid / tile_size);
@@ -228,6 +227,7 @@ void draw_walls() {
 				}
 			}
 		}
+
 		if (castarc < angle_90 || castarc > angle_270) {
 			vertical_grid = tile_size + floor(player_x / tile_size) * tile_size;
 			dist_to_n_v_grid = tile_size;
@@ -241,11 +241,12 @@ void draw_walls() {
 			y_intersect = ytemp + player_y;
 			vertical_grid--;
 		}
+
 		if (castarc == angle_90 || castarc == angle_270) {
 			dist_to_v_hit = max_dist;
 		}
 		else {
-			dist_to_n_y_intersect = floor(tab_mur_y[castarc] * 0.015625);
+			dist_to_n_y_intersect = tab_mur_y[castarc];
 			while (true) {
 				x_raypos = floor(vertical_grid / tile_size);
 				y_raypos = floor(y_intersect / tile_size);
@@ -266,6 +267,7 @@ void draw_walls() {
 				}
 			}
 		}
+
 		if (dist_to_h_hit < dist_to_v_hit) {
 			wall_dist = dist_to_h_hit;
 		}
@@ -309,20 +311,15 @@ void draw_walls() {
 			case 2: {
 				drect(castcolumn, wall_haut, castcolumn, wall_bas, 0xFAFA);
 				break;
-			}
-			}*/
+			}*/ 
 			drect( castcolumn, wall_haut, castcolumn, wall_bas, 0xAAAA); //nrmlnt : table_couleur[couleur]
 		}
 		else {
 			drect( castcolumn, wall_haut, castcolumn, wall_bas, 0x5ACB);
 		}
-		/**/if(temp >= 2){
-			dpixel( castcolumn, castcolumn, C_BLACK);
-			temp = 0;
-		}
-		/**/temp++;
-		/**/dupdate();
-		castarc += 1;
+		
+		dupdate();
+		castarc++;
 		castcolumn++;
 		if (castarc > 360) {
 			castarc -= 360;
