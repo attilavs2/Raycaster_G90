@@ -108,10 +108,9 @@ int main(){
 	dclear(C_WHITE);
 	dtext(100, 100, C_BLACK, "projet CPC 23 : Raycaster");
 	
-	/*draw_sprites(8);
+	//draw_sprites(8);
 	dupdate();
 	getkey();
-	return 1;*/
 
 	while (true) {
 		dclear(C_WHITE); //nrmlmnt 0x5ACB, changé pour debug

@@ -274,6 +274,7 @@ void draw_walls() {
 		else {
 			wall_dist = dist_to_v_hit;
 		}
+		
 		wall_dist = wall_dist / distors_table[castcolumn];
 		proj_wall_h = (tile_size * player_pj_pl_dist / wall_dist)*0.5;
 		wall_bas = floor(half_viewport_h + proj_wall_h);
@@ -283,14 +284,6 @@ void draw_walls() {
 		}
 		if (wall_bas >= viewport_h) {
 			wall_bas = viewport_h - 1;
-		}
-		//wall_bas = (wall_bas - wall_haut) + 1;
-		couleur = floor(255 - (wall_dist / max_dist) * 255) - 20;
-		if (couleur <= 0) {
-			couleur = 0;
-		}
-		if (couleur > 235) {
-			couleur = 225;
 		}
 		
 		wall_bas = (wall_bas - wall_haut) + 1;
@@ -318,7 +311,9 @@ void draw_walls() {
 			drect( castcolumn, wall_haut, castcolumn, wall_bas, 0x5ACB);
 		}
 		
-		dupdate();
+		if (castcolumn >= 231){
+			dupdate();
+		}
 		castarc++;
 		castcolumn++;
 		if (castarc > 360) {
