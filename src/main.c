@@ -86,6 +86,8 @@ int main(){
 	dclear(C_WHITE);
 	dtext( 1, 1, C_BLACK, "Chargement...");
 	dupdate();
+	//a faire plus proprement selon le FOV, actuellement intégralment basé
+	//sur 60 de FOV
 	angle_60 = viewport_w;
 	angle_30 = floor(angle_60 * 0.5);
 	angle_15 = floor(angle_60 * 0.25);

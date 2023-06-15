@@ -311,13 +311,12 @@ void draw_walls() {
 			drect( castcolumn, wall_haut, castcolumn, wall_bas, 0x5ACB);
 		}
 		
-		if (castcolumn >= 231){
-			dupdate();
-		}
+		dupdate();
+		
 		castarc++;
 		castcolumn++;
-		if (castarc > 360) {
-			castarc -= 360;
+		if (castarc > angle_360) {
+			castarc -= angle_360;
 		}
 	}
 }

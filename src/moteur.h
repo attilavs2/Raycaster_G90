@@ -10,6 +10,8 @@
 #define viewport_h 224
 // ! doit être changé avec viewport_w !
 #define ang_360p 2377 //viewport_w * 6 + 1
+//Utilisé pour la définition de tables, plus simple que une variable
+// + allocation de mémoire
 //#define fps_cap 30
 #define FOV 60
 #define max_dist 640 //en fraction de tuiles, 20 tuiles en ce moment
@@ -29,11 +31,6 @@ int load_map();
 void draw_background();
 void draw_walls();
 
-/*#define map_w 13
-#define map_h 13
-#define startpos_x 0
-#define startpos_y 0
-#define startdir 0 en degrés*/
 #define wall_color 0xAAAA
 
 #endif /* moteur.h */
