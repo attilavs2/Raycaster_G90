@@ -110,27 +110,11 @@ void compute_table() {
 		i++;
 	}
 }
-int load_map() {
-	extern int player_x;
-	extern int player_y;
-	extern int player_dir;
-	player_x = startpos_x;
-	player_y = startpos_y;
-	player_dir = startdir;
-	//faudrait d'autres trucs quand y aura plusieurs maps
-	//*tout changer x|
-	return 1;
-}
-void draw_background() {
-	//très simple pour le moment, je vais sans doute améliorer
-	//ajout le 28 10h : pas de dehors donc pas d'arrière plan
-	drect(1, 1, viewport_w, viewport_h*0.5 , couleur_ciel);
-}
-void draw_walls() {
+void draw_walls(){
 	int vertical_grid;
 	int horizontal_grid;
 	int dist_to_n_v_grid; //distance to next vertical grid
-	int dist_to_n_h_grid; //a changer si max_dist (distance de rendu) > 255
+	int dist_to_n_h_grid;
 	int x_intersect;
 	int y_intersect;
 	float dist_to_n_x_intersect;
@@ -147,7 +131,8 @@ void draw_walls() {
 	int wall_haut;
 	int wall_bas;
 	int couleur;
-	int half_viewport_h = viewport_h / 2;
+	int half_viewport_h = viewport_h / 2; //Va y avoir besoin quand je vais 
+	//réduire par deux la résolution horizontale du bouzin
 	int rgh_xdist;
 	int rgh_ydist; 
 	char wall_type; //type de mur touché par le raycast
@@ -175,29 +160,33 @@ void draw_walls() {
 	extern int player_x;
 	extern int player_y;
 	extern int player_dir;
-	extern char map_test[map_w][map_h];
+	extern short map_test[map_w][map_h];
 
 	castarc = player_dir - angle_30;
+	castarc += 235;
 	if (castarc < 1) {
 		castarc += angle_360;
 	}
 	if (castarc > 360) {
 		castarc -= angle_360;
 	}
-
-	for ( castcolumn = 0; castcolumn < viewport_w;) {
+	for ( castcolumn = 235; castcolumn < viewport_w;) {
+		dprint( 1, 1, C_BLACK, "castcolumn : %d", castcolumn); 
+		dprint( 1, 1, C_BLACK, "castarc : %d", castarc);
 		if (castarc > 0 && castarc < angle_180) {
 			horizontal_grid = floor(player_y / tile_size) * tile_size + tile_size;
 			dist_to_n_h_grid = tile_size;
-			xtemp = floor((atan_table[castarc] * (horizontal_grid - player_y)) * 0.015625);
+			xtemp = floor((atan_table[castarc] * (horizontal_grid - player_y)) >>6);
 			x_intersect = xtemp + player_x;
+			dprint( 1, 1, C_BLACK, "x_intersect : %d", x_intersect);
 		}
 		else {
 			horizontal_grid = floor(player_y / tile_size) * tile_size;
 			dist_to_n_h_grid = -tile_size;
-			xtemp = floor((atan_table[castarc] * (horizontal_grid - player_y)) * 0.015625);
+			xtemp = floor((atan_table[castarc] * (horizontal_grid - player_y)) >>6);
 			x_intersect = xtemp + player_x;
 			horizontal_grid--;
+			dprint( 1, 1, C_BLACK, "x_intersect : %d", x_intersect);
 		}
 
 		if (castarc == 0 || castarc == angle_180) {
@@ -209,8 +198,8 @@ void draw_walls() {
 				x_raypos = floor(x_intersect / tile_size);
 				y_raypos = floor(horizontal_grid / tile_size);
 				mapindex = floor(y_raypos * map_w + x_raypos); 
-				rgh_xdist = abs(x_raypos - (tile_size * player_x));
-				rgh_ydist = abs(y_raypos- (tile_size * player_y));
+				//rgh_xdist = abs(x_raypos - (tile_size * player_x));
+				//rgh_ydist = abs(y_raypos- (tile_size * player_y));
 				if (x_raypos >= map_w || y_raypos >= map_h || x_raypos <= 0 || y_raypos <= 0 
 					|| rgh_xdist > max_dist || rgh_ydist > max_dist) {
 					dist_to_h_hit = max_dist;
@@ -221,25 +210,28 @@ void draw_walls() {
 					horizontal_grid += dist_to_n_h_grid;
 				}
 				else {
-					dist_to_h_hit = floor(((x_intersect - player_x) * acos_table[castarc]) * 0.015625);
+					dist_to_h_hit = floor(((x_intersect - player_x) * acos_table[castarc]) >>6);
 					wall_type = map_test[x_raypos][y_raypos];
 					break;
 				}
 			}
+			dprint( 1, 10, C_BLACK, "dist_to_h_hit : %d", dist_to_h_hit);
 		}
 
 		if (castarc < angle_90 || castarc > angle_270) {
 			vertical_grid = tile_size + floor(player_x / tile_size) * tile_size;
 			dist_to_n_v_grid = tile_size;
-			ytemp = floor((tan_table[castarc] * (vertical_grid - player_x)) * 0.015625);
+			ytemp = floor((tan_table[castarc] * (vertical_grid - player_x)) >>6);
 			y_intersect = ytemp + player_y;
+			dprint( 1, 20, C_BLACK, "y_intersect : %d", y_intersect);
 		}
 		else {
 			vertical_grid = floor(player_x / tile_size * tile_size);
 			dist_to_n_v_grid = -tile_size;
-			ytemp = floor((tan_table[castarc] * (vertical_grid - player_x)) * 0.015625);
+			ytemp = floor((tan_table[castarc] * (vertical_grid - player_x)) >>6);
 			y_intersect = ytemp + player_y;
 			vertical_grid--;
+			dprint( 1, 20, C_BLACK, "y_intersect : %d", y_intersect);
 		}
 
 		if (castarc == angle_90 || castarc == angle_270) {
@@ -251,8 +243,11 @@ void draw_walls() {
 				x_raypos = floor(vertical_grid / tile_size);
 				y_raypos = floor(y_intersect / tile_size);
 				mapindex = floor(y_raypos * map_w + x_raypos);
+				//rgh_xdist = abs(x_raypos - (tile_size * player_x));
+				//rgh_ydist = abs(y_raypos- (tile_size * player_y));
+				//Gros truc bien long pour vérifier que le rayon est pas trop loin
 				if (x_raypos >= map_w || y_raypos >= map_h || x_raypos <= 0 || y_raypos <= 0 
-					|| x_raypos > max_dist || y_raypos > max_dist) {
+					|| rgh_xdist > max_dist || rgh_ydist > max_dist) {
 					dist_to_h_hit = max_dist;
 					break;
 				}
@@ -261,20 +256,21 @@ void draw_walls() {
 					horizontal_grid += dist_to_n_h_grid;
 				}
 				else {
-					dist_to_h_hit = floor(((x_intersect - player_x) * acos_table[castarc]) * 0.015625);
+					dist_to_h_hit = floor(((x_intersect - player_x) * acos_table[castarc]) >>6);
 					wall_type = map_test[x_raypos][y_raypos];
 					break;
 				}
 			}
+			dprint( 1, 30, C_BLACK, "dist_to_v_hit : %d", dist_to_v_hit);
 		}
-
+		/**/dupdate();
 		if (dist_to_h_hit < dist_to_v_hit) {
 			wall_dist = dist_to_h_hit;
 		}
 		else {
 			wall_dist = dist_to_v_hit;
 		}
-		
+		dprint( 1, 40, C_BLACK, "wall_dist : %d", wall_dist);
 		wall_dist = wall_dist / distors_table[castcolumn];
 		proj_wall_h = (tile_size * player_pj_pl_dist / wall_dist)*0.5;
 		wall_bas = floor(half_viewport_h + proj_wall_h);
@@ -288,30 +284,32 @@ void draw_walls() {
 		
 		wall_bas = (wall_bas - wall_haut) + 1;
 
-		if (floor(wall_dist) < max_dist) {
+		/*if (floor(wall_dist) < max_dist) {
 			couleur = floor(255 - (wall_dist / max_dist) * 255)-20;
 			if (couleur <= 0) {
 				couleur = 0;
 			}
 			if (couleur > 235) {
-				couleur = 225;
+				couleur = 235;
 			}
-			/*switch (wall_type) {
-			case 1: {
-				drect(castcolumn, wall_haut, castcolumn, wall_bas, wall_color);
-				break;
+			switch (wall_type) {
+				case 1: {
+					drect(castcolumn, wall_haut, castcolumn, wall_bas, wall_color);
+					break;
+				}
+				case 2: {
+					drect(castcolumn, wall_haut, castcolumn, wall_bas, 0xFAFA);
+					break;
+				}
 			}
-			case 2: {
-				drect(castcolumn, wall_haut, castcolumn, wall_bas, 0xFAFA);
-				break;
-			}*/ 
-			drect( castcolumn, wall_haut, castcolumn, wall_bas, 0xAAAA); //nrmlnt : table_couleur[couleur]
+			drect( castcolumn, wall_haut, castcolumn, wall_bas, 0xAAAA); //nrmlnt : table_couleur[couleur]	
 		}
 		else {
 			drect( castcolumn, wall_haut, castcolumn, wall_bas, 0x5ACB);
 		}
-		
+		*/
 		dupdate();
+		getkey();
 		
 		castarc++;
 		castcolumn++;

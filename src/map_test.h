@@ -6,6 +6,5 @@
 #define startpos_x 6
 #define startpos_y 6
 #define startdir 10 //en degrés
-//char map_test[map_w][map_h];
 
 #endif /* map_test.h */

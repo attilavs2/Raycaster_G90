@@ -56,9 +56,9 @@
 // -Maps
 // -Textures
 //
+
 int player_x;
 int player_y;
-//int player_z; pour un futur fort fort lointain, pas pour ce premier jeu avec ce moteur
 int player_dir;
 
 unsigned short angle_60;
@@ -86,59 +86,33 @@ int main(){
 	dclear(C_WHITE);
 	dtext( 1, 1, C_BLACK, "Chargement...");
 	dupdate();
-	//a faire plus proprement selon le FOV, actuellement intégralment basé
-	//sur 60 de FOV
-	angle_60 = viewport_w;
-	angle_30 = floor(angle_60 * 0.5);
-	angle_15 = floor(angle_60 * 0.25);
-	angle_90 = floor(angle_60 * 1.5);
-	angle_180 = floor(angle_60 * 3);
-	angle_270 = floor(angle_60 * 4.5);
-	angle_360 = floor(angle_60 * 6);
-	angle_5 = floor(angle_60 / 12);
-	angle_10 = floor(angle_60 / 6);
-	angle_45 = floor(angle_60 * 0.75);
-
 	compute_table();
-	
-	int temp;
-	temp = 0;
-
-	///generate_horizon_gradient();
-	load_map();
+	//trucs de chargement
 
 	dclear(C_WHITE);
-	dtext(100, 100, C_BLACK, "projet CPC 23 : Raycaster");
-	
-	//draw_sprites(8);
+	dtext(100, 100, C_BLACK, "Raycaster Fcalva v 0.1");
+	dtext(60, 130, C_BLACK, "Edition a la poubelle ce qui marche pas");
+
+	player_x = 6;
+	player_y = 6;
+
+	dclear(C_WHITE);
 	dupdate();
 	getkey();
 
-	while (true) {
-		dclear(C_WHITE); //nrmlmnt 0x5ACB, changé pour debug
+	draw_walls();
+
+	dupdate();
+	getkey();
+	return 1;
+
+	/*while (true) {
+		dclear(C_WHITE); //0x5ACB pour ambiance
 		//draw_background();
 		draw_walls();
-
-		/*dtext(1, temp, C_WHITE, "coucou"); //passé
-		temp++;
-		if (temp >= 240) {
-			temp = 0;
-		}*/
-		/*if (keydown(KEY_UP)) {
-			//flemme d'implémanter le mouvement, verrai quand le rendu marche
-		}*/
-		if (keydown(KEY_LEFT)) {
-			player_dir -= 5;
-		}
-		if (keydown(KEY_RIGHT)) {
-			player_dir += 5;
-		}
-		if (keydown(KEY_MENU)) {
-			return 1;
-		}
 
 		dupdate();
 		getkey();
 		return 1;
-	}
+	}*/
 }
