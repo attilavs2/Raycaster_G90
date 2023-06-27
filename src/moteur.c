@@ -208,7 +208,9 @@ void draw_walls(){
 				y_raypos = floor(horizontal_grid / tile_size);
 				//rgh_xdist = abs(x_raypos - (tile_size * player_x));
 				//rgh_ydist = abs(y_raypos- (tile_size * player_y));
-				if (x_raypos >= map_w || y_raypos >= map_h || x_raypos < 0 || y_raypos < 0 
+                //Gros truc bien long pour vérifier que le rayon est pas trop loin
+                //Note : Si je remplace le <= par < avec les raypos, ça plante :/
+				if (x_raypos >= map_w || y_raypos >= map_h || x_raypos <= 0 || y_raypos <= 0 
 					|| rgh_xdist > max_dist || rgh_ydist > max_dist) {
 					dist_to_h_hit = max_dist;
 
@@ -272,8 +274,7 @@ void draw_walls(){
 				y_raypos = floor(y_intersect / tile_size);
 				//rgh_xdist = abs(x_raypos - (tile_size * player_x));
 				//rgh_ydist = abs(y_raypos - (tile_size * player_y));
-				//Gros truc bien long pour vérifier que le rayon est pas trop loin
-				if (x_raypos >= map_w || y_raypos >= map_h || x_raypos < 0 || y_raypos < 0 
+				if (x_raypos >= map_w || y_raypos >= map_h || x_raypos <= 0 || y_raypos <= 0 
 					|| rgh_xdist > max_dist || rgh_ydist > max_dist) {
 					dist_to_h_hit = max_dist;
 
