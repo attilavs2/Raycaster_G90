@@ -96,9 +96,10 @@ int main(){
 	player_x = 6;
 	player_y = 6;
 
-	dclear(C_WHITE);
 	dupdate();
 	getkey();
+	
+	dclear(C_WHITE);
 
 	draw_walls();
 
