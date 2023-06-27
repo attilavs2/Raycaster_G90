@@ -68,7 +68,7 @@ void compute_table() {
 	extern int atan_table[ang_360p];
 	extern float tab_mur_x[ang_360p];
 	extern float tab_mur_y[ang_360p];
-	extern float distors_table[ang_360p];
+	extern int distors_table[ang_360p];
 	int i = 0;
 	float rad_i = 0;
 	while (i != angle_360) {
@@ -106,7 +106,7 @@ void compute_table() {
 		i++;
 	}
 	for (i = -30; i <= angle_30;) {
-		distors_table[i + angle_30] = 1 / cos(deg_to_rad(i));
+		distors_table[i + angle_30] = floor(128*(1 / cos(deg_to_rad(i))));
 		i++;
 	}
 }
@@ -156,7 +156,7 @@ void draw_walls(){
 	extern int atan_table[ang_360p];
 	extern float tab_mur_x[ang_360p];
 	extern float tab_mur_y[ang_360p];
-	extern float distors_table[ang_360p];
+	extern int distors_table[ang_360p];
 	extern int player_x;
 	extern int player_y;
 	extern int player_dir;
@@ -166,24 +166,23 @@ void draw_walls(){
 	if (castarc < 1) {
 		castarc += angle_360;
 	}
-	castarc += 235;
 	if (castarc > 360) {
 		castarc -= angle_360;
 	}
-	for ( castcolumn = 235; castcolumn < viewport_w;) {
+	for ( castcolumn = 0; castcolumn < viewport_w;) {
 		dprint( 1, 1, C_BLACK, "castcolumn : %d", castcolumn); 
 		dprint( 1, 10, C_BLACK, "castarc : %d", castarc);
 		if (castarc > 0 && castarc < angle_180) {
 			horizontal_grid = floor(player_y / tile_size) * tile_size + tile_size;
 			dist_to_n_h_grid = tile_size;
-			xtemp = floor((atan_table[castarc] * (horizontal_grid - player_y)) >>6);
+			xtemp = floor((atan_table[castarc] * (horizontal_grid - player_y)) >> 6);
 			x_intersect = xtemp + player_x;
 			dprint( 1, 20, C_BLACK, "x_intersect : %d", x_intersect);
 		}
 		else {
 			horizontal_grid = floor(player_y / tile_size) * tile_size;
 			dist_to_n_h_grid = -tile_size;
-			xtemp = floor((atan_table[castarc] * (horizontal_grid - player_y)) >>6);
+			xtemp = floor((atan_table[castarc] * (horizontal_grid - player_y)) >> 6);
 			x_intersect = xtemp + player_x;
 			horizontal_grid--;
 			dprint( 1, 20, C_BLACK, "x_intersect : %d", x_intersect);
@@ -210,7 +209,7 @@ void draw_walls(){
 					horizontal_grid += dist_to_n_h_grid;
 				}
 				else {
-					dist_to_h_hit = floor(((x_intersect - player_x) * acos_table[castarc]) >>6);
+					dist_to_h_hit = floor(((x_intersect - player_x) * acos_table[castarc]) >> 6);
 					wall_type = map_test[x_raypos][y_raypos];
 					break;
 				}
@@ -221,14 +220,14 @@ void draw_walls(){
 		if (castarc < angle_90 || castarc > angle_270) {
 			vertical_grid = tile_size + floor(player_x / tile_size) * tile_size;
 			dist_to_n_v_grid = tile_size;
-			ytemp = floor((tan_table[castarc] * (vertical_grid - player_x)) >>6);
+			ytemp = floor((tan_table[castarc] * (vertical_grid - player_x)) >> 6 );
 			y_intersect = ytemp + player_y;
 			dprint( 1, 40, C_BLACK, "y_intersect : %d", y_intersect);
 		}
 		else {
 			vertical_grid = floor(player_x / tile_size * tile_size);
 			dist_to_n_v_grid = -tile_size;
-			ytemp = floor((tan_table[castarc] * (vertical_grid - player_x)) >>6);
+			ytemp = floor((tan_table[castarc] * (vertical_grid - player_x)) >> 6 );
 			y_intersect = ytemp + player_y;
 			vertical_grid--;
 			dprint( 1, 40, C_BLACK, "y_intersect : %d", y_intersect);
@@ -256,22 +255,21 @@ void draw_walls(){
 					horizontal_grid += dist_to_n_h_grid;
 				}
 				else {
-					dist_to_h_hit = floor(((x_intersect - player_x) * acos_table[castarc]) >>6);
+					dist_to_h_hit = floor(((x_intersect - player_x) * acos_table[castarc]) >> 6);
 					wall_type = map_test[x_raypos][y_raypos];
 					break;
 				}
 			}
 			dprint( 1, 50, C_BLACK, "dist_to_v_hit : %d", dist_to_v_hit);
 		}
-		/**/dupdate();
 		if (dist_to_h_hit <= dist_to_v_hit) {
 			wall_dist = dist_to_h_hit;
 		}
 		else {
 			wall_dist = dist_to_v_hit;
 		}
+		wall_dist = floor(wall_dist / distors_table[castcolumn]) >> 7;
 		dprint( 1, 60, C_BLACK, "wall_dist : %d", wall_dist);
-		wall_dist = wall_dist / distors_table[castcolumn];
 		proj_wall_h = floor((tile_size * player_pj_pl_dist / wall_dist)*0.5);
 		wall_bas = half_viewport_h + proj_wall_h;
 		wall_haut = half_viewport_h + proj_wall_h;
@@ -310,6 +308,7 @@ void draw_walls(){
 		*/
 		dupdate();
 		getkey();
+		dclear(C_WHITE);
 		
 		castarc++;
 		castcolumn++;

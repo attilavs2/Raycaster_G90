@@ -80,7 +80,7 @@ int asin_table[ang_360p];
 int atan_table[ang_360p];
 float tab_mur_x[ang_360p];
 float tab_mur_y[ang_360p];
-float distors_table[ang_360p];
+int distors_table[ang_360p];
 
 int main(){
 	dclear(C_WHITE);
