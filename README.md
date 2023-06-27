@@ -1,5 +1,5 @@
 # Raycaster_prealpha
-Tout mon code est en C; le C++ indiqué vient des bibliothèques je crois
+Tout mon code est en C; le C++ indiqué vient des bibliothèques je crois 
 Utilise Gint + fxsdk pour G90+E/FX-CG50
 
 04/06 :
