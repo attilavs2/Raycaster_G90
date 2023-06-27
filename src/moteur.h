@@ -29,4 +29,8 @@ void draw_walls();
 
 #define wall_color 0xAAAA
 
-#endif /* moteur.h */
+//signaux de debug, commenter pour enlever
+#define debug
+#define raycast_debug
+
+#endif /* moteur */

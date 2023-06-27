@@ -44,7 +44,7 @@ unsigned short table_couleur[235] = {
 	0xef7d,0xef7d,0xef7d,0xef7d,0xef9d,0xef9d,0xf79e,
 	0xf79e,0xf7be,0xf7be,0xf7be,0xf7be,0xf7de,0xf7de,
 	0xffdf,0xffdf,0xffff,0xffff
-};//optimisation par deux assez facile a voir
+};
 
 float deg_to_rad(float angle_deg) {
 	return((angle_deg * pi) / 180);
@@ -130,7 +130,6 @@ void draw_walls(){
 	int mapindex;
 	int wall_haut;
 	int wall_bas;
-	int couleur;
 	int half_viewport_h = viewport_h / 2; //Va y avoir besoin quand je vais 
 	//réduire par deux la résolution horizontale du bouzin
 	int rgh_xdist;
@@ -139,6 +138,7 @@ void draw_walls(){
 	int wall_dist;
 	float scale_factor;
 	float proj_wall_h;
+	double wall_temp;
 	extern unsigned short angle_30;//il y en a peut être des inutilisés, a voir
 	extern unsigned short angle_15;
 	extern unsigned short angle_90;
@@ -170,14 +170,21 @@ void draw_walls(){
 		castarc -= angle_360;
 	}
 	for ( castcolumn = 0; castcolumn < viewport_w;) {
+
+		#ifdef debug
 		dprint( 1, 1, C_BLACK, "castcolumn : %d", castcolumn); 
 		dprint( 1, 10, C_BLACK, "castarc : %d", castarc);
+		#endif
+
 		if (castarc > 0 && castarc < angle_180) {
 			horizontal_grid = floor(player_y / tile_size) * tile_size + tile_size;
 			dist_to_n_h_grid = tile_size;
 			xtemp = floor((atan_table[castarc] * (horizontal_grid - player_y)) >> 6);
 			x_intersect = xtemp + player_x;
+
+			#ifdef debug
 			dprint( 1, 20, C_BLACK, "x_intersect : %d", x_intersect);
+			#endif
 		}
 		else {
 			horizontal_grid = floor(player_y / tile_size) * tile_size;
@@ -185,7 +192,10 @@ void draw_walls(){
 			xtemp = floor((atan_table[castarc] * (horizontal_grid - player_y)) >> 6);
 			x_intersect = xtemp + player_x;
 			horizontal_grid--;
+
+			#ifdef debug
 			dprint( 1, 20, C_BLACK, "x_intersect : %d", x_intersect);
+			#endif
 		}
 
 		if (castarc == 0 || castarc == angle_180) {
@@ -196,12 +206,15 @@ void draw_walls(){
 			while (true) {
 				x_raypos = floor(x_intersect / tile_size);
 				y_raypos = floor(horizontal_grid / tile_size);
-				mapindex = floor(y_raypos * map_w + x_raypos); 
 				//rgh_xdist = abs(x_raypos - (tile_size * player_x));
 				//rgh_ydist = abs(y_raypos- (tile_size * player_y));
-				if (x_raypos >= map_w || y_raypos >= map_h || x_raypos <= 0 || y_raypos <= 0 
+				if (x_raypos >= map_w || y_raypos >= map_h || x_raypos < 0 || y_raypos < 0 
 					|| rgh_xdist > max_dist || rgh_ydist > max_dist) {
 					dist_to_h_hit = max_dist;
+
+                    #ifdef raycast_debug
+					dprint( 200, 1, C_BLACK, "H : Max_dist");
+					#endif
 					break;
 				}
 				else if (map_test[x_raypos][y_raypos] == 0) {
@@ -211,10 +224,20 @@ void draw_walls(){
 				else {
 					dist_to_h_hit = floor(((x_intersect - player_x) * acos_table[castarc]) >> 6);
 					wall_type = map_test[x_raypos][y_raypos];
+
+                    #ifdef raycast_debug
+					dprint( 200, 10, C_BLACK, "H : Hit");
+                    dprint( 200, 20, C_BLACK, "x_intersect : %d", x_intersect);
+                    dprint( 200, 30, C_BLACK, "horizontal_grid : %d", horizontal_grid);
+                    dprint( 200, 40, C_BLACK, "wall_type : %d", wall_type);
+					#endif
 					break;
 				}
 			}
+
+			#ifdef debug
 			dprint( 1, 30, C_BLACK, "dist_to_h_hit : %d", dist_to_h_hit);
+			#endif
 		}
 
 		if (castarc < angle_90 || castarc > angle_270) {
@@ -222,7 +245,10 @@ void draw_walls(){
 			dist_to_n_v_grid = tile_size;
 			ytemp = floor((tan_table[castarc] * (vertical_grid - player_x)) >> 6 );
 			y_intersect = ytemp + player_y;
+
+			#ifdef debug
 			dprint( 1, 40, C_BLACK, "y_intersect : %d", y_intersect);
+			#endif
 		}
 		else {
 			vertical_grid = floor(player_x / tile_size * tile_size);
@@ -230,7 +256,10 @@ void draw_walls(){
 			ytemp = floor((tan_table[castarc] * (vertical_grid - player_x)) >> 6 );
 			y_intersect = ytemp + player_y;
 			vertical_grid--;
+
+			#ifdef debug
 			dprint( 1, 40, C_BLACK, "y_intersect : %d", y_intersect);
+			#endif
 		}
 
 		if (castarc == angle_90 || castarc == angle_270) {
@@ -241,26 +270,39 @@ void draw_walls(){
 			while (true) {
 				x_raypos = floor(vertical_grid / tile_size);
 				y_raypos = floor(y_intersect / tile_size);
-				mapindex = floor(y_raypos * map_w + x_raypos);
 				//rgh_xdist = abs(x_raypos - (tile_size * player_x));
-				//rgh_ydist = abs(y_raypos- (tile_size * player_y));
+				//rgh_ydist = abs(y_raypos - (tile_size * player_y));
 				//Gros truc bien long pour vérifier que le rayon est pas trop loin
-				if (x_raypos >= map_w || y_raypos >= map_h || x_raypos <= 0 || y_raypos <= 0 
+				if (x_raypos >= map_w || y_raypos >= map_h || x_raypos < 0 || y_raypos < 0 
 					|| rgh_xdist > max_dist || rgh_ydist > max_dist) {
 					dist_to_h_hit = max_dist;
+
+					#ifdef raycast_debug
+					dprint( 200, 50, C_BLACK, "V : Max_dist");
+					#endif
 					break;
 				}
 				else if (map_test[x_raypos][y_raypos] == 0) {
 					x_intersect += dist_to_n_x_intersect;
 					horizontal_grid += dist_to_n_h_grid;
-				}
+                }
 				else {
 					dist_to_h_hit = floor(((x_intersect - player_x) * acos_table[castarc]) >> 6);
 					wall_type = map_test[x_raypos][y_raypos];
+
+					#ifdef raycast_debug
+					dprint( 200, 60, C_BLACK, "V : Hit");
+                    dprint( 200, 70, C_BLACK, "x_intersect : %d", x_intersect);
+                    dprint( 200, 80, C_BLACK, "horizontal_grid : %d", horizontal_grid);
+                    dprint( 200, 90, C_BLACK, "wall_type : %d", wall_type);
+					#endif
 					break;
 				}
 			}
+
+			#ifdef debug
 			dprint( 1, 50, C_BLACK, "dist_to_v_hit : %d", dist_to_v_hit);
+			#endif
 		}
 		if (dist_to_h_hit <= dist_to_v_hit) {
 			wall_dist = dist_to_h_hit;
@@ -268,8 +310,13 @@ void draw_walls(){
 		else {
 			wall_dist = dist_to_v_hit;
 		}
-		wall_dist = floor(wall_dist / distors_table[castcolumn]) >> 7;
+		//wall_temp = floor(wall_dist / distors_table[castcolumn]) >> 7; //va y avoir de la 
+		//distortion mais pas grave
+
+		#ifdef debug
 		dprint( 1, 60, C_BLACK, "wall_dist : %d", wall_dist);
+		#endif
+
 		proj_wall_h = floor((tile_size * player_pj_pl_dist / wall_dist)*0.5);
 		wall_bas = half_viewport_h + proj_wall_h;
 		wall_haut = half_viewport_h + proj_wall_h;
