@@ -93,8 +93,8 @@ int main(){
 	dtext(100, 100, C_BLACK, "Raycaster Fcalva v 0.1");
 	dtext(60, 130, C_BLACK, "Edition a la poubelle ce qui marche pas");
 
-	player_x = 6;
-	player_y = 6;
+	player_x = 192;
+	player_y = 192;
 
 	dupdate();
 	getkey();
