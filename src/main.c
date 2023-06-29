@@ -61,16 +61,16 @@ int player_x;
 int player_y;
 int player_dir;
 
-unsigned short angle_60;
-unsigned short angle_30;
-unsigned short angle_15;
-unsigned short angle_90;
-unsigned short angle_180;
-unsigned short angle_270;
-unsigned short angle_360;
-unsigned short angle_5;
-unsigned short angle_10;
-unsigned short angle_45;
+int angle_60;
+int angle_30;
+int angle_15;
+int angle_90;
+int angle_180;
+int angle_270;
+int angle_360;
+int angle_5;
+int angle_10;
+int angle_45;
 
 int cos_table[ang_360p];
 int sin_table[ang_360p];
@@ -86,6 +86,16 @@ int main(){
 	dclear(C_WHITE);
 	dtext( 1, 1, C_BLACK, "Chargement...");
 	dupdate();
+	angle_60 = viewport_w;
+	angle_30 = floor(viewport_w * 0.5);
+	angle_15 = floor(viewport_w * 0.25);
+	angle_90 = floor(viewport_w * 1.5);
+	angle_180 = floor(viewport_w * 3);
+	angle_270 = floor(viewport_w * 4.5);
+	angle_360 = floor(viewport_w * 6);
+	angle_5 = floor(viewport_w / 12);
+	angle_10 = floor(viewport_w / 6);
+	angle_45 = floor(viewport_w * 0.75);
 	compute_table();
 	//trucs de chargement
 

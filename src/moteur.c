@@ -51,15 +51,15 @@ float deg_to_rad(float angle_deg) {
 }
 
 void compute_table() {
-	extern unsigned short angle_30;//il y en a des inutilisés
-	extern unsigned short angle_15;
-	extern unsigned short angle_90;
-	extern unsigned short angle_180;
-	extern unsigned short angle_270;
-	extern unsigned short angle_360;
-	extern unsigned short angle_5;
-	extern unsigned short angle_10;
-	extern unsigned short angle_45;
+	extern int angle_30;//il y en a des inutilisés
+	extern int angle_15;
+	extern int angle_90;
+	extern int angle_180;
+	extern int angle_270;
+	extern int angle_360;
+	extern int angle_5;
+	extern int angle_10;
+	extern int angle_45;
 	extern int cos_table[ang_360p];
 	extern int sin_table[ang_360p];
 	extern int tan_table[ang_360p];
@@ -136,18 +136,17 @@ void draw_walls(){
     int couleur;
 	char wall_type; //type de mur touché par le raycast
 	int wall_dist;
-	float scale_factor;
-	float proj_wall_h;
+    int proj_wall_h;
 	double wall_temp;
-	extern unsigned short angle_30;//il y en a peut être des inutilisés, a voir
-	extern unsigned short angle_15;
-	extern unsigned short angle_90;
-	extern unsigned short angle_180;
-	extern unsigned short angle_270;
-	extern unsigned short angle_360;
-	extern unsigned short angle_5;
-	extern unsigned short angle_10;
-	extern unsigned short angle_45;
+	extern int angle_30;//il y en a peut être des inutilisés, a voir
+	extern int angle_15;
+	extern int angle_90;
+	extern int angle_180;
+	extern int angle_270;
+	extern int angle_360;
+	extern int angle_5;
+	extern int angle_10;
+	extern int angle_45;
 	extern int cos_table[ang_360p];
 	extern int sin_table[ang_360p];
 	extern int tan_table[ang_360p];
@@ -161,14 +160,16 @@ void draw_walls(){
 	extern int player_y;
 	extern int player_dir;
 	extern char map_test[map_w][map_h];
+    //Note : les dupdate() et dprint() en masse sont pour le debug
 
 	castarc = player_dir - angle_30;
 	if (castarc < 1) {
 		castarc += angle_360;
 	}
-	if (castarc > 360) {
+	if (castarc > angle_360) {
 		castarc -= angle_360;
 	}
+    
 	for ( castcolumn = 0; castcolumn < viewport_w;) {
 
 		dprint( 1, 1, C_BLACK, "castcolumn : %d", castcolumn); 
@@ -194,6 +195,7 @@ void draw_walls(){
 
 		if (castarc == 0 || castarc == angle_180) {
 			dist_to_h_hit = max_dist;
+            dprint( 1, 100, C_BLACK, "x_0/180"); 
 		}
 		else {
 			dist_to_n_x_intersect = tab_mur_x[castarc];
@@ -230,8 +232,6 @@ void draw_walls(){
 
 			dprint( 1, 30, C_BLACK, "dist_to_h_hit : %d", dist_to_h_hit);
 		}
-        //ça plante entre la ligne 242/251 et la ligne 261
-        //J'ai tenté plusieurs trucs de debug mais je vois pas le problème
         
 		if (castarc < angle_90 || castarc > angle_270) {
 			vertical_grid = tile_size + floor(player_x / tile_size) * tile_size;
@@ -250,17 +250,19 @@ void draw_walls(){
 
 			dprint( 1, 40, C_BLACK, "y_intersect : %d", y_intersect);
 		}
-
+        //Debugger a partir d'ici
 		if (castarc == angle_90 || castarc == angle_270) {
 			dist_to_v_hit = max_dist;
-            dupdate();
+            dprint( 1, 110, C_BLACK, "y_90/270");
+            dupdate(); getkey();
 		}
 		else {
 			dist_to_n_y_intersect = tab_mur_y[castarc];
-            dupdate();
+            dprint( 1, 80, C_BLACK, "coucou 261"); dupdate(); getkey();
 			while (true) {
 				x_raypos = floor(vertical_grid / tile_size);
 				y_raypos = floor(y_intersect / tile_size);
+                dprint( 1, 90, C_BLACK, "coucou 261"); dupdate(); getkey();
 				//rgh_xdist = abs(x_raypos - (tile_size * player_x));
 				//rgh_ydist = abs(y_raypos - (tile_size * player_y));
 				if (x_raypos >= map_w || y_raypos >= map_h || x_raypos <= 0 || y_raypos <= 0 
@@ -268,12 +270,13 @@ void draw_walls(){
 					dist_to_h_hit = max_dist;
 
 					dprint( 200, 50, C_BLACK, "V : Max_dist");
-                    dupdate();
+                    dupdate(); getkey();
 					break;
 				}
 				else if (map_test[x_raypos][y_raypos] == 0) {
 					x_intersect += dist_to_n_x_intersect;
 					horizontal_grid += dist_to_n_h_grid;
+                    dprint( 1, 90, C_BLACK, "coucou 279"); dupdate(); getkey();
                 }
 				else {
 					dist_to_h_hit = floor(((x_intersect - player_x) * acos_table[castarc]) >> 6);
@@ -283,7 +286,7 @@ void draw_walls(){
                     dprint( 200, 70, C_BLACK, "x_intersect : %d", x_intersect);
                     dprint( 200, 80, C_BLACK, "horizontal_grid : %d", horizontal_grid);
                     dprint( 200, 90, C_BLACK, "wall_type : %d", wall_type);
-                    dupdate();
+                    dupdate(); getkey();
 					break;
 				}
 			}
@@ -298,9 +301,14 @@ void draw_walls(){
 		}
 		//wall_temp = floor(wall_dist / distors_table[castcolumn]) >> 7; //va y avoir de la 
 		//distortion mais pas grave
-
 		dprint( 1, 60, C_BLACK, "wall_dist : %d", wall_dist);
-        dupdate();
+
+        if (wall_dist >= max_dist){
+            wall_dist = max_dist; //devrait pas y en avoir besoin mais bon
+        }
+        if (wall_dist == 0){
+            wall_dist += 1;
+        }
 
 		proj_wall_h = floor((tile_size * player_pj_pl_dist / wall_dist)*0.5);
         if (proj_wall_h >= half_viewport_h){
@@ -349,7 +357,7 @@ void draw_walls(){
 
 		castarc++;
 		castcolumn++;
-		if (castarc > angle_360) {
+		if (castarc >= ang_360p) {
 			castarc -= angle_360;
 		}
 	}
