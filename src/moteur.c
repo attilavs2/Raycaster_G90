@@ -9,6 +9,45 @@
 #include "sprites.h"
 #include "map_test.h"
 
+// Je garde le bout en dessous pour des raisons
+//Problèmes :
+//-L'affichage est très mauvais, a revoir
+//-Le mouvement de la caméra ne marche pas
+//
+//A rajouter d'ici le 27 :
+//-Que ça marche (logique)
+// -collisions
+// -Sol
+// -Gestion de plusieurs maps
+// -Interaction (Portes/boutons)
+// -Textures
+// -Sprites
+// -PNJs ( a voir selon le théme)
+// -Extérieur/intérieur (très probablement mais a voir selon le thème)
+//La suite dépend surtout de ce qui aura été fait et du thème
+//Avec le thème, maintenant il faudrait :
+//-collisions
+// -sol
+// -Des bouts de map reliés entre eux
+// -Sprites (ennemis + ambiance dans un second temps)
+// -map générées aléatoirement
+// -textures
+// -Gameplay
+// -PNJs
+// -Sans de undertale (me demandez pas pourquoi, c'est un mec sur discord qui a propos�)
+//
+//================================================
+// au 03/06 :
+// A faire là tout de suite :
+// - Bien réparer correctement les murs
+// - Sprites
+// Plan :
+// -Sol
+// -Ennemis
+// -Maps
+// -Textures
+//
+
 void load_map(int){
 
 }
