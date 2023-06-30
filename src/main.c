@@ -59,52 +59,29 @@
 
 int player_x;
 int player_y;
-int player_dir;
 
-int angle_60;
-int angle_30;
-int angle_15;
-int angle_90;
-int angle_180;
-int angle_270;
-int angle_360;
-int angle_5;
-int angle_10;
-int angle_45;
-
-int cos_table[ang_360p];
-int sin_table[ang_360p];
-int tan_table[ang_360p];
-int acos_table[ang_360p];
-int asin_table[ang_360p];
-int atan_table[ang_360p];
-float tab_mur_x[ang_360p];
-float tab_mur_y[ang_360p];
-int distors_table[ang_360p];
+double posX;
+double posY;
+double dirX;
+double dirY;
+double planeX;
+double planeY;
 
 int main(){
 	dclear(C_WHITE);
 	dtext( 1, 1, C_BLACK, "Chargement...");
 	dupdate();
-	angle_60 = viewport_w;
-	angle_30 = floor(viewport_w * 0.5);
-	angle_15 = floor(viewport_w * 0.25);
-	angle_90 = floor(viewport_w * 1.5);
-	angle_180 = floor(viewport_w * 3);
-	angle_270 = floor(viewport_w * 4.5);
-	angle_360 = floor(viewport_w * 6);
-	angle_5 = floor(viewport_w / 12);
-	angle_10 = floor(viewport_w / 6);
-	angle_45 = floor(viewport_w * 0.75);
-	compute_table();
+	posX = 6; 
+	posY = 6;  //x and y start position
+  	dirX = -1;
+	dirY = 0; //initial direction vector
+ 	planeX = 0; 
+	planeY = 0.66; //the 2d raycaster version of camera plane
 	//trucs de chargement
 
 	dclear(C_WHITE);
-	dtext(100, 100, C_BLACK, "Raycaster Fcalva v 0.1");
-	dtext(60, 130, C_BLACK, "Edition a la poubelle ce qui marche pas");
-
-	player_x = 192;
-	player_y = 192;
+	dtext(100, 100, C_BLACK, "Raycaster Fcalva v 0.1.1");
+	dtext(60, 130, C_BLACK, "Edition j'ai volé le code d'un gars");
 
 	dupdate();
 	getkey();
@@ -118,12 +95,35 @@ int main(){
 	return 1;
 
 	/*while (true) {
-		dclear(C_WHITE); //0x5ACB pour ambiance
-		//draw_background();
-		draw_walls();
-
-		dupdate();
-		getkey();
-		return 1;
+		draw_walls_2();
+		if (keydown(KEY_UP)) {
+     		if(worldMap[int(posX + dirX * moveSpeed)][int(posY)] == false) posX += dirX * moveSpeed;
+     		if(worldMap[int(posX)][int(posY + dirY * moveSpeed)] == false) posY += dirY * moveSpeed;
+    	}
+    	//move backwards if no wall behind you
+    	if (keydown(KEY_DOWN)) {
+      		if(worldMap[int(posX - dirX * moveSpeed)][int(posY)] == false) posX -= dirX * moveSpeed;
+      		if(worldMap[int(posX)][int(posY - dirY * moveSpeed)] == false) posY -= dirY * moveSpeed;
+    	}
+   		//rotate to the right
+    	if (keydown(KEY_RIGHT)) {
+      		//both camera direction and camera plane must be rotated
+	      	double oldDirX = dirX;
+    	  	dirX = dirX * cos(-rotSpeed) - dirY * sin(-rotSpeed);
+ 	     	dirY = oldDirX * sin(-rotSpeed) + dirY * cos(-rotSpeed);
+   		   	double oldPlaneX = planeX;
+   		   	planeX = planeX * cos(-rotSpeed) - planeY * sin(-rotSpeed);
+      		planeY = oldPlaneX * sin(-rotSpeed) + planeY * cos(-rotSpeed);
+    	}
+    	//rotate to the left
+    	if (keydown(KEY_LEFT))) {
+     	 	//both camera direction and camera plane must be rotated
+      		double oldDirX = dirX;
+      		dirX = dirX * cos(rotSpeed) - dirY * sin(rotSpeed);
+      		dirY = oldDirX * sin(rotSpeed) + dirY * cos(rotSpeed);
+      		double oldPlaneX = planeX;
+      		planeX = planeX * cos(rotSpeed) - planeY * sin(rotSpeed);
+      		planeY = oldPlaneX * sin(rotSpeed) + planeY * cos(rotSpeed);
+    	}
 	}*/
 }

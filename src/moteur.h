@@ -23,8 +23,8 @@
 float deg_to_rad(float angle_deg);
 
 void compute_table();
-int load_map();
-void draw_background();
+void load_map(int);
+void draw_background(int);
 void draw_walls();
 
 #define wall_color 0xAAAA
