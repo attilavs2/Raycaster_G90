@@ -56,29 +56,41 @@ void draw_background(int){
     
 }
 void draw_walls(){
-    extern double posX;
-    extern double posY;
-    extern double dirX;
-    extern double dirY;
-    extern double planeX;
-    extern double planeY;
+    extern float posX;
+    extern float posY;
+    extern float dirX;
+    extern float dirY;
+    extern float planeX;
+    extern float planeY;
     extern char map_test[map_w][map_h];
 
     unsigned short color;
+    float cameraX;
+    float rayDirX;
+    float rayDirY;
+    float sideDistX;//length of ray from current position to next x or y-side
+    float sideDistY;
+    float deltaDistX;
+    float deltaDistY;
+    float perpWallDist;
+    int x;
+    int mapX;
+    int mapY;
+    int stepX; //what direction to step in x or y-direction (either +1 or -1)
+    int stepY;
+    int hit = 0; //was there a wall hit?
+    int side; //was a NS or a EW wall hit?
+    int lineHeight;
 
-    for(int x = 0; x < viewport_w; x++) {
+    for(x = 0; x < viewport_w; x++) {
     
       //calculate ray position and direction
-      double cameraX = 2 * x / viewport_w - 1; //x-coordinate in camera space
-      double rayDirX = dirX + planeX * cameraX;
-      double rayDirY = dirY + planeY * cameraX;
+      cameraX = 2 * x / viewport_w - 1; //x-coordinate in camera space
+      rayDirX = dirX + planeX * cameraX;
+      rayDirY = dirY + planeY * cameraX;
       //which box of the map we're in
-      int mapX = posX;
-      int mapY = posY;
-
-      //length of ray from current position to next x or y-side
-      double sideDistX;
-      double sideDistY;
+      mapX = posX;
+      mapY = posY;
 
       //length of ray from one x or y-side to next x or y-side
       //these are derived as:
@@ -91,17 +103,9 @@ void draw_walls(){
       //stepping further below works. So the values can be computed as below.
       // Division through zero is prevented, even though technically that's not
       // needed in C++ with IEEE 754 floating point values.
-      double deltaDistX = (rayDirX == 0) ? 1e30 : abs(1 / rayDirX);
-      double deltaDistY = (rayDirY == 0) ? 1e30 : abs(1 / rayDirY);
+      deltaDistX = (rayDirX == 0) ? 1e30 : abs(1 / rayDirX);
+      deltaDistY = (rayDirY == 0) ? 1e30 : abs(1 / rayDirY);
 
-      double perpWallDist;
-
-      //what direction to step in x or y-direction (either +1 or -1)
-      int stepX;
-      int stepY;
-
-      int hit = 0; //was there a wall hit?
-      int side; //was a NS or a EW wall hit?
       //calculate step and initial sideDist
       if(rayDirX < 0)
       {
@@ -152,7 +156,7 @@ void draw_walls(){
       else          perpWallDist = (sideDistY - deltaDistY);
 
       //Calculate height of line to draw on screen
-      int lineHeight = (viewport_h / perpWallDist);
+      lineHeight = floor(viewport_h / perpWallDist);
 
       //calculate lowest and highest pixel to fill in current stripe
       int drawStart = -lineHeight / 2 + viewport_h / 2;
@@ -161,23 +165,19 @@ void draw_walls(){
       if(drawEnd >= viewport_h) drawEnd = viewport_h - 1;
 
       //choose wall color
-      /*ColorRGB color;
-      switch(worldMap[mapX][mapY])
+      switch(map_test[mapX][mapY])
       {
-        case 1:  color = RGB_Red;    break; //red
-        case 2:  color = RGB_Green;  break; //green
-        case 3:  color = RGB_Blue;   break; //blue
-        case 4:  color = RGB_White;  break; //white
-        default: color = RGB_Yellow; break; //yellow
-      }*/
+        case 1:  color = C_RED;    break; //red
+        case 2:  color = C_GREEN;  break; //green
+        case 3:  color = C_BLUE;   break; //blue
+        case 4:  color = C_WHITE;  break; //white
+        default: color = 0xffc0; break; //yellow
+      }
 
-      //give x and y sides different brightness
-      if (side == 1) {
-        color = 0xFAFA;
-      }
-      else {
-        color = 0xFAFF;
-      }
+      //give x and y sides different brightness Fcalva : Ne marche pas en RGB565
+      /*if (side == 1) {
+        color = floor(color/2);
+      }*/
 
       //draw the pixels of the stripe as a vertical line
       dline(x, drawStart, x, drawEnd, color);

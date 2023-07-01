@@ -8,7 +8,6 @@
 #define screen_h 224
 #define viewport_w 396
 #define viewport_h 224
-#define ang_360p 2377 //Viewport_h * 6 + 1, fixé ici pour définiton des tables
 #define FOV 60
 #define max_dist 640 //en fraction de tuiles, 20 tuiles en ce moment
 #define player_pj_pl_dist 277 //distance du joueur au plan de projection

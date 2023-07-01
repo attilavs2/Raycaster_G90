@@ -27,20 +27,22 @@ int player_y;
 
 extern char map_test[map_w][map_h];
 
-double posX;
-double posY;
-double dirX;
-double dirY;
-double planeX;
-double planeY;
-double moveSpeed;
-double rotSpeed;
-double oldDirX;
-double oldPlaneX;
+float posX;
+float posY;
+float dirX;
+float dirY;
+float planeX;
+float planeY;
+float moveSpeed;
+float rotSpeed;
+float oldDirX;
+float oldPlaneX;
 int xtemp1;
 int xtemp2;
 int ytemp1;
 int ytemp2;
+
+int a = 0;
 
 int main(){
 	dclear(C_WHITE);
@@ -88,25 +90,29 @@ int main(){
     	if (keydown(KEY_RIGHT)) {
       		//both camera direction and camera plane must be rotated
 	      	oldDirX = dirX;
-    	  	dirX = dirX * cos(-rotSpeed) - dirY * sin(-rotSpeed);
- 	     	dirY = oldDirX * sin(-rotSpeed) + dirY * cos(-rotSpeed);
+    	  	dirX = dirX * 1.0 - dirY * -0.2; //cos(-rotSpeed) ~= 1 sin(-rotSpeed) ~= -0.0021
+ 	     	dirY = oldDirX * 0.0021 + dirY * 1.0;
    		   	oldPlaneX = planeX;
-   		   	planeX = planeX * cos(-rotSpeed) - planeY * sin(-rotSpeed);
-      		planeY = oldPlaneX * sin(-rotSpeed) + planeY * cos(-rotSpeed);
+   		   	planeX = planeX * 1.0 - planeY * -0.2;
+      		planeY = oldPlaneX * 0.0021 + planeY * 1.0;
     	}
     	//rotate to the left
     	if (keydown(KEY_LEFT)) {
      	 	//both camera direction and camera plane must be rotated
       		oldDirX = dirX;
-      		dirX = dirX * cos(rotSpeed) - dirY * sin(rotSpeed);
-      		dirY = oldDirX * sin(rotSpeed) + dirY * cos(rotSpeed);
+      		dirX = dirX * 1.0 - dirY * 0.2; //cos(rotSpeed) ~= 1 sin(rotSpeed) ~= 0.0021
+      		dirY = oldDirX * 0.2 + dirY * 1.0;
       		oldPlaneX = planeX;
-      		planeX = planeX * cos(rotSpeed) - planeY * sin(rotSpeed);
-      		planeY = oldPlaneX * sin(rotSpeed) + planeY * cos(rotSpeed);
+      		planeX = planeX * 1.0 - planeY * 0.2;
+      		planeY = oldPlaneX * 0.2 + planeY * 1.0;
     	}
 		if (keydown(KEY_F6)) {
 			return 1;
 		}
+		
+		dprint( 1, 1, C_BLACK, "frame : %d", a);
+		a++;
+
 
 		dupdate();
 	}
