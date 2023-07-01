@@ -41,6 +41,8 @@ int xtemp1;
 int xtemp2;
 int ytemp1;
 int ytemp2;
+double sin_rotspeed;
+double sin_mrotspeed;
 
 int a = 0;
 
@@ -56,11 +58,12 @@ int main(){
 	planeY = 0.66; //the 2d raycaster version of camera plane
 	moveSpeed = 5/24; //the constant value is in squares/second
     rotSpeed = 3/24; //the constant value is in radians/second
+	sin_rotspeed = sin(rotSpeed);
 	//autres trucs de chargement
 
 	dclear(C_WHITE);
 	dtext(100, 100, C_BLACK, "Raycaster Fcalva v 0.1.1");
-	dtext(60, 130, C_BLACK, "Edition j'ai volé le code d'un gars");
+	dtext(60, 130, C_BLACK, "Edition plus paraplegique");
 
 	dupdate();
 	getkey();
@@ -90,29 +93,31 @@ int main(){
     	if (keydown(KEY_RIGHT)) {
       		//both camera direction and camera plane must be rotated
 	      	oldDirX = dirX;
-    	  	dirX = dirX * 1.0 - dirY * -0.2; //cos(-rotSpeed) ~= 1 sin(-rotSpeed) ~= -0.0021
- 	     	dirY = oldDirX * 0.0021 + dirY * 1.0;
+    	  	dirX = dirX * 1.0 - dirY * -0.0022; //cos(-rotSpeed) ~= 1 
+ 	     	dirY = oldDirX * -0.0022 + dirY * 1.0; //sin(-rotspeed) ~= -0.0022
    		   	oldPlaneX = planeX;
-   		   	planeX = planeX * 1.0 - planeY * -0.2;
-      		planeY = oldPlaneX * 0.0021 + planeY * 1.0;
+   		   	planeX = planeX * 1.0 - planeY * -0.0022;
+      		planeY = oldPlaneX * -0.0022 + planeY * 1.0;
     	}
     	//rotate to the left
     	if (keydown(KEY_LEFT)) {
      	 	//both camera direction and camera plane must be rotated
       		oldDirX = dirX;
-      		dirX = dirX * 1.0 - dirY * 0.2; //cos(rotSpeed) ~= 1 sin(rotSpeed) ~= 0.0021
-      		dirY = oldDirX * 0.2 + dirY * 1.0;
+      		dirX = dirX * 1.0 - dirY * 0.0022; //cos(rotSpeed) ~= 1
+      		dirY = oldDirX * 0.0022 + dirY * 1.0; //sin(rotSpeed) ~= 0.0022
       		oldPlaneX = planeX;
-      		planeX = planeX * 1.0 - planeY * 0.2;
-      		planeY = oldPlaneX * 0.2 + planeY * 1.0;
+      		planeX = planeX * 1.0 - planeY * 0.0022;
+      		planeY = oldPlaneX * 0.0022 + planeY * 1.0;
     	}
 		if (keydown(KEY_F6)) {
 			return 1;
 		}
 		
-		dprint( 1, 1, C_BLACK, "frame : %d", a);
-		a++;
-
+		dprint( 1, 1, C_BLACK, "frame : %d", a); a++;
+		dprint( 1, 10, C_BLACK, "posX : %d", floor(posX*100));
+		dprint( 1, 20, C_BLACK, "posY : %d", floor(posY*100));
+		dprint( 1, 30, C_BLACK, "dirX : %d", floor(dirX*100));
+		dprint( 1, 40, C_BLACK, "dirY : %d", floor(dirY*100));
 
 		dupdate();
 	}
