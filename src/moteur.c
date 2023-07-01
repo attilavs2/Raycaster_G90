@@ -81,6 +81,8 @@ void draw_walls(){
     int hit = 0; //was there a wall hit?
     int side; //was a NS or a EW wall hit?
     int lineHeight;
+    int drawStart;
+    int drawEnd;
 
     for(x = 0; x < viewport_w; x++) {
     
@@ -103,8 +105,8 @@ void draw_walls(){
       //stepping further below works. So the values can be computed as below.
       // Division through zero is prevented, even though technically that's not
       // needed in C++ with IEEE 754 floating point values.
-      deltaDistX = (rayDirX == 0) ? 1e30 : abs(1 / rayDirX);
-      deltaDistY = (rayDirY == 0) ? 1e30 : abs(1 / rayDirY);
+      deltaDistX = (rayDirX == 0) ? 1e30 : fabs(1 / rayDirX);
+      deltaDistY = (rayDirY == 0) ? 1e30 : fabs(1 / rayDirY);
 
       //calculate step and initial sideDist
       if(rayDirX < 0)
@@ -159,25 +161,28 @@ void draw_walls(){
       lineHeight = floor(viewport_h / perpWallDist);
 
       //calculate lowest and highest pixel to fill in current stripe
-      int drawStart = -lineHeight / 2 + viewport_h / 2;
+      drawStart = floor(-lineHeight / 2 + viewport_h / 2);
       if(drawStart < 0) drawStart = 0;
-      int drawEnd = lineHeight / 2 + viewport_h / 2;
+      drawEnd = floor(lineHeight / 2 + viewport_h / 2);
       if(drawEnd >= viewport_h) drawEnd = viewport_h - 1;
 
+      //give x and y sides different brightness
+      if (side == 1) {
+        color += 4;
+      }
       //choose wall color
       switch(map_test[mapX][mapY])
       {
-        case 1:  color = C_RED;    break; //red
-        case 2:  color = C_GREEN;  break; //green
-        case 3:  color = C_BLUE;   break; //blue
-        case 4:  color = C_WHITE;  break; //white
-        default: color = 0xffc0; break; //yellow
+        case 1:   color = C_RED;     break; //red
+        case 2:   color = C_GREEN;   break; //green
+        case 3:   color = C_BLUE;    break; //blue
+        case 4:   color = C_WHITE;   break; //white
+        case 5:   color = 0x8000;    break; //rouge foncé
+        case 6:   color = 0x0400;    break; //vert foncé
+        case 7:   color = 0x0010;    break; //bleu foncé
+        case 8:   color = C_LIGHT;   break; //gris clair
+        default:  color = 0xffc0;    break; //yellow
       }
-
-      //give x and y sides different brightness Fcalva : Ne marche pas en RGB565
-      /*if (side == 1) {
-        color = floor(color/2);
-      }*/
 
       //draw the pixels of the stripe as a vertical line
       dline(x, drawStart, x, drawEnd, color);

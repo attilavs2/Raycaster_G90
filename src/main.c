@@ -17,9 +17,10 @@
 // Art : Fcalva
 // 
 // 
-// 
-// 
-// 
+// TODO :
+// - réparer l'affichage
+// - sprites
+// - gameplay
 
 
 int player_x;
@@ -42,9 +43,10 @@ int xtemp2;
 int ytemp1;
 int ytemp2;
 double sin_rotspeed;
-double sin_mrotspeed;
 
-int a = 0;
+int frame = 0;
+float aprox_s_rotspeed = 0.0087;
+float maprox_s_rotspeed = -0.0087;
 
 int main(){
 	dclear(C_WHITE);
@@ -56,9 +58,8 @@ int main(){
 	dirY = 0; //initial direction vector
  	planeX = 0; 
 	planeY = 0.66; //the 2d raycaster version of camera plane
-	moveSpeed = 5/24; //the constant value is in squares/second
-    rotSpeed = 3/24; //the constant value is in radians/second
-	sin_rotspeed = sin(rotSpeed);
+	moveSpeed = 5/10; //the constant value is in squares/second
+    rotSpeed = 3/10; //the constant value is in radians/second
 	//autres trucs de chargement
 
 	dclear(C_WHITE);
@@ -93,27 +94,27 @@ int main(){
     	if (keydown(KEY_RIGHT)) {
       		//both camera direction and camera plane must be rotated
 	      	oldDirX = dirX;
-    	  	dirX = dirX * 1.0 - dirY * -0.0022; //cos(-rotSpeed) ~= 1 
- 	     	dirY = oldDirX * -0.0022 + dirY * 1.0; //sin(-rotspeed) ~= -0.0022
+    	  	dirX = dirX * 1.0 - dirY * maprox_s_rotspeed; //cos(-rotSpeed) ~= 1 
+ 	     	dirY = oldDirX * maprox_s_rotspeed + dirY * 1.0; //sin(-rotspeed) ~= -0.0022
    		   	oldPlaneX = planeX;
-   		   	planeX = planeX * 1.0 - planeY * -0.0022;
-      		planeY = oldPlaneX * -0.0022 + planeY * 1.0;
+   		   	planeX = planeX * 1.0 - planeY * maprox_s_rotspeed;
+      		planeY = oldPlaneX * maprox_s_rotspeed + planeY * 1.0;
     	}
     	//rotate to the left
     	if (keydown(KEY_LEFT)) {
      	 	//both camera direction and camera plane must be rotated
       		oldDirX = dirX;
-      		dirX = dirX * 1.0 - dirY * 0.0022; //cos(rotSpeed) ~= 1
-      		dirY = oldDirX * 0.0022 + dirY * 1.0; //sin(rotSpeed) ~= 0.0022
+      		dirX = dirX * 1.0 - dirY * aprox_s_rotspeed; //cos(rotSpeed) ~= 1
+      		dirY = oldDirX * aprox_s_rotspeed + dirY * 1.0; //sin(rotSpeed) ~= 0.0022
       		oldPlaneX = planeX;
-      		planeX = planeX * 1.0 - planeY * 0.0022;
-      		planeY = oldPlaneX * 0.0022 + planeY * 1.0;
+      		planeX = planeX * 1.0 - planeY * aprox_s_rotspeed;
+      		planeY = oldPlaneX * aprox_s_rotspeed + planeY * 1.0;
     	}
 		if (keydown(KEY_F6)) {
 			return 1;
 		}
 		
-		dprint( 1, 1, C_BLACK, "frame : %d", a); a++;
+		dprint( 1, 1, C_BLACK, "frame : %d", frame); frame++;
 		dprint( 1, 10, C_BLACK, "posX : %d", floor(posX*100));
 		dprint( 1, 20, C_BLACK, "posY : %d", floor(posY*100));
 		dprint( 1, 30, C_BLACK, "dirX : %d", floor(dirX*100));
