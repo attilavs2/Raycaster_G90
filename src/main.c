@@ -3,6 +3,7 @@
 
 #include <gint/display.h>
 #include <gint/keyboard.h>
+//#include <libprof.h>
 
 #include "moteur.h"
 #include "map_test.h"
@@ -12,7 +13,8 @@
 // Tout le code non-foireux vient de https://lodev.org/cgtutor/raycasting.html
 // Grands remerciments !
 // Github : https://github.com/attilavs2/Raycaster_prealpha
-// Game design : Fcalva
+// Tout le code de cette version est en GPL3
+// Game design : Fcalva (aka. fklv, Fcalva#6860, attilavs2)
 // Programmation : Fcalva
 // Art : Fcalva
 // 
@@ -42,83 +44,65 @@ int xtemp1;
 int xtemp2;
 int ytemp1;
 int ytemp2;
-double sin_rotspeed;
 
-int frame = 0;
-float aprox_s_rotspeed = 0.0087;
-float maprox_s_rotspeed = -0.0087;
+int frame_time;
+int old_frame_time;
+int frame_n = 0;
+
+//prof_init();
 
 int main(){
 	dclear(C_WHITE);
 	dtext( 1, 1, C_BLACK, "Chargement...");
 	dupdate();
-	posX = 6; 
-	posY = 6;  //x and y start position
-  	dirX = -1;
-	dirY = 0; //initial direction vector
+	posX = startpos_x; 
+	posY = startpos_y;  //x and y start position
+  	dirX = start_dirX;
+	dirY = start_dirY; //initial direction vector
  	planeX = 0; 
 	planeY = 0.66; //the 2d raycaster version of camera plane
-	moveSpeed = 5/10; //the constant value is in squares/second
-    rotSpeed = 3/10; //the constant value is in radians/second
+	//prof_t frame = prof_make();
 	//autres trucs de chargement
 
 	dclear(C_WHITE);
-	dtext(100, 100, C_BLACK, "Raycaster Fcalva v 0.1.1");
-	dtext(60, 130, C_BLACK, "Edition plus paraplegique");
+	dtext(100, 100, C_BLACK, "Raycaster Fcalva v 0.1.2");
+	dtext( 97, 120, C_BLACK, "Edition plus paraplegique");
+	dtext(105, 150, C_BLACK, "Appuyez sur une touche");
+
 
 	dupdate();
 	getkey();
 
 	while (true) {
+		/* marche pas, je vais bosser sur des trucs plus importants
+		prof_leave(frame);
+		old_frame_time = frame_time;
+		frame_time = prof_time(frame);
+		frame_time -= old_frame_time;
+		prof_enter(frame);
+		*/
+
 		dclear(C_WHITE);
+
+		draw_background(1);
+
 		draw_walls();
+		
+		move();
+
 		pollevent();
-		if (keydown(KEY_UP)) {
-			xtemp1 = floor(posX + dirX * moveSpeed);
-			ytemp1 = floor(posY);
-			xtemp2 = floor(posX);
-			ytemp2 = floor(posY + dirY * moveSpeed);
-     		if(map_test[xtemp1][ytemp1] == 0) posX += dirX * moveSpeed;
-     		if(map_test[xtemp2][ytemp2] == 0) posY += dirY * moveSpeed;
-    	}
-    	//move backwards if no wall behind you
-    	if (keydown(KEY_DOWN)) {
-      		xtemp1 = floor(posX - dirX * moveSpeed);
-			ytemp1 = floor(posY);
-			xtemp2 = floor(posX);
-			ytemp2 = floor(posY - dirY * moveSpeed);
-     		if(map_test[xtemp1][ytemp1] == 0) posX -= dirX * moveSpeed;
-     		if(map_test[xtemp2][ytemp2] == 0) posY -= dirY * moveSpeed;
-    	}
-   		//rotate to the right
-    	if (keydown(KEY_RIGHT)) {
-      		//both camera direction and camera plane must be rotated
-	      	oldDirX = dirX;
-    	  	dirX = dirX * 1.0 - dirY * maprox_s_rotspeed; //cos(-rotSpeed) ~= 1 
- 	     	dirY = oldDirX * maprox_s_rotspeed + dirY * 1.0; //sin(-rotspeed) ~= -0.0022
-   		   	oldPlaneX = planeX;
-   		   	planeX = planeX * 1.0 - planeY * maprox_s_rotspeed;
-      		planeY = oldPlaneX * maprox_s_rotspeed + planeY * 1.0;
-    	}
-    	//rotate to the left
-    	if (keydown(KEY_LEFT)) {
-     	 	//both camera direction and camera plane must be rotated
-      		oldDirX = dirX;
-      		dirX = dirX * 1.0 - dirY * aprox_s_rotspeed; //cos(rotSpeed) ~= 1
-      		dirY = oldDirX * aprox_s_rotspeed + dirY * 1.0; //sin(rotSpeed) ~= 0.0022
-      		oldPlaneX = planeX;
-      		planeX = planeX * 1.0 - planeY * aprox_s_rotspeed;
-      		planeY = oldPlaneX * aprox_s_rotspeed + planeY * 1.0;
-    	}
 		if (keydown(KEY_F6)) {
+			prof_quit();
 			return 1;
 		}
-		
-		dprint( 1, 1, C_BLACK, "frame : %d", frame); frame++;
-		dprint( 1, 10, C_BLACK, "posX : %d", floor(posX*100));
-		dprint( 1, 20, C_BLACK, "posY : %d", floor(posY*100));
-		dprint( 1, 30, C_BLACK, "dirX : %d", floor(dirX*100));
-		dprint( 1, 40, C_BLACK, "dirY : %d", floor(dirY*100));
+		/*
+		dprint( 1, 1, C_BLACK, "frame : %d", frame_n); frame_n++;
+		dprint( 1, 10, C_BLACK, "posX : %d", floor(posX));
+		dprint( 1, 20, C_BLACK, "posY : %d", floor(posY));
+		dprint( 1, 30, C_BLACK, "dirX : %d", floor(dirX));
+		dprint( 1, 40, C_BLACK, "dirY : %d", floor(dirY));
+		*/
+		//dprint( 1, 50, C_BLACK, "frame time : %d", frame_time);
 
 		dupdate();
 	}

@@ -24,6 +24,7 @@ void compute_table();
 void load_map(int);
 void draw_background(int);
 void draw_walls();
+void move();
 
 #define wall_color 0xAAAA
 
