@@ -82,7 +82,7 @@ int main(){
 		prof_enter(frame);
 		*/
 
-		dclear(C_WHITE);
+		dclear(C_BLACK);
 
 		draw_background(1);
 

@@ -105,9 +105,9 @@ void draw_walls(){
     extern char map_test[map_w][map_h];
 
     unsigned short color;
-    float cameraX;
-    float rayDirX;
-    float rayDirY;
+    double cameraX;
+    double rayDirX;
+    double rayDirY;
     float sideDistX;//length of ray from current position to next x or y-side
     float sideDistY;
     float deltaDistX;
@@ -127,77 +127,82 @@ void draw_walls(){
     for(x = 0; x < viewport_w; x++) {
     
       //calculate ray position and direction
-      cameraX = 2 * x / viewport_w - 1.0; //x-coordinate in camera space -1
-      rayDirX = dirX + (planeX * cameraX); //-1 + (0*-1) = -1
-      rayDirY = dirY + (planeY * cameraX); //0 + (0.66 * -1) = -0.66 
+      cameraX = ((double)x * 2 / (double)viewport_w - 1.0); //x-coordinate in camera space 
+      rayDirX = (double)dirX + ((double)planeX * cameraX);
+      rayDirY = (double)dirY + ((double)planeY * cameraX);
       //which box of the map we're in
+      
       mapX = floor(posX); //22
       mapY = floor(posY); //12
 
-      //length of ray from one x or y-side to next x or y-side
-      //these are derived as:
-      //deltaDistX = sqrt(1 + (rayDirY * rayDirY) / (rayDirX * rayDirX))
-      //deltaDistY = sqrt(1 + (rayDirX * rayDirX) / (rayDirY * rayDirY))
-      //which can be simplified to abs(|rayDir| / rayDirX) and abs(|rayDir| / rayDirY)
-      //where |rayDir| is the length of the vector (rayDirX, rayDirY). Its length,
-      //unlike (dirX, dirY) is not 1, however this does not matter, only the
-      //ratio between deltaDistX and deltaDistY matters, due to the way the DDA
-      //stepping further below works. So the values can be computed as below.
+      // length of ray from one x or y-side to next x or y-side
+      // these are derived as:
+      // deltaDistX = sqrt(1 + (rayDirY * rayDirY) / (rayDirX * rayDirX))
+      // deltaDistY = sqrt(1 + (rayDirX * rayDirX) / (rayDirY * rayDirY))
+      // which can be simplified to abs(|rayDir| / rayDirX) and abs(|rayDir| / rayDirY)
+      // where |rayDir| is the length of the vector (rayDirX, rayDirY). Its length,
+      // unlike (dirX, dirY) is not 1, however this does not matter, only the
+      // ratio between deltaDistX and deltaDistY matters, due to the way the DDA
+      // stepping further below works. So the values can be computed as below.
       // Division through zero is prevented, even though technically that's not
-      // needed in C++ with IEEE 754 floating point values. Fcalva : removed
-      deltaDistX = fabs(1 / rayDirX); //1
-      deltaDistY = fabs(1 / rayDirY); //1.51
+      // needed in C++ with IEEE 754 floating point values. 
+      // Fcalva : removed the 0 div prevention
+      deltaDistX = fabs(1 / rayDirX);
+      deltaDistY = fabs(1 / rayDirY);
 
       //calculate step and initial sideDist
       if(rayDirX < 0) 
       {
         stepX = -1; //true
-        sideDistX = (posX - mapX) * deltaDistX; //0 * 1 = 0
+        sideDistX = (posX*1.0 - mapX) * deltaDistX;
       }
       else
       {
         stepX = 1;
-        sideDistX = (mapX + 1.0 - posX) * deltaDistX;
+        sideDistX = ((mapX + 1)*1.0 - posX) * deltaDistX;
       }
       if(rayDirY < 0)
       {
         stepY = -1; //true
-        sideDistY = (posY - mapY) * deltaDistY; //0 * 1.51 = 0
+        sideDistY = (posY*1.0 - mapY) * deltaDistY;
       }
       else
       {
         stepY = 1;
-        sideDistY = (mapY + 1.0 - posY) * deltaDistY;
+        sideDistY = ((mapY + 1)*1.0 - posY) * deltaDistY;
       }
       //perform DDA
       while(hit == 0)
       {
-        //jump to next map square
-        sideDistX += deltaDistX; 
-        mapX += stepX;
-        sideDistY += deltaDistY;
-        mapY += stepY; 
+        //jump to next map square, either in x-direction, or in y-direction
+        if (sideDistX < sideDistY) {
+          sideDistX += deltaDistX; 
+          mapX += stepX; 
+          side = 0;
+        }
+        else {
+          sideDistY += deltaDistY;
+          mapY += stepY; 
+          side = 1;
+        }
         //Check if ray has hit a wall
         if(map_test[mapX][mapY] != 0) hit = 1;
       }
-
       //Calculate distance projected on camera direction. This is the shortest distance from the point where the wall is
       //hit to the camera plane. Euclidean to center camera point would give fisheye effect!
       //This can be computed as (mapX - posX + (1 - stepX) / 2) / rayDirX for side == 0, or same formula with Y
       //for size == 1, but can be simplified to the code below thanks to how sideDist and deltaDist are computed:
       //because they were left scaled to |rayDir|. sideDist is the entire length of the ray above after the multiple
       //steps, but we subtract deltaDist once because one step more into the wall was taken above.
-      if (sideDistX <= sideDistY) {
-        side = 0;
+      if (side == 0) {
         perpWallDist = (sideDistX - deltaDistX);
-      }
+      } 
       else {
-        side = -1;
         perpWallDist = (sideDistY - deltaDistY);
       }
 
       //Calculate height of line to draw on screen
-      lineHeight = floor(viewport_h / perpWallDist);
+      lineHeight = floor(viewport_h*1.0 / perpWallDist);
 
       //calculate lowest and highest pixel to fill in current stripe
       drawStart = floor((-lineHeight * 0.5) + (viewport_h * 0.5));
@@ -227,7 +232,7 @@ void draw_walls(){
       }
 
       //draw the pixels of the stripe as a vertical line
-      dline(x, drawStart, x, drawEnd, color);
+      drect(x, drawStart, x, drawEnd, color);
     }
 }
 
