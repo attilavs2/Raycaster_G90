@@ -105,9 +105,9 @@ void draw_walls(){
     extern char map_test[map_w][map_h];
 
     unsigned short color;
-    double cameraX;
-    double rayDirX;
-    double rayDirY;
+    float cameraX;
+    float rayDirX;
+    float rayDirY;
     float sideDistX;//length of ray from current position to next x or y-side
     float sideDistY;
     float deltaDistX;
@@ -124,16 +124,22 @@ void draw_walls(){
     int drawStart;
     int drawEnd;
 
+    int a;
+
     for(x = 0; x < viewport_w; x++) {
     
       //calculate ray position and direction
-      cameraX = ((double)x * 2 / (double)viewport_w - 1.0); //x-coordinate in camera space 
-      rayDirX = (double)dirX + ((double)planeX * cameraX);
-      rayDirY = (double)dirY + ((double)planeY * cameraX);
+      cameraX = ((float)x * 2 / (float)viewport_w - 1.0); //x-coordinate in camera space 
+      rayDirX = (float)dirX + ((float)planeX * cameraX);
+      rayDirY = (float)dirY + ((float)planeY * cameraX);
+      /*
+      dprint(1,1,C_BLACK,"cameraX : %d", (int)(cameraX*1000));
+      dprint(1,10,C_BLACK,"rayDirX : %d", (int)(rayDirX*1000));
+      dprint(1,20,C_BLACK,"rayDirX : %d", (int)(rayDirY*1000));
+      */
       //which box of the map we're in
-      
-      mapX = floor(posX); //22
-      mapY = floor(posY); //12
+      mapX = (int)posX; //22
+      mapY = (int)posY; //12
 
       // length of ray from one x or y-side to next x or y-side
       // these are derived as:
@@ -149,31 +155,34 @@ void draw_walls(){
       // Fcalva : removed the 0 div prevention
       deltaDistX = fabs(1 / rayDirX);
       deltaDistY = fabs(1 / rayDirY);
-
+      /**
+      dprint(1,30,C_BLACK,"deltaDistX : %d", (int)(deltaDistX*1000));
+      dprint(1,40,C_BLACK,"deltaDistY : %d", (int)(deltaDistY*1000));
+      */
       //calculate step and initial sideDist
       if(rayDirX < 0) 
       {
         stepX = -1; //true
-        sideDistX = (posX*1.0 - mapX) * deltaDistX;
+        sideDistX = (posX - (float)mapX) * deltaDistX;
       }
       else
       {
         stepX = 1;
-        sideDistX = ((mapX + 1)*1.0 - posX) * deltaDistX;
+        sideDistX = (((float)mapX + 1.0) - posX) * deltaDistX;
       }
       if(rayDirY < 0)
       {
         stepY = -1; //true
-        sideDistY = (posY*1.0 - mapY) * deltaDistY;
+        sideDistY = (posY - (float)mapY) * deltaDistY;
       }
       else
       {
         stepY = 1;
-        sideDistY = ((mapY + 1)*1.0 - posY) * deltaDistY;
+        sideDistY = (((float)mapY + 1.0) - posY) * deltaDistY;
       }
+      a = 0;
       //perform DDA
-      while(hit == 0)
-      {
+      while(true) {
         //jump to next map square, either in x-direction, or in y-direction
         if (sideDistX < sideDistY) {
           sideDistX += deltaDistX; 
@@ -185,8 +194,16 @@ void draw_walls(){
           mapY += stepY; 
           side = 1;
         }
-        //Check if ray has hit a wall
-        if(map_test[mapX][mapY] != 0) hit = 1;
+
+        if ((int)sideDistX >= max_dist || (int)sideDistY >= max_dist) {
+          hit = 0;
+          break;
+        }
+        else if (map_test[mapX][mapY] != 0) { //Check if ray has hit a wall
+          hit = 1;
+          break;
+        }
+        a++;
       }
       //Calculate distance projected on camera direction. This is the shortest distance from the point where the wall is
       //hit to the camera plane. Euclidean to center camera point would give fisheye effect!
@@ -200,7 +217,13 @@ void draw_walls(){
       else {
         perpWallDist = (sideDistY - deltaDistY);
       }
-
+      /*
+      dprint(1,10,C_BLACK,"a : %d", a);
+      
+      dprint(1,50,C_BLACK,"sideDistX : %d", (int)(sideDistX*1000));
+      dprint(1,60,C_BLACK,"sideDistY : %d", (int)(sideDistY*1000));
+      dprint(1,70,C_BLACK,"perpWallDist : %d", (int)(perpWallDist*1000));
+      */
       //Calculate height of line to draw on screen
       lineHeight = floor(viewport_h*1.0 / perpWallDist);
 
@@ -228,7 +251,7 @@ void draw_walls(){
         case 6:   color = 0x0400;    break; //vert foncé
         case 7:   color = 0x0010;    break; //bleu foncé
         case 8:   color = C_LIGHT;   break; //gris clair
-        default:  color = 0xffc0;    break; //yellow
+        default:  color = C_DARK;    break; //yellow
       }
 
       //draw the pixels of the stripe as a vertical line

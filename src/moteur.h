@@ -9,7 +9,7 @@
 #define viewport_w 396
 #define viewport_h 224
 #define FOV 60
-#define max_dist 640 //en fraction de tuiles, 20 tuiles en ce moment
+#define max_dist 10 //en fraction de tuiles, 20 tuiles en ce moment
 
 #define couleur_ciel 0x0ADF
 
