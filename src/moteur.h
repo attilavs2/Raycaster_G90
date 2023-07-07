@@ -8,7 +8,7 @@
 #define screen_h 224
 #define viewport_w 396
 #define viewport_h 224
-#define max_dist 10 //en fraction de tuiles, 20 tuiles en ce moment
+#define max_dist 0xFFFFF //en tuiles << 16
 
 void load_map(int);
 void draw_background(int);

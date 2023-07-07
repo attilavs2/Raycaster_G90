@@ -5,6 +5,8 @@
 #include <gint/display.h>
 #include <gint/keyboard.h>
 
+#include "fixed.h"
+
 #include "moteur.h"
 #include "sprites.h"
 #include "map_test.h"
@@ -15,21 +17,21 @@
 //
 
 void move(){
-  float moveSpeed = 0.3;
-  float rotSpeed = 1.0;
-  float c_rotSpeed = 0.9980;
-  float s_rotSpeed = 0.0174;
+  fixed_t moveSpeed = fix(0.3);
+  fixed_t rotSpeed = fix(1.0);
+  fixed_t c_rotSpeed = fix(0.9980);
+  fixed_t s_rotSpeed = fix(0.0174);
 
   extern char map_test[map_w][map_h];
-  extern float planeX;
-  extern float planeY;
-  extern float dirX;
-  extern float dirY;
-  extern float posX;
-  extern float posY;
+  extern fixed_t planeX;
+  extern fixed_t planeY;
+  extern fixed_t dirX;
+  extern fixed_t dirY;
+  extern fixed_t posX;
+  extern fixed_t posY;
 
-  float oldDirX;
-  float oldPlaneX;
+  fixed_t oldDirX;
+  fixed_t oldPlaneX;
   int xtemp1;
   int ytemp1;
   int xtemp2;
@@ -38,49 +40,49 @@ void move(){
   pollevent();
 
 	if (keydown(KEY_UP)) {
-		xtemp1 = (int)(posX + dirX * moveSpeed);
-    ytemp1 = (int)posY;
-		xtemp2 = (int)posX;
-		ytemp2 = (int)(posY + dirY * moveSpeed);
+		xtemp1 = f2int(posX + fmul(dirX, moveSpeed));
+    ytemp1 = f2int(posY);
+		xtemp2 = f2int(posX);
+		ytemp2 = f2int(posY + fmul(dirY, moveSpeed));
     if(map_test[xtemp1][ytemp1] == 0) {
-      posX += dirX * moveSpeed;
+      posX += fmul(dirX, moveSpeed);
     }
     if(map_test[xtemp2][ytemp2] == 0) {
-      posY += dirY * moveSpeed;
+      posY += fmul(dirY, moveSpeed);
     }
   }
   //move backwards if no wall behind you
   if (keydown(KEY_DOWN)) {
-    xtemp1 = (int)(posX - dirX * moveSpeed);
-		ytemp1 = (int)posY;
-		xtemp2 = (int)posX;
-		ytemp2 = (int)(posY - dirY * moveSpeed);
+    xtemp1 = f2int(posX - fmul(dirX, moveSpeed));
+		ytemp1 = f2int(posY);
+		xtemp2 = f2int(posX);
+		ytemp2 = f2int(posY - fmul(dirY, moveSpeed));
     if(map_test[xtemp1][ytemp1] == 0) {
-      posX -= dirX * moveSpeed;
+      posX -= fmul(dirX, moveSpeed);
     }
     if(map_test[xtemp2][ytemp2] == 0) {
-      posY -= dirY * moveSpeed;
+      posY -= fmul(dirY, moveSpeed);
     }
   }
   //rotate to the rightdouble sin_rotspeed;
   if (keydown(KEY_RIGHT)) {
     //both camera direction and camera plane must be rotated
 	  oldDirX = dirX;
-    dirX = dirX * c_rotSpeed - dirY * (-1.0 * s_rotSpeed); 
- 	  dirY = oldDirX * (-1.0 * s_rotSpeed) + dirY * c_rotSpeed;
+    dirX = fmul(dirX, c_rotSpeed) - fmul(dirY, -s_rotSpeed); 
+ 	  dirY = fmul(oldDirX, -s_rotSpeed) + fmul(dirY, c_rotSpeed);
    	oldPlaneX = planeX;
-   	planeX = planeX * c_rotSpeed - planeY * (-1.0 * s_rotSpeed);
-    planeY = oldPlaneX * (-1.0 * s_rotSpeed) + planeY * c_rotSpeed;
+   	planeX = fmul(planeX, c_rotSpeed) - fmul(planeY, -s_rotSpeed);
+    planeY = fmul(oldPlaneX, -s_rotSpeed) + fmul(planeY, c_rotSpeed);
   }
   //rotate to the left
   if (keydown(KEY_LEFT)) {
     //both camera direction and camera plane must be rotated
     oldDirX = dirX;
-    dirX = dirX * c_rotSpeed - dirY * s_rotSpeed;
-    dirY = oldDirX * s_rotSpeed + dirY * c_rotSpeed;
+    dirX = fmul(dirX, c_rotSpeed) - fmul(dirY, s_rotSpeed);
+    dirY = fmul(oldDirX, s_rotSpeed) + fmul(dirY, c_rotSpeed);
     oldPlaneX = planeX;
-    planeX = planeX * c_rotSpeed - planeY * s_rotSpeed;
-    planeY = oldPlaneX * s_rotSpeed + planeY * c_rotSpeed;
+    planeX = fmul(planeX, c_rotSpeed) - fmul(planeY, s_rotSpeed);
+    planeY = fmul(oldPlaneX, s_rotSpeed) + fmul(planeY, c_rotSpeed);
   }
 }
 void load_map(int map_id){
@@ -106,23 +108,23 @@ void draw_background(int background_id){
     }
 }
 void draw_walls(){
-    extern float posX;
-    extern float posY;
-    extern float dirX;
-    extern float dirY;
-    extern float planeX;
-    extern float planeY;
+    extern fixed_t posX;
+    extern fixed_t posY;
+    extern fixed_t dirX;
+    extern fixed_t dirY;
+    extern fixed_t planeX;
+    extern fixed_t planeY;
     extern char map_test[map_w][map_h];
 
     unsigned short color;
-    float cameraX;
-    float rayDirX;
-    float rayDirY;
-    float sideDistX;//length of ray from current position to next x or y-side
-    float sideDistY;
-    float deltaDistX;
-    float deltaDistY;
-    float perpWallDist;
+    fixed_t cameraX;
+    fixed_t rayDirX;
+    fixed_t rayDirY;
+    fixed_t sideDistX;//length of ray from current position to next x or y-side
+    fixed_t sideDistY;
+    fixed_t deltaDistX;
+    fixed_t deltaDistY;
+    fixed_t perpWallDist;
     int x;
     int mapX;
     int mapY;
@@ -137,18 +139,13 @@ void draw_walls(){
     for(x = 0; x < viewport_w; x++) {
     
       //calculate ray position and direction
-      cameraX = ((float)x * 2 / (float)viewport_w - 1.0); //x-coordinate in camera space 
-      rayDirX = (float)dirX + ((float)planeX * cameraX);
-      rayDirY = (float)dirY + ((float)planeY * cameraX);
-      /*
-      dprint(1,1,C_BLACK,"cameraX : %d", (int)(cameraX*1000));
-      dprint(1,10,C_BLACK,"rayDirX : %d", (int)(rayDirX*1000));
-      dprint(1,20,C_BLACK,"rayDirX : %d", (int)(rayDirY*1000));
-      */
-      //which box of the map we're in
-      mapX = ((int)posX);
-      mapY = ((int)posY);
+      cameraX = fdiv(fix(x*2), fix(viewport_w)) - 0xFFFF; //x-coordinate in camera space
+      rayDirX = dirX + fmul(planeX, cameraX);
+      rayDirY = dirY + fmul(planeY, cameraX);
 
+      //which box of the map we're in
+      mapX = f2int(posX);
+      mapY = f2int(posY);
       // length of ray from one x or y-side to next x or y-side
       // these are derived as:
       // deltaDistX = sqrt(1 + (rayDirY * rayDirY) / (rayDirX * rayDirX))
@@ -161,35 +158,39 @@ void draw_walls(){
       // Division through zero is prevented, even though technically that's not
       // needed in C++ with IEEE 754 floating point values. 
       // Fcalva : removed the 0 div prevention
-      deltaDistX = fabs(1 / rayDirX);
-      deltaDistY = fabs(1 / rayDirY);
-      /**
-      dprint(1,30,C_BLACK,"deltaDistX : %d", (int)(deltaDistX*1000));
-      dprint(1,40,C_BLACK,"deltaDistY : %d", (int)(deltaDistY*1000));
-      */
+      deltaDistX = abs(fdiv(0xFFFF, rayDirX));
+      deltaDistY = abs(fdiv(0xFFFF, rayDirY));
       //calculate step and initial sideDist
-      if(rayDirX < 0) 
+      if(rayDirX < (fixed_t)0) 
       {
         stepX = -1; //true
-        sideDistX = (posX - (float)mapX) * deltaDistX;
+        sideDistX = fmul(posX - fix(mapX), deltaDistX);
       }
       else
       {
         stepX = 1;
-        sideDistX = ((float)(mapX + 1) - posX) * deltaDistX;
+        sideDistX = fmul( fix(mapX + 1) - posX, deltaDistX);
       }
-      if(rayDirY < 0)
+      if(rayDirY < (fixed_t)0)
       {
         stepY = -1; //true
-        sideDistY = (posY - (float)mapY) * deltaDistY;
+        sideDistY = fmul(posY - fix(mapY), deltaDistY);
       }
       else
       {
         stepY = 1;
-        sideDistY = ((float)(mapY + 1) - posY) * deltaDistY;
+        sideDistY = fmul( fix(mapY + 1) - posY, deltaDistY);
       }
       //perform DDA
       while(true) {
+        if (sideDistX >= max_dist || sideDistY >= max_dist || mapX < 0 || mapY < 0) {
+          hit = 0;
+          break;
+        }
+        else if (map_test[mapX][mapY] != 0) { //Check if ray has hit a wall
+          hit = 1;
+          break;
+        }
         //jump to next map square, either in x-direction, or in y-direction
         if (sideDistX < sideDistY) {
           sideDistX += deltaDistX; 
@@ -200,15 +201,6 @@ void draw_walls(){
           sideDistY += deltaDistY;
           mapY += stepY; 
           side = 1;
-        }
-
-        if ((int)sideDistX >= max_dist || (int)sideDistY >= max_dist) {
-          hit = 0;
-          break;
-        }
-        else if (map_test[mapX][mapY] != 0) { //Check if ray has hit a wall
-          hit = 1;
-          break;
         }
       }
       //Calculate distance projected on camera direction. This is the shortest distance from the point where the wall is
@@ -231,7 +223,8 @@ void draw_walls(){
       dprint(1,70,C_BLACK,"perpWallDist : %d", (int)(perpWallDist*1000));
       */
       //Calculate height of line to draw on screen
-      lineHeight = floor((float)viewport_h / perpWallDist);
+      lineHeight = f2int(fdiv(fix(viewport_h), perpWallDist));
+      //plante avant ici
 
       //calculate lowest and highest pixel to fill in current stripe
       drawStart = floor((-lineHeight * 0.5) + (viewport_h * 0.5));
@@ -257,7 +250,7 @@ void draw_walls(){
         case 6:   color = 0x0400;    break; //vert foncé
         case 7:   color = 0x0010;    break; //bleu foncé
         case 8:   color = C_LIGHT;   break; //gris clair
-        default:  color = C_DARK;    break; //yellow
+        default:  color = C_DARK;    break; //gris foncé
       }
 
       //draw the pixels of the stripe as a vertical line

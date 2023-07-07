@@ -3,11 +3,13 @@
 
 #include <gint/display.h>
 #include <gint/keyboard.h>
-//#include <libprof.h>
+#include <libprof.h>
+
+#include "fixed.h"
 
 #include "moteur.h"
 #include "map_test.h"
-//#include "sprites.h"
+#include "sprites.h"
 
 //====== Raycaster (faut trouver un nom) =====
 // Tout le code non-foireux vient de https://lodev.org/cgtutor/raycasting.html
@@ -24,20 +26,16 @@
 // - sprites
 // - gameplay
 
-
-int player_x;
-int player_y;
-
 extern char map_test[map_w][map_h];
 
-float posX;
-float posY;
-float dirX;
-float dirY;
-float planeX;
-float planeY;
-float oldDirX;
-float oldPlaneX;
+fixed_t posX;
+fixed_t posY;
+fixed_t dirX;
+fixed_t dirY;
+fixed_t planeX;
+fixed_t planeY;
+fixed_t oldDirX;
+fixed_t oldPlaneX;
 
 int frame_time;
 int frame_n = 0;
@@ -52,8 +50,8 @@ int main(){
 	posY = startpos_y;  //x and y start position
   	dirX = start_dirX;
 	dirY = start_dirY; //initial direction vector
- 	planeX = 0; 
-	planeY = 0.66; //the 2d raycaster version of camera plane
+ 	planeX = fix(0); 
+	planeY = fix(0.66); //the 2d raycaster version of camera plane
 	//prof_t frame = prof_make();
 	//autres trucs de chargement
 
@@ -67,15 +65,7 @@ int main(){
 	getkey();
 
 	while (true) {
-		/* marche pas, je vais bosser sur des trucs plus importants
-		prof_leave(frame);
-		old_frame_time = frame_time;
-		frame_time = prof_time(frame);
-		frame_time -= old_frame_time;
-		prof_enter(frame);
-		*/
-
-		dclear(C_BLACK);
+		dclear(C_LIGHT);
 
 		draw_background(0);
 
@@ -88,13 +78,9 @@ int main(){
 			prof_quit();
 			return 1;
 		}
-		/*
+		
 		dprint( 1, 1, C_BLACK, "frame : %d", frame_n); frame_n++;
-		dprint( 1, 10, C_BLACK, "posX : %d", floor(posX));
-		dprint( 1, 20, C_BLACK, "posY : %d", floor(posY));
-		dprint( 1, 30, C_BLACK, "dirX : %d", floor(dirX));
-		dprint( 1, 40, C_BLACK, "dirY : %d", floor(dirY));
-		*/
+		
 		//dprint( 1, 50, C_BLACK, "frame time : %d", frame_time);
 
 		dupdate();
