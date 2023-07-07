@@ -36,17 +36,10 @@ float dirX;
 float dirY;
 float planeX;
 float planeY;
-float moveSpeed;
-float rotSpeed;
 float oldDirX;
 float oldPlaneX;
-int xtemp1;
-int xtemp2;
-int ytemp1;
-int ytemp2;
 
 int frame_time;
-int old_frame_time;
 int frame_n = 0;
 
 //prof_init();
@@ -84,7 +77,7 @@ int main(){
 
 		dclear(C_BLACK);
 
-		draw_background(1);
+		draw_background(0);
 
 		draw_walls();
 		

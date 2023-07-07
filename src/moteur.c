@@ -13,12 +13,14 @@
 // ici se trouvent tout ce qui concerne les graphismes, mouvement et collisions
 //
 //
-void move(){
-  float moveSpeed = 0.5; //the constant value is in squares/second
-  float rotSpeed = 0.33; //the constant value is in radians/second
-  float aprox_s_rotspeed = 0.0087;
-  float maprox_s_rotspeed = -0.0087;
 
+void move(){
+  float moveSpeed = 0.3;
+  float rotSpeed = 1.0;
+  float c_rotSpeed = 0.9980;
+  float s_rotSpeed = 0.0174;
+
+  extern char map_test[map_w][map_h];
   extern float planeX;
   extern float planeY;
   extern float dirX;
@@ -28,49 +30,57 @@ void move(){
 
   float oldDirX;
   float oldPlaneX;
-  float xtemp1;
-  float ytemp1;
-  float xtemp2;
-  float ytemp2;
+  int xtemp1;
+  int ytemp1;
+  int xtemp2;
+  int ytemp2;
 
   pollevent();
 
 	if (keydown(KEY_UP)) {
-		xtemp1 = floor(posX + dirX * moveSpeed);
-    ytemp1 = floor(posY);
-		xtemp2 = floor(posX);
-		ytemp2 = floor(posY + dirY * moveSpeed);
-    /*if(map_test[xtemp1][ytemp1] == 0)*/ posX += dirX * moveSpeed;
-    /*if(map_test[xtemp2][ytemp2] == 0)*/ posY += dirY * moveSpeed;
+		xtemp1 = (int)(posX + dirX * moveSpeed);
+    ytemp1 = (int)posY;
+		xtemp2 = (int)posX;
+		ytemp2 = (int)(posY + dirY * moveSpeed);
+    if(map_test[xtemp1][ytemp1] == 0) {
+      posX += dirX * moveSpeed;
+    }
+    if(map_test[xtemp2][ytemp2] == 0) {
+      posY += dirY * moveSpeed;
+    }
   }
   //move backwards if no wall behind you
   if (keydown(KEY_DOWN)) {
-    xtemp1 = floor(posX - dirX * moveSpeed);
-		ytemp1 = floor(posY);
-		xtemp2 = floor(posX);
-		ytemp2 = floor(posY - dirY * moveSpeed);
-    /*if(map_test[xtemp1][ytemp1] == 0)*/ posX -= dirX * moveSpeed;
-    /*if(map_test[xtemp2][ytemp2] == 0)*/ posY -= dirY * moveSpeed;
+    xtemp1 = (int)(posX - dirX * moveSpeed);
+		ytemp1 = (int)posY;
+		xtemp2 = (int)posX;
+		ytemp2 = (int)(posY - dirY * moveSpeed);
+    if(map_test[xtemp1][ytemp1] == 0) {
+      posX -= dirX * moveSpeed;
+    }
+    if(map_test[xtemp2][ytemp2] == 0) {
+      posY -= dirY * moveSpeed;
+    }
   }
   //rotate to the rightdouble sin_rotspeed;
   if (keydown(KEY_RIGHT)) {
     //both camera direction and camera plane must be rotated
 	  oldDirX = dirX;
-    dirX = dirX * 1.0 - dirY * maprox_s_rotspeed; //cos(-rotSpeed) ~= 1 
- 	  dirY = oldDirX * maprox_s_rotspeed + dirY * 1.0; //sin(-rotspeed) ~= -0.0022
+    dirX = dirX * c_rotSpeed - dirY * (-1.0 * s_rotSpeed); 
+ 	  dirY = oldDirX * (-1.0 * s_rotSpeed) + dirY * c_rotSpeed;
    	oldPlaneX = planeX;
-   	planeX = planeX * 1.0 - planeY * maprox_s_rotspeed;
-    planeY = oldPlaneX * maprox_s_rotspeed + planeY * 1.0;
+   	planeX = planeX * c_rotSpeed - planeY * (-1.0 * s_rotSpeed);
+    planeY = oldPlaneX * (-1.0 * s_rotSpeed) + planeY * c_rotSpeed;
   }
   //rotate to the left
   if (keydown(KEY_LEFT)) {
     //both camera direction and camera plane must be rotated
     oldDirX = dirX;
-    dirX = dirX * 1.0 - dirY * aprox_s_rotspeed; //cos(rotSpeed) ~= 1
-    dirY = oldDirX * aprox_s_rotspeed + dirY * 1.0; //sin(rotSpeed) ~= 0.0022
+    dirX = dirX * c_rotSpeed - dirY * s_rotSpeed;
+    dirY = oldDirX * s_rotSpeed + dirY * c_rotSpeed;
     oldPlaneX = planeX;
-    planeX = planeX * 1.0 - planeY * aprox_s_rotspeed;
-    planeY = oldPlaneX * aprox_s_rotspeed + planeY * 1.0;
+    planeX = planeX * c_rotSpeed - planeY * s_rotSpeed;
+    planeY = oldPlaneX * s_rotSpeed + planeY * c_rotSpeed;
   }
 }
 void load_map(int map_id){
@@ -124,8 +134,6 @@ void draw_walls(){
     int drawStart;
     int drawEnd;
 
-    int a;
-
     for(x = 0; x < viewport_w; x++) {
     
       //calculate ray position and direction
@@ -138,8 +146,8 @@ void draw_walls(){
       dprint(1,20,C_BLACK,"rayDirX : %d", (int)(rayDirY*1000));
       */
       //which box of the map we're in
-      mapX = (int)posX; //22
-      mapY = (int)posY; //12
+      mapX = ((int)posX);
+      mapY = ((int)posY);
 
       // length of ray from one x or y-side to next x or y-side
       // these are derived as:
@@ -168,7 +176,7 @@ void draw_walls(){
       else
       {
         stepX = 1;
-        sideDistX = (((float)mapX + 1.0) - posX) * deltaDistX;
+        sideDistX = ((float)(mapX + 1) - posX) * deltaDistX;
       }
       if(rayDirY < 0)
       {
@@ -178,9 +186,8 @@ void draw_walls(){
       else
       {
         stepY = 1;
-        sideDistY = (((float)mapY + 1.0) - posY) * deltaDistY;
+        sideDistY = ((float)(mapY + 1) - posY) * deltaDistY;
       }
-      a = 0;
       //perform DDA
       while(true) {
         //jump to next map square, either in x-direction, or in y-direction
@@ -203,7 +210,6 @@ void draw_walls(){
           hit = 1;
           break;
         }
-        a++;
       }
       //Calculate distance projected on camera direction. This is the shortest distance from the point where the wall is
       //hit to the camera plane. Euclidean to center camera point would give fisheye effect!
@@ -225,7 +231,7 @@ void draw_walls(){
       dprint(1,70,C_BLACK,"perpWallDist : %d", (int)(perpWallDist*1000));
       */
       //Calculate height of line to draw on screen
-      lineHeight = floor(viewport_h*1.0 / perpWallDist);
+      lineHeight = floor((float)viewport_h / perpWallDist);
 
       //calculate lowest and highest pixel to fill in current stripe
       drawStart = floor((-lineHeight * 0.5) + (viewport_h * 0.5));
