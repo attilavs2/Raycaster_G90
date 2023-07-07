@@ -142,6 +142,8 @@ void draw_walls(){
       cameraX = fdiv(fix(x*2), fix(viewport_w)) - 0xFFFF; //x-coordinate in camera space
       rayDirX = dirX + fmul(planeX, cameraX);
       rayDirY = dirY + fmul(planeY, cameraX);
+      if (rayDirX == 0) rayDirX = cameraX;
+      if (rayDirY == 0) rayDirY = cameraX;
 
       //which box of the map we're in
       mapX = f2int(posX);
@@ -161,7 +163,7 @@ void draw_walls(){
       deltaDistX = abs(fdiv(0xFFFF, rayDirX));
       deltaDistY = abs(fdiv(0xFFFF, rayDirY));
       //calculate step and initial sideDist
-      if(rayDirX < (fixed_t)0) 
+      if(rayDirX < 0) 
       {
         stepX = -1; //true
         sideDistX = fmul(posX - fix(mapX), deltaDistX);
@@ -171,7 +173,7 @@ void draw_walls(){
         stepX = 1;
         sideDistX = fmul( fix(mapX + 1) - posX, deltaDistX);
       }
-      if(rayDirY < (fixed_t)0)
+      if(rayDirY < 0)
       {
         stepY = -1; //true
         sideDistY = fmul(posY - fix(mapY), deltaDistY);

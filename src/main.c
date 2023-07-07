@@ -37,7 +37,7 @@ fixed_t planeY;
 fixed_t oldDirX;
 fixed_t oldPlaneX;
 
-int frame_time;
+int frame_time = 0;
 int frame_n = 0;
 
 //prof_init();
@@ -51,8 +51,8 @@ int main(){
   	dirX = start_dirX;
 	dirY = start_dirY; //initial direction vector
  	planeX = fix(0); 
-	planeY = fix(0.66); //the 2d raycaster version of camera plane
-	//prof_t frame = prof_make();
+	planeY = fix(0.66); //the 2d raycaster version of camera plan
+	prof_init();
 	//autres trucs de chargement
 
 	dclear(C_WHITE);
@@ -65,6 +65,9 @@ int main(){
 	getkey();
 
 	while (true) {
+		prof_t frame = prof_make();
+		prof_enter(frame);
+
 		dclear(C_LIGHT);
 
 		draw_background(0);
@@ -80,9 +83,12 @@ int main(){
 		}
 		
 		dprint( 1, 1, C_BLACK, "frame : %d", frame_n); frame_n++;
+		dprint( 1, 10, C_BLACK, "frame time : %d ms", (int)frame_time / 1000);
 		
 		//dprint( 1, 50, C_BLACK, "frame time : %d", frame_time);
 
 		dupdate();
+		prof_leave(frame);
+		frame_time = prof_time(frame);
 	}
 }
