@@ -58,8 +58,8 @@ int main(){
 	//autres trucs de chargement
 
 	dclear(C_WHITE);
-	dtext(100, 100, C_BLACK, "Raycaster Fcalva v 0.1.2");
-	dtext( 97, 120, C_BLACK, "Edition plus paraplegique");
+	dtext(100, 100, C_BLACK, "Raycaster Fcalva v 0.1.4");
+	dtext( 97, 120, C_BLACK, "Edition Manque de Gameplay");
 	dtext(105, 150, C_BLACK, "Appuyez sur une touche");
 
 
