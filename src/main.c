@@ -38,7 +38,6 @@ fixed_t oldDirX;
 fixed_t oldPlaneX;
 
 int frame_time = 0;
-int frame_n = 0;
 
 //prof_init();
 
@@ -56,8 +55,8 @@ int main(){
 	//autres trucs de chargement
 
 	dclear(C_WHITE);
-	dtext(100, 100, C_BLACK, "Raycaster Fcalva v 0.1.4");
-	dtext( 97, 120, C_BLACK, "Edition Manque de Gameplay");
+	dtext(100, 100, C_BLACK, "Raycaster Fcalva v 0.2");
+	dtext( 97, 120, C_BLACK, "Edition FPS goes BRRRRRRRRRRRRRRRRRR");
 	dtext(105, 150, C_BLACK, "Appuyez sur une touche");
 
 
@@ -81,12 +80,17 @@ int main(){
 			prof_quit();
 			return 1;
 		}
-		
-		dprint( 1, 1, C_BLACK, "frame : %d", frame_n); frame_n++;
-		dprint( 1, 10, C_BLACK, "frame time : %d ms", (int)frame_time / 1000);
-		
-		//dprint( 1, 50, C_BLACK, "frame time : %d", frame_time);
-
+		dprint( 1, 10, C_BLACK, "Frame time : %d ", (int)frame_time/1000);
+		/*
+		dprint( 1, 20, C_BLACK, "planeX : %d", planeX);
+		dprint( 1, 30, C_BLACK, "planeY : %d", planeY);
+		dprint( 1, 40, C_BLACK, "dirX : %d", dirX);
+		dprint( 1, 50, C_BLACK, "dirY : %d", dirY);
+		*/
+		if (dirX > 0xFFFF) dirX = 0xFFFF;
+		if (dirY > 0xFFFF) dirY = 0xFFFF;
+		if (dirX < -0xFFFF) dirX = -0xFFFF;
+		if (dirY < -0xFFFF) dirY = -0xFFFF;
 		dupdate();
 		prof_leave(frame);
 		frame_time = prof_time(frame);

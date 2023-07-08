@@ -36,6 +36,7 @@ add_executable(myaddin ${SOURCES} ${ASSETS} ${ASSETS_${FXSDK_PLATFORM}})
 target_compile_options(myaddin PRIVATE -Wall -Wextra -Os)
 target_link_libraries(myaddin Gint::Gint )
 target_link_libraries(myaddin LibProf::LibProf)
+target_link_options(myaddin PRIVATE -Wl,--print-memory-usage)
 
 if("${FXSDK_PLATFORM_LONG}" STREQUAL fx9860G)
   generate_g1a(TARGET myaddin OUTPUT "Raycaster.g1a"

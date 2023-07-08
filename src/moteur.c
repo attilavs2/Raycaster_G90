@@ -17,10 +17,10 @@
 //
 
 void move(){
-  fixed_t moveSpeed = fix(0.3);
-  fixed_t rotSpeed = fix(1.0);
-  fixed_t c_rotSpeed = fix(0.9980);
-  fixed_t s_rotSpeed = fix(0.0174);
+  fixed_t moveSpeed = 0x4CCE;
+  fixed_t rotSpeed = 0xFFFF;
+  fixed_t c_rotSpeed = 0xFFFF;
+  fixed_t s_rotSpeed = 0x0474;
 
   extern char map_test[map_w][map_h];
   extern fixed_t planeX;
@@ -68,21 +68,21 @@ void move(){
   if (keydown(KEY_RIGHT)) {
     //both camera direction and camera plane must be rotated
 	  oldDirX = dirX;
-    dirX = fmul(dirX, c_rotSpeed) - fmul(dirY, -s_rotSpeed); 
- 	  dirY = fmul(oldDirX, -s_rotSpeed) + fmul(dirY, c_rotSpeed);
+    dirX = (fmul(dirX, c_rotSpeed)+1) - (fmul(dirY, -s_rotSpeed)+1); 
+ 	  dirY = (fmul(oldDirX, -s_rotSpeed)+1) + (fmul(dirY, c_rotSpeed)+1);
    	oldPlaneX = planeX;
-   	planeX = fmul(planeX, c_rotSpeed) - fmul(planeY, -s_rotSpeed);
-    planeY = fmul(oldPlaneX, -s_rotSpeed) + fmul(planeY, c_rotSpeed);
+   	planeX = (fmul(planeX, c_rotSpeed)+1) - (fmul(planeY, -s_rotSpeed)+1);
+    planeY = (fmul(oldPlaneX, -s_rotSpeed)+1) + (fmul(planeY, c_rotSpeed)+1);
   }
   //rotate to the left
   if (keydown(KEY_LEFT)) {
     //both camera direction and camera plane must be rotated
     oldDirX = dirX;
-    dirX = fmul(dirX, c_rotSpeed) - fmul(dirY, s_rotSpeed);
-    dirY = fmul(oldDirX, s_rotSpeed) + fmul(dirY, c_rotSpeed);
+    dirX = (fmul(dirX, c_rotSpeed)-1) - (fmul(dirY, s_rotSpeed)-1);
+    dirY = (fmul(oldDirX, s_rotSpeed)+1) + (fmul(dirY, c_rotSpeed)+1);
     oldPlaneX = planeX;
-    planeX = fmul(planeX, c_rotSpeed) - fmul(planeY, s_rotSpeed);
-    planeY = fmul(oldPlaneX, s_rotSpeed) + fmul(planeY, c_rotSpeed);
+    planeX = (fmul(planeX, c_rotSpeed)-1) - (fmul(planeY, s_rotSpeed) - 1);
+    planeY = (fmul(oldPlaneX, s_rotSpeed)+1) + (fmul(planeY, c_rotSpeed) + 1);
   }
 }
 void load_map(int map_id){
@@ -140,10 +140,10 @@ void draw_walls(){
     
       //calculate ray position and direction
       cameraX = fdiv(fix(x*2), fix(viewport_w)) - 0xFFFF; //x-coordinate in camera space
+      
       rayDirX = dirX + fmul(planeX, cameraX);
       rayDirY = dirY + fmul(planeY, cameraX);
-      if (rayDirX == 0) rayDirX = cameraX;
-      if (rayDirY == 0) rayDirY = cameraX;
+      
 
       //which box of the map we're in
       mapX = f2int(posX);
@@ -162,6 +162,7 @@ void draw_walls(){
       // Fcalva : removed the 0 div prevention
       deltaDistX = abs(fdiv(0xFFFF, rayDirX));
       deltaDistY = abs(fdiv(0xFFFF, rayDirY));
+      
       //calculate step and initial sideDist
       if(rayDirX < 0) 
       {
