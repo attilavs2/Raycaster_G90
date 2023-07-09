@@ -3,23 +3,17 @@
 
 #include <gint/display.h>
 #include <gint/keyboard.h>
+#include <gint/image.h>
 
-//#include "map_test.h" //pas besoin pour le moment
+#include "fixed.h"
+
+#include "map_test.h"
 #include "sprites.h"
 #include "moteur.h"
 
-//Je compte utiliser des sprites décrits en vecteurs, étant donné que c'est bien plus 
-// facile à agrandir et réduire.
 // 2 maps de sprites : Les sprites de la map (tonneaux, torches, cadavres...)
 // Et les sprites de PNJs, donc d'ennemis et amicaux si jamais il y en a
 // 
-// Les sprites sont définis en vecteurs, en array de 64 (max, multiple de 4 requis) x5, 
-// une ligne par trait, en vecteurs (les 4 premieres valeurs), 0;0 étant le coin en haut 
-// a gauche, sur une zone de 32x32. Le 5 ème nombre est la couleur de la ligne
-// Ex : Une ligne noire de 0;0 à 3;3 :
-// unsigned short ligne[1][5]{
-//		{0, 0, 3, 3, 0x0000}
-// }
 //
 
 //char lsprites[32][32]; //les pnjs (ennemis)
@@ -32,30 +26,11 @@ void draw_sprites() {
 	// 5 - vérifier les recouvrement éventuels
 	// 6 - dessiner en commençant par derrière
 }
+void test_sprite(fixed_t scale){
+	extern bopti_image_t demo_player;
+	struct image_linear_map temp_lin_map;
 
-unsigned short sprite_caillou[24][6] = {
-	{ 1, 2, 7, 1, 0x0000},
-	{ 7, 1,12, 1, 0x0000},
-	{12, 1,14, 1, 0x0000},
-	{14, 1,20, 2, 0x0000},
-	{20, 2,22,11, 0x0000},
-	{22,11,21,13, 0x0000},
-	{21,13,18,12, 0x0000},
-	{18,12,14, 5, 0x0000},
-	{14, 5,15, 3, 0x0000},
-	{15, 3,13, 1, 0x0000},
-	{ 2, 2, 3, 6, 0x0000},
-	{ 3, 6, 6, 9, 0x0000},
-	{ 6, 9,10,12, 0x0000},
-	{10,12,12,11, 0x0000},
-	{12,11,10, 9, 0x0000},
-	{10, 9,15,13, 0x0000},
-	{15,13,17,12, 0x0000},
-	{17,12,17,11, 0x0000},
-	{11, 9, 6, 7, 0x0000},
-	{ 6, 7, 2, 2, 0x0000},
-	{14, 5,10, 5, 0x0000},
-	{10, 5, 5, 2, 0x0000}, 
-	{ 0, 0, 0, 0, 0x0000},
-	{ 0, 0, 0, 0, 0x0000}
-};
+	image_scale(&demo_player , scale, scale, &temp_lin_map);
+	image_linear_alloc(&demo_player , &temp_lin_map);
+	dimage(100,100,&demo_player);
+}

@@ -257,7 +257,8 @@ void draw_walls(){
       }
 
       //draw the pixels of the stripe as a vertical line
-      drect(x, drawStart, x, drawEnd, color);
+      gint_dvline(drawStart, drawEnd, x, color);
+
     }
 }
 

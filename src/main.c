@@ -25,6 +25,9 @@
 // - réparer l'affichage
 // - sprites
 // - gameplay
+#ifndef FXCG50
+#error Ce code est pour FXCG50/G90+E uniquement, enlevez ce message a vos riques et périls
+#endif
 
 extern char map_test[map_w][map_h];
 
@@ -62,6 +65,12 @@ int main(){
 
 	dupdate();
 	getkey();
+	/*
+	test_sprite(0xFFFFF);
+	dupdate();
+	getkey();
+	return 1;
+	*/
 
 	while (true) {
 		prof_t frame = prof_make();
@@ -86,7 +95,7 @@ int main(){
 		dprint( 1, 30, C_BLACK, "planeY : %d", planeY);
 		dprint( 1, 40, C_BLACK, "dirX : %d", dirX);
 		dprint( 1, 50, C_BLACK, "dirY : %d", dirY);
-		*/
+		*/    
 		if (dirX > 0xFFFF) dirX = 0xFFFF;
 		if (dirY > 0xFFFF) dirY = 0xFFFF;
 		if (dirX < -0xFFFF) dirX = -0xFFFF;

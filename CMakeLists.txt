@@ -15,19 +15,10 @@ set(SOURCES
   src/moteur.c
   src/sprites.c
   src/map_test.c
-  # ...
 )
 # Shared assets, fx-9860G-only assets and fx-CG-50-only assets
 set(ASSETS
-  # ...
-)
-set(ASSETS_fx
-  #assets-fx/example.png
-  # ...
-)
-set(ASSETS_cg
-  #assets-cg/example.png
-  # ...
+  assets-cg/demo_player.png
 )
 
 fxconv_declare_assets(${ASSETS} ${ASSETS_fx} ${ASSETS_cg} WITH_METADATA)
