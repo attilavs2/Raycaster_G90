@@ -5,6 +5,13 @@
 #include <gint/keyboard.h>
 #include <libprof.h>
 
+#define USB
+
+#ifdef USB
+#include <gint/usb-ff-bulk.h>
+#include <gint/usb.h>
+#endif
+
 #include "fixed.h"
 
 #include "moteur.h"
@@ -12,7 +19,7 @@
 #include "sprites.h"
 
 //====== Raycaster (faut trouver un nom) =====
-// Tout le code non-foireux vient de https://lodev.org/cgtutor/raycasting.html
+// Toute la base du raycaster vient d'ici : https://lodev.org/cgtutor/raycasting.html
 // Grands remerciments !
 // Github : https://github.com/attilavs2/Raycaster_prealpha
 // Tout le code de cette version est en GPL3
@@ -29,7 +36,21 @@
 #error Ce code est pour FXCG50/G90+E uniquement, enlevez ce message a vos riques et périls
 #endif
 
+#ifdef USB
+void USB_capture() {
+	if (usb_is_open()) {
+		usb_fxlink_screenshot(false);
+	}
+}
+#endif
+
+
+
+//#define debug //pour afficher les infos de debug
+
 extern char map_test[map_w][map_h];
+
+char disp_frame_time = 0;
 
 fixed_t posX;
 fixed_t posY;
@@ -48,18 +69,28 @@ int main(){
 	dclear(C_WHITE);
 	dtext( 1, 1, C_BLACK, "Chargement...");
 	dupdate();
+
 	posX = startpos_x; 
 	posY = startpos_y;  //x and y start position
   	dirX = start_dirX;
 	dirY = start_dirY; //initial direction vector
  	planeX = fix(0); 
 	planeY = fix(0.66); //the 2d raycaster version of camera plan
+	
 	prof_init();
+
+	#ifdef USB
+    usb_interface_t const *interfaces[] = {&usb_ff_bulk, NULL};
+    usb_open(interfaces, GINT_CALL_NULL);
+    #endif
+
 	//autres trucs de chargement
 
+
+
 	dclear(C_WHITE);
-	dtext(100, 100, C_BLACK, "Raycaster Fcalva v 0.2");
-	dtext( 97, 120, C_BLACK, "Edition FPS goes BRRRRRRRRRRRRRRRRRR");
+	dtext(100, 100, C_BLACK, "Raycaster Fcalva v 0.2.2");
+	dtext( 97, 120, C_BLACK, "Edition FPS BRRRRRRRRRRRRRRRRRR");
 	dtext(105, 150, C_BLACK, "Appuyez sur une touche");
 
 
@@ -85,23 +116,39 @@ int main(){
 		move();
 
 		pollevent();
+		if (keydown(KEY_F1)) {
+			if (disp_frame_time == 0) {
+				disp_frame_time = 1;
+			}
+			else {
+				disp_frame_time = 0;
+			}
+		}
 		if (keydown(KEY_F6)) {
 			prof_quit();
+			usb_close();
 			return 1;
 		}
-		dprint( 1, 10, C_BLACK, "Frame time : %d ", (int)frame_time/1000);
-		/*
+
+		#ifdef USB
+		if (keydown(KEY_0) && keydown(KEY_EXE)) {
+			USB_capture();
+		}
+		#endif
+
+		if (disp_frame_time == 1) {
+			dprint( 1, 10, C_BLACK, "Frame time : %d ms", frame_time);
+		}
+		
+		#ifdef debug
 		dprint( 1, 20, C_BLACK, "planeX : %d", planeX);
 		dprint( 1, 30, C_BLACK, "planeY : %d", planeY);
 		dprint( 1, 40, C_BLACK, "dirX : %d", dirX);
 		dprint( 1, 50, C_BLACK, "dirY : %d", dirY);
-		*/    
-		if (dirX > 0xFFFF) dirX = 0xFFFF;
-		if (dirY > 0xFFFF) dirY = 0xFFFF;
-		if (dirX < -0xFFFF) dirX = -0xFFFF;
-		if (dirY < -0xFFFF) dirY = -0xFFFF;
+		#endif
+
 		dupdate();
 		prof_leave(frame);
-		frame_time = prof_time(frame);
+		frame_time = (int)prof_time(frame)/1000;
 	}
 }

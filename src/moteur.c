@@ -17,10 +17,11 @@
 //
 
 void move(){
-  fixed_t moveSpeed = 0x4CCE;
-  fixed_t rotSpeed = 0xFFFF;
-  fixed_t c_rotSpeed = 0xFFFF;
-  fixed_t s_rotSpeed = 0x0474;
+  extern int frame_time;
+  fixed_t moveSpeed = (int) frame_time * 0x148; //frame_time * fix(carrés/seconde/1000) dans ce cas carrés/seconde = 5
+  fixed_t rotSpeed = (int) frame_time * 0x83; //frame_time * fix(radians/seconde/1000) dans ce cas radians/seconde = 2
+  fixed_t c_rotSpeed = fix(cos(f2float(rotSpeed)));
+  fixed_t s_rotSpeed = fix(sin(f2float(rotSpeed)));
 
   extern char map_test[map_w][map_h];
   extern fixed_t planeX;
@@ -84,6 +85,10 @@ void move(){
     planeX = (fmul(planeX, c_rotSpeed)-1) - (fmul(planeY, s_rotSpeed) - 1);
     planeY = (fmul(oldPlaneX, s_rotSpeed)+1) + (fmul(planeY, c_rotSpeed) + 1);
   }
+  if (dirX > 0xFFFF) dirX = 0xFFFF;
+	if (dirY > 0xFFFF) dirY = 0xFFFF;
+	if (dirX < -0xFFFF) dirX = -0xFFFF;
+	if (dirY < -0xFFFF) dirY = -0xFFFF;
 }
 void load_map(int map_id){
 
@@ -160,8 +165,9 @@ void draw_walls(){
       // Division through zero is prevented, even though technically that's not
       // needed in C++ with IEEE 754 floating point values. 
       // Fcalva : removed the 0 div prevention
-      deltaDistX = abs(fdiv(0xFFFF, rayDirX));
-      deltaDistY = abs(fdiv(0xFFFF, rayDirY));
+      // Fcalva : Put again to limit the "cardinal" artefacts
+      deltaDistX = (rayDirX == 0) ? 0x1 : abs(fdiv(0xFFFF, rayDirX));
+      deltaDistY = (rayDirY == 0) ? 0x1 : abs(fdiv(0xFFFF, rayDirY));
       
       //calculate step and initial sideDist
       if(rayDirX < 0) 
@@ -245,15 +251,15 @@ void draw_walls(){
       //choose wall color
       switch(map_test[mapX][mapY])
       {
-        case 1:   color = C_RED;     break; //red
-        case 2:   color = C_GREEN;   break; //green
-        case 3:   color = C_BLUE;    break; //blue
-        case 4:   color = C_WHITE;   break; //white
-        case 5:   color = 0x8000;    break; //rouge foncé
-        case 6:   color = 0x0400;    break; //vert foncé
-        case 7:   color = 0x0010;    break; //bleu foncé
-        case 8:   color = C_LIGHT;   break; //gris clair
-        default:  color = C_DARK;    break; //gris foncé
+        case 1:   color = 0xA800;    break; //rouge
+        case 2:   color = 0x0540;    break; //vert
+        case 3:   color = 0x0555;    break; //bleu
+        case 4:   color = 0xFFFF;    break; //blanc
+        case 5:   color = 0x5000;    break; //rouge foncé
+        case 6:   color = 0x02A0;    break; //vert foncé
+        case 7:   color = 0x02AA;    break; //bleu foncé
+        case 8:   color = 0xAD55;    break; //gris clair
+        default:  color = 0x52aa;    break; //gris foncé
       }
 
       //draw the pixels of the stripe as a vertical line
