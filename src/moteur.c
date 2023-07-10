@@ -165,38 +165,37 @@ void draw_walls(){
       // Division through zero is prevented, even though technically that's not
       // needed in C++ with IEEE 754 floating point values. 
       // Fcalva : removed the 0 div prevention
-      // Fcalva : Put again to limit the "cardinal" artefacts
-      deltaDistX = (rayDirX == 0) ? 0x1 : abs(fdiv(0xFFFF, rayDirX));
-      deltaDistY = (rayDirY == 0) ? 0x1 : abs(fdiv(0xFFFF, rayDirY));
+
+      deltaDistX = abs(fdiv(0xFFFF, rayDirX));
+      deltaDistY = abs(fdiv(0xFFFF, rayDirY));
       
       //calculate step and initial sideDist
-      if(rayDirX < 0) 
-      {
+      if (rayDirX <= 0) {
         stepX = -1; //true
         sideDistX = fmul(posX - fix(mapX), deltaDistX);
       }
-      else
-      {
+      else {
         stepX = 1;
         sideDistX = fmul( fix(mapX + 1) - posX, deltaDistX);
       }
-      if(rayDirY < 0)
-      {
+
+      if (rayDirY <= 0) {
         stepY = -1; //true
         sideDistY = fmul(posY - fix(mapY), deltaDistY);
       }
-      else
-      {
+      else {
         stepY = 1;
         sideDistY = fmul( fix(mapY + 1) - posY, deltaDistY);
       }
       //perform DDA
       while(true) {
+        //Check if the ray is out of range/bounds
         if (sideDistX >= max_dist || sideDistY >= max_dist || mapX < 0 || mapY < 0) {
           hit = 0;
           break;
         }
-        else if (map_test[mapX][mapY] != 0) { //Check if ray has hit a wall
+        //Otherwise check if ray has hit a wall
+        else if (map_test[mapX][mapY] != 0) { 
           hit = 1;
           break;
         }

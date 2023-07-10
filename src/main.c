@@ -50,7 +50,10 @@ void USB_capture() {
 
 extern char map_test[map_w][map_h];
 
+char exit_game = 0;
 char disp_frame_time = 0;
+int frame_time_timer = 1;
+int capture_timer = 1;
 
 fixed_t posX;
 fixed_t posY;
@@ -58,8 +61,6 @@ fixed_t dirX;
 fixed_t dirY;
 fixed_t planeX;
 fixed_t planeY;
-fixed_t oldDirX;
-fixed_t oldPlaneX;
 
 int frame_time = 0;
 
@@ -103,7 +104,7 @@ int main(){
 	return 1;
 	*/
 
-	while (true) {
+	while (exit_game == 0) {
 		prof_t frame = prof_make();
 		prof_enter(frame);
 
@@ -113,28 +114,7 @@ int main(){
 
 		draw_walls();
 		
-		move();
-
-		pollevent();
-		if (keydown(KEY_F1)) {
-			if (disp_frame_time == 0) {
-				disp_frame_time = 1;
-			}
-			else {
-				disp_frame_time = 0;
-			}
-		}
-		if (keydown(KEY_F6)) {
-			prof_quit();
-			usb_close();
-			return 1;
-		}
-
-		#ifdef USB
-		if (keydown(KEY_0) && keydown(KEY_EXE)) {
-			USB_capture();
-		}
-		#endif
+		keys_get();
 
 		if (disp_frame_time == 1) {
 			dprint( 1, 10, C_BLACK, "Frame time : %d ms", frame_time);
@@ -151,4 +131,35 @@ int main(){
 		prof_leave(frame);
 		frame_time = (int)prof_time(frame)/1000;
 	}
+
+	prof_quit();
+	usb_close();
+	return 1;
+}
+
+void keys_get(){
+	move();
+	pollevent();
+	if (keydown(KEY_F1) && frame_time_timer <= 0) {
+		if (disp_frame_time == 0) {
+			disp_frame_time = 1;
+			frame_time_timer = 10;
+		}
+		else {
+			disp_frame_time = 0;
+			frame_time_timer = 10;
+		}
+	}
+	frame_time_timer--;
+	if (keydown(KEY_F6)) {
+		exit_game = 1;
+	}
+
+	#ifdef USB
+	if (keydown(KEY_0) && keydown(KEY_EXE) && capture_timer <= 0) {
+		USB_capture();
+		capture_timer = 10;
+	}
+	capture_timer--;
+	#endif
 }
