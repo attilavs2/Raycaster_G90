@@ -18,7 +18,7 @@ set(SOURCES
 )
 # Shared assets, fx-9860G-only assets and fx-CG-50-only assets
 set(ASSETS
-  assets-cg/demo_player.png
+  assets-cg/zombard1.png
 )
 
 fxconv_declare_assets(${ASSETS} ${ASSETS_fx} ${ASSETS_cg} WITH_METADATA)

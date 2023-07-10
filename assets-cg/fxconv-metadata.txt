@@ -1,3 +1,3 @@
-demo_player.png:
+zombard1.png:
   type: bopti-image
-  name: demo_player
+  name: zombard

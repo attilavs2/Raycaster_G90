@@ -97,13 +97,13 @@ int main(){
 
 	dupdate();
 	getkey();
-	/*
-	test_sprite(0xFFFFF);
+	
+	test_sprite(0xFFFF);
 	dupdate();
 	getkey();
 	return 1;
-	*/
-
+	
+	/*
 	while (exit_game == 0) {
 		prof_t frame = prof_make();
 		prof_enter(frame);
@@ -130,7 +130,7 @@ int main(){
 		dupdate();
 		prof_leave(frame);
 		frame_time = (int)prof_time(frame)/1000;
-	}
+	}*/
 
 	prof_quit();
 	usb_close();

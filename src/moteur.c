@@ -263,9 +263,176 @@ void draw_walls(){
 
       //draw the pixels of the stripe as a vertical line
       gint_dvline(drawStart, drawEnd, x, color);
-
     }
 }
+
+//Function using the same raycast logic returning distance
+//Returns -1 if it didn't hit anything
+// ! a tester !
+fixed_t raycast(fixed_t posX, fixed_t posY, fixed_t rayDirX, fixed_t rayDirY, fixed_t dist, char type){
+    extern char map_test[map_w][map_h];
+    extern char mob_index[map_w][map_h];
+    
+    fixed_t sideDistX;//length of ray from current position to next x or y-side
+    fixed_t sideDistY;
+    fixed_t deltaDistX;
+    fixed_t deltaDistY;
+    fixed_t wallDist;
+
+    char side;
+
+    int mapX;
+    int mapY;
+    int stepX; //what direction to step in x or y-direction (either +1 or -1)
+    int stepY;
+    int hit = 0; //was there a wall hit?
+      
+
+    //which box of the map we're in
+    mapX = f2int(posX);
+    mapY = f2int(posY);
+    // length of ray from one x or y-side to next x or y-side
+    // these are derived as:
+    // deltaDistX = sqrt(1 + (rayDirY * rayDirY) / (rayDirX * rayDirX))
+    // deltaDistY = sqrt(1 + (rayDirX * rayDirX) / (rayDirY * rayDirY))
+    // which can be simplified to abs(|rayDir| / rayDirX) and abs(|rayDir| / rayDirY)
+    // where |rayDir| is the length of the vector (rayDirX, rayDirY). Its length,
+    // unlike (dirX, dirY) is not 1, however this does not matter, only the
+    // ratio between deltaDistX and deltaDistY matters, due to the way the DDA
+    // stepping further below works. So the values can be computed as below.
+    // Division through zero is prevented, even though technically that's not
+    // needed in C++ with IEEE 754 floating point values. 
+    // Fcalva : removed the 0 div prevention
+
+    deltaDistX = abs(fdiv(0xFFFF, rayDirX));
+    deltaDistY = abs(fdiv(0xFFFF, rayDirY));
+      
+    //calculate step and initial sideDist
+    if (rayDirX <= 0) {
+      stepX = -1; //true
+      sideDistX = fmul(posX - fix(mapX), deltaDistX);
+    }
+    else {
+      stepX = 1;
+      sideDistX = fmul( fix(mapX + 1) - posX, deltaDistX);
+    }
+
+    if (rayDirY <= 0) {
+      stepY = -1; //true
+      sideDistY = fmul(posY - fix(mapY), deltaDistY);
+    }
+    else {
+      stepY = 1;
+      sideDistY = fmul( fix(mapY + 1) - posY, deltaDistY);
+    }
+    //perform DDA
+    switch(type){
+      //Walls and mobs raycast
+      case 0 : {
+        while(true) {
+          //Check if the ray is out of range/bounds
+          if (sideDistX >= dist || sideDistY >= dist || mapX < 0 || mapY < 0) {
+            hit = 0;
+            break;
+          }
+          //Otherwise check if ray has hit a wall/mob
+          else if (map_test[mapX][mapY] != 0 || mob_index[mapX][mapY] != 0) { 
+            hit = 1;
+            break;
+          }
+          //jump to next map square, either in x-direction, or in y-direction
+          if (sideDistX < sideDistY) {
+            sideDistX += deltaDistX; 
+            mapX += stepX; 
+            side = 0;
+          }
+          else {
+            sideDistY += deltaDistY;
+            mapY += stepY; 
+            side = 1;
+          }
+       
+        }
+        break;
+      }
+      //Mobs only
+      case 1 : {
+        while(true) {
+          //Check if the ray is out of range/bounds
+          if (sideDistX >= dist || sideDistY >= dist || mapX < 0 || mapY < 0) {
+            hit = 0;
+            break;
+          }
+          //Otherwise check if ray has hit a wall/mob
+          else if (map_test[mapX][mapY] != 0) { 
+            hit = 1;
+            break;
+          }
+          //jump to next map square, either in x-direction, or in y-direction
+          if (sideDistX < sideDistY) {
+            sideDistX += deltaDistX; 
+            mapX += stepX; 
+            side = 0;
+          }
+          else {
+            sideDistY += deltaDistY;
+            mapY += stepY; 
+            side = 1;
+          }
+        }
+        break;
+      }
+      //Walls only
+      case 2 : {
+        while(true) {
+          //Check if the ray is out of range/bounds
+          if (sideDistX >= dist || sideDistY >= dist || mapX < 0 || mapY < 0) {
+            hit = 0;
+            break;
+          }
+          //Otherwise check if ray has hit a wall/mob
+          else if (mob_index[mapX][mapY] != 0) { 
+            hit = 1;
+            break;
+          }
+          //jump to next map square, either in x-direction, or in y-direction
+          if (sideDistX < sideDistY) {
+            sideDistX += deltaDistX; 
+            mapX += stepX; 
+            side = 0;
+          }
+          else {
+            sideDistY += deltaDistY;
+            mapY += stepY; 
+            side = 1;
+          }
+        }
+        break;
+      }
+      default : {
+        return -2;
+        break;
+      }
+    }
+    
+    //Calculate distance projected on camera direction. This is the shortest distance from the point where the wall is
+    //hit to the camera plane. Euclidean to center camera point would give fisheye effect!
+    //This can be computed as (mapX - posX + (1 - stepX) / 2) / rayDirX for side == 0, or same formula with Y
+    //for size == 1, but can be simplified to the code below thanks to how sideDist and deltaDist are computed:
+    //because they were left scaled to |rayDir|. sideDist is the entire length of the ray above after the multiple
+    //steps, but we subtract deltaDist once because one step more into the wall was taken above.
+    if (hit == 0){
+      wallDist = -1;
+    }
+    else if (side == 0) {
+      wallDist = (sideDistX - deltaDistX);
+    } 
+    else {
+      wallDist = (sideDistY - deltaDistY);
+    }
+    return wallDist;
+}
+
 
 
 
