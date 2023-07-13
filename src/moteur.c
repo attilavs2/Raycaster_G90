@@ -112,7 +112,8 @@ void draw_background(int background_id){
       }
     }
 }
-void draw_walls(){
+
+void draw_walls(image_t *XOR_tex, image_t *frame_buffer){
     extern fixed_t posX;
     extern fixed_t posY;
     extern fixed_t dirX;
@@ -140,6 +141,8 @@ void draw_walls(){
     int lineHeight;
     int drawStart;
     int drawEnd;
+
+    image_fill(frame_buffer, C_LIGHT);
 
     for(x = 0; x < viewport_w; x++) {
     
@@ -247,23 +250,33 @@ void draw_walls(){
       if (side == 1) {
         color += 4;
       }
-      //choose wall color
-      switch(map_test[mapX][mapY])
-      {
-        case 1:   color = 0xA800;    break; //rouge
-        case 2:   color = 0x0540;    break; //vert
-        case 3:   color = 0x0555;    break; //bleu
-        case 4:   color = 0xFFFF;    break; //blanc
-        case 5:   color = 0x5000;    break; //rouge foncé
-        case 6:   color = 0x02A0;    break; //vert foncé
-        case 7:   color = 0x02AA;    break; //bleu foncé
-        case 8:   color = 0xAD55;    break; //gris clair
-        default:  color = 0x52aa;    break; //gris foncé
-      }
+      //texturing calculations
+      //int texNum = test_map[mapX][mapY] - 1; //a voir plus tard
 
-      //draw the pixels of the stripe as a vertical line
-      gint_dvline(drawStart, drawEnd, x, color);
+      //calculate value of wallX
+      fixed_t wallX; //where exactly the wall was hit
+      if (side == 0){
+        wallX = posY + fmul(perpWallDist, rayDirY);
+      } 
+      else  {
+        wallX = posX + fmul(perpWallDist, rayDirX);
+      }         
+      wallX -= floor((wallX));
+
+      //x coordinate on the texture
+      int texX = f2int(fmul(wallX, 64));
+      if(side == 0 && rayDirX > 0) {
+        texX = 64 - texX - 1;
+      }
+      if(side == 1 && rayDirY < 0) {
+        texX = 64 - texX - 1;
+      }
+      image_t texStripe = *image_sub(XOR_tex , texX, 0, 1, 64);
+      struct image_linear_map temp;
+      image_scale(&texStripe, 0xFFFF, fix(drawEnd - drawStart / 64), &temp); //Faudrait faire "à la main" ça marche pas pour ce que je veux faire
+      image_linear(&texStripe, frame_buffer, &temp);
     }
+    dimage(1, 1, frame_buffer);
 }
 
 //Function using the same raycast logic returning distance

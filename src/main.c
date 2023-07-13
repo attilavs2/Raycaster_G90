@@ -3,6 +3,7 @@
 
 #include <gint/display.h>
 #include <gint/keyboard.h>
+#include <gint/image.h>
 #include <libprof.h>
 
 #define USB
@@ -66,77 +67,6 @@ int frame_time = 0;
 
 //prof_init();
 
-int main(){
-	dclear(C_WHITE);
-	dtext( 1, 1, C_BLACK, "Chargement...");
-	dupdate();
-
-	posX = startpos_x; 
-	posY = startpos_y;  //x and y start position
-  	dirX = start_dirX;
-	dirY = start_dirY; //initial direction vector
- 	planeX = fix(0); 
-	planeY = fix(0.66); //the 2d raycaster version of camera plan
-	
-	prof_init();
-
-	#ifdef USB
-    usb_interface_t const *interfaces[] = {&usb_ff_bulk, NULL};
-    usb_open(interfaces, GINT_CALL_NULL);
-    #endif
-
-	//autres trucs de chargement
-
-
-
-	dclear(C_WHITE);
-	dtext(100, 100, C_BLACK, "Raycaster Fcalva v 0.2.2");
-	dtext( 97, 120, C_BLACK, "Edition FPS BRRRRRRRRRRRRRRRRRR");
-	dtext(105, 150, C_BLACK, "Appuyez sur une touche");
-
-
-	dupdate();
-	getkey();
-	
-	test_sprite(0xFFFF);
-	dupdate();
-	getkey();
-	return 1;
-	
-	/*
-	while (exit_game == 0) {
-		prof_t frame = prof_make();
-		prof_enter(frame);
-
-		dclear(C_LIGHT);
-
-		draw_background(0);
-
-		draw_walls();
-		
-		keys_get();
-
-		if (disp_frame_time == 1) {
-			dprint( 1, 10, C_BLACK, "Frame time : %d ms", frame_time);
-		}
-		
-		#ifdef debug
-		dprint( 1, 20, C_BLACK, "planeX : %d", planeX);
-		dprint( 1, 30, C_BLACK, "planeY : %d", planeY);
-		dprint( 1, 40, C_BLACK, "dirX : %d", dirX);
-		dprint( 1, 50, C_BLACK, "dirY : %d", dirY);
-		#endif
-
-		dupdate();
-		prof_leave(frame);
-		frame_time = (int)prof_time(frame)/1000;
-	}*/
-
-	prof_quit();
-	usb_close();
-	return 1;
-}
-
 void keys_get(){
 	move();
 	pollevent();
@@ -162,4 +92,82 @@ void keys_get(){
 	}
 	capture_timer--;
 	#endif
+}
+
+int main(){
+	dclear(C_WHITE);
+	dtext( 1, 1, C_BLACK, "Chargement...");
+	dupdate();
+
+	posX = startpos_x; 
+	posY = startpos_y;  //x and y start position
+  	dirX = start_dirX;
+	dirY = start_dirY; //initial direction vector
+ 	planeX = fix(0); 
+	planeY = fix(0.66); //the 2d raycaster version of camera plan
+	image_t XOR_tex = *image_alloc(64, 64, IMAGE_RGB565);
+	image_t frame_buffer = *image_alloc(viewport_w, viewport_h, IMAGE_RGB565);
+	int i, j;
+	for (i = 0; i<= 64; i++){
+		for (j = 0; j<= 64; j++){
+			fixed_t c = fix((float)(i ^ j) * 0.5);
+			unsigned short color = f2int(fmul(2048, c) + fmul(32, c) + c); //meilleur moyen de converir en RGB 565
+    		image_set_pixel(&XOR_tex, i, j, color);
+		}
+	}
+	
+	prof_init();
+
+	#ifdef USB
+    usb_interface_t const *interfaces[] = {&usb_ff_bulk, NULL};
+    usb_open(interfaces, GINT_CALL_NULL);
+    #endif
+
+	//autres trucs de chargement
+
+
+
+	dclear(C_WHITE);
+	dtext(100, 100, C_BLACK, "Raycaster Fcalva v 0.3");
+	dtext( 97, 120, C_BLACK, "Edition FPS BRRRRRRRRRRRRRRRRRR");
+	dtext(105, 150, C_BLACK, "Appuyez sur une touche");
+	dimage(1,1, &XOR_tex);
+
+
+	dupdate();
+	getkey();
+	
+	
+	while (exit_game == 0) {
+		prof_t frame = prof_make();
+		prof_enter(frame);
+
+		dclear(C_LIGHT);
+
+		draw_background(0);
+
+		draw_walls(&XOR_tex, &frame_buffer);
+		
+		keys_get();
+
+		if (disp_frame_time == 1) {
+			dprint( 1, 10, C_BLACK, "Frame time : %d ms", frame_time);
+		}
+		
+		#ifdef debug
+		dprint( 1, 20, C_BLACK, "planeX : %d", planeX);
+		dprint( 1, 30, C_BLACK, "planeY : %d", planeY);
+		dprint( 1, 40, C_BLACK, "dirX : %d", dirX);
+		dprint( 1, 50, C_BLACK, "dirY : %d", dirY);
+		#endif
+
+		dupdate();
+		prof_leave(frame);
+		frame_time = (int)prof_time(frame)/1000;
+	}
+
+	prof_quit();
+	usb_close();
+	free(&XOR_tex);
+	return 1;
 }
