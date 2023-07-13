@@ -273,10 +273,13 @@ void draw_walls(image_t *XOR_tex, image_t *frame_buffer){
       }
       image_t texStripe = *image_sub(XOR_tex , texX, 0, 1, 64);
       struct image_linear_map temp;
-      image_scale(&texStripe, 0xFFFF, fix(drawEnd - drawStart / 64), &temp); //Faudrait faire "à la main" ça marche pas pour ce que je veux faire
+      image_scale(&texStripe, 0xFFFF, fix(drawEnd - drawStart / 64), &temp);
+      temp.u = x;
+      temp.v = 0;
       image_linear(&texStripe, frame_buffer, &temp);
     }
-    dimage(1, 1, frame_buffer);
+    dprint(1,1,C_BLACK,"coucou 281"); dupdate(); getkey();
+    dimage(0, 0, frame_buffer);
 }
 
 //Function using the same raycast logic returning distance
