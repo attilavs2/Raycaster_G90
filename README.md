@@ -1,6 +1,6 @@
 # Raycaster_prealpha
 Raycaster texturé écrit en C pour G90+E/FX-CG50 avec Gint
-Peu de gameplay pour le moment, mais ça ne saurait tarder
+Peu de gameplay pour le moment, mais ça ne saurait tarder   
 Touches : F6 pour quitter (bien loin des autres mais facile a appuyer)    
           Dpad pour se déplacer   
           F1 pour afficher/cacher le compteur de temps d'image (attention capricieux pour le moment)   
