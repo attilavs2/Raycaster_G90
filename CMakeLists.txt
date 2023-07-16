@@ -18,7 +18,11 @@ set(SOURCES
 )
 # Shared assets, fx-9860G-only assets and fx-CG-50-only assets
 set(ASSETS
-  assets-cg/zombard1.png
+  #assets-cg/textures/briques0.png
+  #assets-cg/textures/buisson0.png
+  #assets-cg/textures/herbe0.png
+  #assets-cg/sprites/zombard1.png
+  #assets-cg/skybox0.png
 )
 
 fxconv_declare_assets(${ASSETS} ${ASSETS_fx} ${ASSETS_cg} WITH_METADATA)

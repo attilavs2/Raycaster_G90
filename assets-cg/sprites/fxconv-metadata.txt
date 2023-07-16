@@ -1,0 +1,3 @@
+zombard1.png:
+  type: bopti-image
+  name: zombard

@@ -1,5 +1,5 @@
 //---
-// fixed: 48:16 fixed-point arithmetic
+// fixed: 16:16 fixed-point arithmetic
 //---
 //vient de https://gitea.planet-casio.com/Slyvtt/OutRun/src/branch/master/src
 //

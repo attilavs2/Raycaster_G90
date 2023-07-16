@@ -1,3 +1,6 @@
 zombard1.png:
   type: bopti-image
   name: zombard
+skybox0.png:
+  type: bopti-image
+  name: skybox_quarter

@@ -62,6 +62,7 @@ void draw_sprites() {
 	// 5 - vérifier les recouvrement éventuels
 	// 6 - dessiner en commençant par derrière
 }
+/*
 void test_sprite(fixed_t scale){
 	extern bopti_image_t zombard;
 	struct image_linear_map temp_lin_map;
@@ -70,4 +71,4 @@ void test_sprite(fixed_t scale){
 	image_scale(&zombard, scale, scale, &temp_lin_map);
 	zombard_2 = image_linear_alloc(&zombard, &temp_lin_map);
 	dimage(100, 100, &zombard_2);
-}
+}*/

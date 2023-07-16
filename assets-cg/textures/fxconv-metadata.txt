@@ -1,0 +1,11 @@
+briques0.png:
+  type: bopti-image
+  name: briques0
+  
+buisson0.png:
+  type: bopti-image
+  name: buisson0
+  
+herbe0.png:
+  type: bopti-image
+  name: herbe0
