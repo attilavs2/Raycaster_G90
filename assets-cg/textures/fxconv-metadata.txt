@@ -2,7 +2,7 @@ briques0.png:
   type: bopti-image
   name: briques0
   
-buisson0.png:
+buisson1.png:
   type: bopti-image
   name: buisson0
   

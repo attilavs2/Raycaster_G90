@@ -1,0 +1,29 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "ShooterGame Tileset0.tsx": {
+            "dynamicWrapping": true
+        }
+    },
+    "last.exportedFilePath": "/home/fr/Raycaster/assets-cg/map",
+    "last.imagePath": "/home/fr/Raycaster/assets-cg/textures",
+    "map.height": 128,
+    "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 64,
+    "map.tileWidth": 64,
+    "map.width": 128,
+    "openFiles": [
+    ],
+    "project": "ShooterGame.tiled-project",
+    "recentFiles": [
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.type": 1
+}

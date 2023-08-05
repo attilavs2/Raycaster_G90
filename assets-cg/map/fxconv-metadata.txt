@@ -1,0 +1,3 @@
+*.json:
+  custom-type: map
+  name_regex: (.*)\.json map_\1

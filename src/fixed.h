@@ -1,7 +1,8 @@
-//---
-// fixed: 16:16 fixed-point arithmetic
-//---
-//vient de https://gitea.planet-casio.com/Slyvtt/OutRun/src/branch/master/src
+// ---
+//  fixed: 16:16 fixed-point arithmetic
+// ---
+//
+// Fcalva : vient de https://gitea.planet-casio.com/Slyvtt/OutRun/src/branch/master/src
 //
 #pragma once
 #include <stdint.h>

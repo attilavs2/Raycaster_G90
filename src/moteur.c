@@ -1,15 +1,17 @@
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #include <gint/display.h>
+#include <libprof.h>
 #include <gint/keyboard.h>
 
 #include "fixed.h"
 
 #include "moteur.h"
 #include "sprites.h"
-#include "map_test.h"
+#include "map.h"
 
 // moteur.c :
 // ici se trouvent tout ce qui concerne les graphismes, mouvement et collisions
@@ -85,11 +87,8 @@ void move() {
 	if (dirX < -0xFFFF) dirX = -0xFFFF;
 	if (dirY < -0xFFFF) dirY = -0xFFFF;
 }
-void load_map(int map_id){
 
-}
-
-void draw_background(int background_id, image_t *skybox, image_t *skyboxSlice0, image_t *skyboxSlice1, image_t *frame_buffer){
+void draw_background(int background_id, image_t *skybox, image_t *skyboxSlice0, image_t *skyboxSlice1, image_t *frame_buffer){ //a revoir
     extern fixed_t dirX;
     
     switch (background_id){
@@ -122,6 +121,16 @@ void draw_background(int background_id, image_t *skybox, image_t *skyboxSlice0, 
         break;
       }
     }
+}
+
+void logic(image_t *frame_buffer, image_t *D_tex){
+  //logique (logique)
+}
+
+void load_map(){
+  dtext( 1, 1, C_BLACK, "Chargement...");
+	dupdate();
+  //trucs de map
 }
 
 void draw_f(image_t *floor_tex, image_t *frame_buffer){ //a refaire
@@ -199,14 +208,25 @@ void draw_walls(image_t *tex_1, image_t *tex_2, image_t *tex_3, image_t *tex_4, 
     int side; //was a NS or a EW wall hit?
     int lineHeight;
     int texX;
+    int texSample;
+    int texSampleY;
 
     int v_offset = 0; //(int)(sin(f2int(posX + posY)) * 5); //a raffiner un peu
     fixed_t h_offset = 0; //fix(sin(f2int(posX - posY)) * 0.01);
 
     struct image_linear_map temp;
 
+    image_t texStripe;
+
+    extern int raycast_time;
+    extern int draw_time;
+
+    prof_t rayscat = prof_make();
+    prof_t img_drw = prof_make();
+
     for(x = 0; x < viewport_w; x++) {
-    
+		  prof_enter(rayscat);
+
       //calculate ray position and direction
       cameraX = fdiv(fix(x*2), fix(viewport_w)) - 0xFFFF + h_offset; //x-coordinate in camera space
       
@@ -235,7 +255,7 @@ void draw_walls(image_t *tex_1, image_t *tex_2, image_t *tex_3, image_t *tex_4, 
       deltaDistY = abs(fdiv(0xFFFF, rayDirY));
       
       //calculate step and initial sideDist
-      if (rayDirX <= 0) {
+      if (rayDirX < 0) {
         stepX = -1; //true
         sideDistX = fmul(posX - fix(mapX), deltaDistX);
       }
@@ -244,7 +264,7 @@ void draw_walls(image_t *tex_1, image_t *tex_2, image_t *tex_3, image_t *tex_4, 
         sideDistX = fmul( fix(mapX + 1) - posX, deltaDistX);
       }
 
-      if (rayDirY <= 0) {
+      if (rayDirY < 0) {
         stepY = -1; //true
         sideDistY = fmul(posY - fix(mapY), deltaDistY);
       }
@@ -255,7 +275,7 @@ void draw_walls(image_t *tex_1, image_t *tex_2, image_t *tex_3, image_t *tex_4, 
       //perform DDA
       while(true) {
         //Check if the ray is out of range/bounds
-        if (sideDistX >= max_dist || sideDistY >= max_dist || mapX < 0 || mapY < 0) {
+        if (sideDistX >= max_dist || sideDistY >= max_dist || mapX < 0 || mapY < 0 || mapX >= map_w || mapY >= map_h) {
           hit = 0;
           break;
         }
@@ -287,7 +307,6 @@ void draw_walls(image_t *tex_1, image_t *tex_2, image_t *tex_3, image_t *tex_4, 
       else perpWallDist = (sideDistY - deltaDistY);
 
       //texturing calculations
-      //int texNum = test_map[mapX][mapY] - 1; //a voir plus tard
 
       //calculate value of wallX
       fixed_t wallX; //where exactly the wall was hit
@@ -306,32 +325,44 @@ void draw_walls(image_t *tex_1, image_t *tex_2, image_t *tex_3, image_t *tex_4, 
 
       lineHeight = f2int(fdiv(fix(viewport_h), perpWallDist)); //Taille en px de la ligne
       if (lineHeight < 1) lineHeight = 1;
-      if (lineHeight > viewport_h) lineHeight = viewport_h - 1;
 
       fixed_t texSize = fix(lineHeight) / 64; //taille proportionelle de la ligne a la tex
       if (texSize < 0x400) texSize = 0x400; //0x400 = 1/64 * 2^16
-      if (texSize > 0x38000) texSize = 0x38000; //0x38000 = 3.5 * 2^16, 3.5 = viewport_h/64
-      
-      image_t texStripe;
+      if (texSize > 0x3D000) { //0x3D000 = 3.8125 * 2^16, 3.8125 = viewport_h/64
+        texSample = fceil(fdiv(fix(viewport_h), texSize));
+        texSampleY  = 32 - (int)texSample * 0.5;
+      }
+      else {
+        texSample = 64;
+        texSampleY = 0; 
+      }
+
+      prof_leave(rayscat);
+      prof_enter(img_drw);
+
       image_clear(&texStripe);
 
       switch(map_test[mapX][mapY]){
-        case 1 : texStripe = *image_sub(tex_1, texX, 0, 1, 64); break;
-        case 2 : texStripe = *image_sub(tex_2, texX, 0, 1, 64); break;
-        case 3 : texStripe = *image_sub(tex_3, texX, 0, 1, 64); break;
-        case 4 : texStripe = *image_sub(tex_4, texX, 0, 1, 64); break;
-        default : texStripe = *image_sub(D_tex, texX, 0, 1, 64); break;
+        case 1 : texStripe = *image_sub(tex_1, texX, texSampleY, 1, texSample); break;
+        case 2 : texStripe = *image_sub(tex_2, texX, texSampleY, 1, texSample); break;
+        case 3 : texStripe = *image_sub(tex_3, texX, texSampleY, 1, texSample); break;
+        case 4 : texStripe = *image_sub(tex_4, texX, texSampleY, 1, texSample); break;
+        default : texStripe = *image_sub(D_tex, texX, texSampleY, 1, texSample); break;
       }
 
       image_scale(&texStripe, 0xFFFF, texSize, &temp);
-      temp.src_stride = 1;
-      temp.dst_stride = 1;
       image_linear(&texStripe, image_at(frame_buffer, x, (int)(viewport_h * 0.5 - lineHeight * 0.5) + v_offset), &temp); 
+
+      prof_leave(img_drw);
     }
+
+    raycast_time = (int)prof_time(rayscat)/1000;
+    draw_time = (int)prof_time(img_drw)/1000;
 }
 
 //Function using the same raycast logic returning distance (and without the same comments)
-//Returns -1 if it didn't hit anything
+//Returns -1 if it didn't hit anything, -2 if incorrect type input
+// Type 0 = Mobs & Walls; Type 1 = Mobs; Type 2 = Walls
 // ! a tester !
 
 fixed_t raycast(fixed_t posX, fixed_t posY, fixed_t rayDirX, fixed_t rayDirY, fixed_t dist, char type){

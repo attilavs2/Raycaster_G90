@@ -1,10 +1,11 @@
 # Configure with [fxsdk build-fx] or [fxsdk build-cg], which provide the
 # toolchain file and module path of the fxSDK
 
-cmake_minimum_required(VERSION 3.15)
-project(Raycaster)
+#Les lignes 29-39 proviennent de https://gitea.planet-casio.com/Slyvtt/Collab_RPG
 
-include(GenerateG1A)
+cmake_minimum_required(VERSION 3.15)
+project(ShooterGame)
+
 include(GenerateG3A)
 include(Fxconv)
 find_package(Gint 2.9 REQUIRED)
@@ -14,15 +15,27 @@ set(SOURCES
   src/main.c
   src/moteur.c
   src/sprites.c
-  src/map_test.c
+  src/map.c
 )
-# Shared assets, fx-9860G-only assets and fx-CG-50-only assets
+
 set(ASSETS
-  #assets-cg/textures/briques0.png
-  #assets-cg/textures/buisson0.png
-  #assets-cg/textures/herbe0.png
-  #assets-cg/sprites/zombard1.png
+  assets-cg/textures/briques0.png
+  assets-cg/textures/buisson1.png
+  assets-cg/textures/herbe0.png
+  assets-cg/sprites/zombard1.png
   #assets-cg/skybox0.png
+)
+
+add_custom_command(
+  COMMENT "Convert Tiled TMX map to usable JSON file"
+	COMMAND tiled --export-tileset json tilesetnpp.tsx tilesetnpp.json
+	COMMAND find | grep .*.tmx | sed 's/.tmx//g' | xargs -l bash -c 'tiled --export-map json $$0.tmx $$0.json'
+	WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/assets/  
+
+  OUTPUT "${CMAKE_CURRENT_LIST_DIR}/assets/Shooterlevel0.json"
+# if several levels/maps are created, just copy the previous line and change the .json name with the new level/map
+  DEPENDS 	assets/converters.py
+		assets-cg/ShooterLevel0.tmx
 )
 
 fxconv_declare_assets(${ASSETS} ${ASSETS_fx} ${ASSETS_cg} WITH_METADATA)
@@ -33,10 +46,7 @@ target_link_libraries(myaddin Gint::Gint )
 target_link_libraries(myaddin LibProf::LibProf)
 target_link_options(myaddin PRIVATE -Wl,--print-memory-usage)
 
-if("${FXSDK_PLATFORM_LONG}" STREQUAL fx9860G)
-  generate_g1a(TARGET myaddin OUTPUT "Raycaster.g1a"
-    NAME "MyAddin" ICON assets-fx/icon.png)
-elseif("${FXSDK_PLATFORM_LONG}" STREQUAL fxCG50)
-  generate_g3a(TARGET myaddin OUTPUT "Raycaster.g3a"
-    NAME "Raycaster" ICONS assets-cg/icon-uns.png assets-cg/icon-sel.png)
+if("${FXSDK_PLATFORM_LONG}" STREQUAL fxCG50)
+  generate_g3a(TARGET myaddin OUTPUT "ShooterGame.g3a"
+    NAME "ShGame" ICONS assets-cg/icon-uns.png assets-cg/icon-sel.png)
 endif()
