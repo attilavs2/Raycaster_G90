@@ -1,4 +1,4 @@
-s#include <stdlib.h>
+#include <stdlib.h>
 #include <math.h>
 
 #include <gint/display.h>
@@ -10,6 +10,7 @@ s#include <stdlib.h>
 #include "map.h"
 #include "sprites.h"
 #include "moteur.h"
+#include "utils.h"
 
 // 2 maps de sprites : Les sprites de la map (tonneaux, torches, cadavres...) qui vont être dans
 // map_test.c dans le futur proche et dans les données tiled plus tard
@@ -34,6 +35,13 @@ void draw_sprites(image_t *frame_buffer, image_t *sprite) {
 
 	struct image_linear_map temp;
 
+	struct Sprite_report sprite_report;
+
+	int sprite_list[max_sprite_search][4];
+	int sprite_list2[max_sprite_search][4];
+	int dist_list[max_sprite_search];
+	char list_counter = 0;
+
 	fixed_t sprite_ratio;
 	fixed_t sprite_dirX;
 	fixed_t sprite_dirY;
@@ -52,36 +60,69 @@ void draw_sprites(image_t *frame_buffer, image_t *sprite) {
 		for(j = -12; j <= 12; j++){
 			if (mob_index[mapX + i][mapY + j] == 0) break;
 			
-			if (i >= j){
-				sprite_ratio = abs(fdiv(fix(j), fix(i)));
-				sprite_dirX = sprite_ratio * i / abs(i); //pour avoir le signe correct
-				sprite_dirY = (1 - sprite_ratio) * j / abs(j);
-			}
-			else{
-				sprite_ratio = abs(fdiv(fix(i), fix(j)));
-				sprite_dirX = (1 - sprite_ratio) * i / abs(i);
-				sprite_dirY = sprite_ratio * j / abs(j); //pour avoir le signe correct
-			}
+			if (list_counter > max_sprite_search - 1) break;
 
 			fixed_t sprite_dist = fix((float)sqrt(i*i + j*j));
 			if(sprite_dist >= fix(sprite_max_dist)) break;
 
 			if(raycast(posX, posY, sprite_dirX, sprite_dirY, sprite_dist, 2) != -1) break;
-			
-			sprite_dirX = sprite_dirX - dirX; //Relative direction to the center of screen
-			sprite_dirY = sprite_dirY - dirY;
 
-			fixed_t inv_d = 0xFFFF / (fmul(planeX, dirY) - fmul(dirX, planeY));
-			fixed_t transX = inv_d * (fmul(dirY, spriteX) - fmul(dirX, spriteY));
-			fixed_t transY = inv_d * (fmul(-planeY, spriteX) + fmul(planeX, spriteY));
-			int screen_x = (int)(viewport_w * 0.5) * ffloor(0xFFFF + fdvi(transX, transY));
-
-			int spriteHeight = f2int(fdiv(fix(viewport_h), sprite_dist)); //Taille en px de la ligne
-      		if (spriteHeight < 1) spriteHeight = 1;
-      		fixed_t spriteSize = fix(spriteHeight) / 64; //taille proportionelle de la ligne a la tex
-
-			image_scale(sprite, spriteSize, spriteSize, &temp);
-      		image_linear(sprite, image_at(frame_buffer, screen_x, (int)(viewport_h * 0.5 - spriteHeight * 0.5)), &temp); 
+			sprite_list[list_counter][0] = sprite_dist;
+			sprite_list[list_counter][1] = mob_index[mapX + i][mapY + j];
+			sprite_list[list_counter][2] = i;
+			sprite_list[list_counter][3] = j;
+			list_counter++;
 		}
-	} 
+		if (list_counter > max_sprite_search - 1) break;
+	}
+
+	for(i = 0; i < list_counter; i++){
+		dist_list[i] = sprite_list[i][0];
+	}
+
+	qsort(&dist_list[0], list_counter, 4, cmpfunc);
+
+	if(list_counter > max_sprite_display) list_counter = max_sprite_display;
+
+	for(i = 0; i < list_counter; i++){
+		int* b = *bsearch(&dist_list[i], &sprite_list, list_counter, 4, cmpfunc);
+		int c = (&sprite_list[0][0] - b) / 4;
+		sprite_list2[i][0] = dist_list[i];
+		sprite_list2[i][1] = sprite_list[c][1];
+		sprite_list2[i][2] = sprite_list[c][2];
+		sprite_list2[i][3] = sprite_list[c][3];
+	}
+
+	for(i = 0; i < list_counter; i++) {
+
+		int spriteX = mapX + sprite_list[i][2];
+		int spriteY = mapY + sprite_list[i][3];
+
+		if (sprite_list[i][2] >= sprite_list[i][3]){
+				sprite_ratio = abs(fdiv(fix(j), fix(i)));
+				sprite_dirX = sprite_ratio * i / abs(i); //pour avoir le signe correct
+				sprite_dirY = (1 - sprite_ratio) * j / abs(j);
+		}
+		else {
+				sprite_ratio = abs(fdiv(fix(i), fix(j)));
+				sprite_dirX = (1 - sprite_ratio) * i / abs(i);
+				sprite_dirY = sprite_ratio * j / abs(j); //pour avoir le signe correct
+		}
+
+		sprite_dirX = sprite_dirX - dirX; //Relative direction to the center of screen
+		sprite_dirY = sprite_dirY - dirY;
+
+		fixed_t inv_d = 0xFFFF / (fmul(planeX, dirY) - fmul(dirX, planeY));
+		fixed_t transX = inv_d * (fmul(dirY, spriteX) - fmul(dirX, spriteY));
+		fixed_t transY = inv_d * (fmul(-planeY, spriteX) + fmul(planeX, spriteY));
+		int screen_x = (int)(viewport_w * 0.5) * ffloor(0xFFFF + fdvi(transX, transY));
+		if(screen_x <= 0 || screen_x >= viewport_w) break;
+
+		int spriteHeight = f2int(fdiv(fix(viewport_h), sprite_list[i][0])); //Taille en px de la ligne
+      	if (spriteHeight < 1) spriteHeight = 1;
+      	fixed_t spriteSize = fix(spriteHeight) / 64; //taille proportionelle de la ligne a la tex
+
+		image_scale(sprite, spriteSize, spriteSize, &temp);
+      	image_linear(sprite, image_at(frame_buffer, screen_x, (int)(viewport_h * 0.5 - spriteHeight * 0.5)), &temp); 
+	}
 }

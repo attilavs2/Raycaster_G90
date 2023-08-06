@@ -16,6 +16,7 @@ set(SOURCES
   src/moteur.c
   src/sprites.c
   src/map.c
+  src/utils.c
 )
 
 set(ASSETS

@@ -8,22 +8,22 @@
 //#define startpos_y (fixed_t) 1817445
 
 typedef struct{
-    //size
-    int w, h;
+    //size (Redundant for now as it's hardcoded to 128x128)
+    //int w, h;
 
     //Start info
     fixed_t startpos_x; fixed_t startpos_y;
     fixed_t startdir_x; fixed_t startdir_y;
-    fixed_t startplane_x;   fixed_t startplane_y;
+    fixed_t startplane_x;  fixed_t startplane_y;
 
     //Floor layer data (Unused for now)
-    floor[w][h];
+    unsigned char floor[map_w][map_h];
     //Wall layer data
-    wall[w][h];
+    unsigned char wall[map_w][map_h];
     //Sprite layer data
-    sprites[w][h];
+    unsigned char sprites[map_w][map_h];
     //Mobs layer data (spawn data , unused)
-    mobs[w][h];
+    unsigned char mobs[map_w][map_h];
 
 } ShooterMap;
 

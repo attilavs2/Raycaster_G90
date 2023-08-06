@@ -10,10 +10,7 @@ def convert(input, output, params, target):
 		return 0
 	else:
 		return 1
-
-#def world_conv(input, output, params, target):
-
-
+		
 def convert_map(input, output, params, target):
 	data = json.load(open(input, "r"))
 
