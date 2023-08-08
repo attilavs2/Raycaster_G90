@@ -4,8 +4,6 @@
 
 #define map_w 128
 #define map_h 128
-//#define startpos_x (fixed_t) 1370352//exprimé en cases<<16
-//#define startpos_y (fixed_t) 1817445
 
 typedef struct{
     //size (Redundant for now as it's hardcoded to 128x128)
@@ -26,7 +24,5 @@ typedef struct{
     unsigned char mobs[map_w][map_h];
 
 } ShooterMap;
-
-extern ShooterMap ShooterLevel0;
 
 #endif /* map_test.h */

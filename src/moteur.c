@@ -18,14 +18,13 @@
 //
 //
 
-void move() {
+void move(ShooterMap* ShooterLevel) {
   extern int frame_time;
   fixed_t moveSpeed = fmul(fix(frame_time), 0x148); //frame_time * fix(carrés/seconde/1000) là carrés/seconde = 5
   fixed_t rotSpeed = fmul(fix(frame_time), 0x83); //frame_time * fix(radians/seconde/1000) là radians/seconde = 2
   fixed_t c_rotSpeed = fix(cos(f2float(rotSpeed)));
   fixed_t s_rotSpeed = fix(sin(f2float(rotSpeed)));
 
-  extern char map_test[map_w][map_h];
   extern fixed_t planeX;
   extern fixed_t planeY;
   extern fixed_t dirX;
@@ -48,8 +47,8 @@ void move() {
 		xtemp2 = f2int(posX);
 		ytemp2 = f2int(posY + fmul(dirY, moveSpeed));
 
-    if(map_test[xtemp1][ytemp1] == 0) posX += fmul(dirX, moveSpeed);
-    if(map_test[xtemp2][ytemp2] == 0) posY += fmul(dirY, moveSpeed);
+    if(ShooterLevel->wall[xtemp1][ytemp1] == 0) posX += fmul(dirX, moveSpeed);
+    if(ShooterLevel->wall[xtemp2][ytemp2] == 0) posY += fmul(dirY, moveSpeed);
   }
   //move backwards if no wall behind you
   if (keydown(KEY_DOWN)) {
@@ -58,8 +57,8 @@ void move() {
 		xtemp2 = f2int(posX);
 		ytemp2 = f2int(posY - fmul(dirY, moveSpeed));
 
-    if(map_test[xtemp1][ytemp1] == 0) posX -= fmul(dirX, moveSpeed);
-    if(map_test[xtemp2][ytemp2] == 0) posY -= fmul(dirY, moveSpeed);
+    if(ShooterLevel->wall[xtemp1][ytemp1] == 0) posX -= fmul(dirX, moveSpeed);
+    if(ShooterLevel->wall[xtemp2][ytemp2] == 0) posY -= fmul(dirY, moveSpeed);
   }
   //rotate to the rightdouble sin_rotspeed;
   if (keydown(KEY_RIGHT)) {
@@ -180,7 +179,7 @@ void draw_f(image_t *floor_tex, image_t *frame_buffer){ //a refaire
 
 }
 
-void draw_walls(image_t *tex_1, image_t *tex_2, image_t *tex_3, image_t *tex_4, image_t *D_tex, image_t *frame_buffer){
+void draw_walls(image_t *tex_1, image_t *tex_2, image_t *tex_3, image_t *tex_4, image_t *D_tex, ShooterMap *ShooterLevel,image_t *frame_buffer){
     extern fixed_t posX;
     extern fixed_t posY;
     extern fixed_t dirX;
@@ -280,7 +279,7 @@ void draw_walls(image_t *tex_1, image_t *tex_2, image_t *tex_3, image_t *tex_4, 
           break;
         }
         //Otherwise check if ray has hit a wall
-        else if (map_test[mapX][mapY] != 0) { 
+        else if (ShooterLevel->wall[mapX][mapY] != 0) { 
           hit = 1;
           break;
         }
@@ -342,7 +341,7 @@ void draw_walls(image_t *tex_1, image_t *tex_2, image_t *tex_3, image_t *tex_4, 
 
       image_clear(&texStripe);
 
-      switch(map_test[mapX][mapY]){
+      switch(ShooterLevel->wall[mapX][mapY]){
         case 1 : texStripe = *image_sub(tex_1, texX, texSampleY, 1, texSample); break;
         case 2 : texStripe = *image_sub(tex_2, texX, texSampleY, 1, texSample); break;
         case 3 : texStripe = *image_sub(tex_3, texX, texSampleY, 1, texSample); break;
@@ -359,45 +358,3 @@ void draw_walls(image_t *tex_1, image_t *tex_2, image_t *tex_3, image_t *tex_4, 
     raycast_time = (int)prof_time(rayscat)/1000;
     draw_time = (int)prof_time(img_drw)/1000;
 }
-
-
-
-
-// Je garde le bout en dessous pour des raisons (date d'avant la V 0.1.1)
-//Problèmes :
-//-L'affichage est très mauvais, a revoir
-//-Le mouvement de la caméra ne marche pas
-//
-//A rajouter d'ici le 27 :
-//-Que ça marche (logique)
-// -collisions
-// -Sol
-// -Gestion de plusieurs maps
-// -Interaction (Portes/boutons)
-// -Textures
-// -Sprites
-// -PNJs ( a voir selon le théme)
-// -Extérieur/intérieur (très probablement mais a voir selon le thème)
-//La suite dépend surtout de ce qui aura été fait et du thème
-//Avec le thème, maintenant il faudrait :
-//-collisions
-// -sol
-// -Des bouts de map reliés entre eux
-// -Sprites (ennemis + ambiance dans un second temps)
-// -map générées aléatoirement
-// -textures
-// -Gameplay
-// -PNJs
-// -Sans de undertale (me demandez pas pourquoi, c'est un mec sur discord qui a propos�)
-//
-//================================================
-// au 03/06 :
-// A faire là tout de suite :
-// - Bien réparer correctement les murs
-// - Sprites
-// Plan :
-// -Sol
-// -Ennemis
-// -Maps
-// -Textures
-//

@@ -20,6 +20,8 @@ set(SOURCES
 )
 
 set(ASSETS
+  assets-cg/map/ShooterLevel0.json
+
   assets-cg/textures/briques0.png
   assets-cg/textures/buisson1.png
   assets-cg/textures/herbe0.png
@@ -29,14 +31,13 @@ set(ASSETS
 
 add_custom_command(
   COMMENT "Convert Tiled TMX map to usable JSON file"
-	COMMAND tiled --export-tileset json tilesetnpp.tsx tilesetnpp.json
 	COMMAND find | grep .*.tmx | sed 's/.tmx//g' | xargs -l bash -c 'tiled --export-map json $$0.tmx $$0.json'
-	WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/assets/  
+	WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/assets-cg/map/  
 
-  OUTPUT "${CMAKE_CURRENT_LIST_DIR}/assets/Shooterlevel0.json"
+  OUTPUT "${CMAKE_CURRENT_LIST_DIR}/assets-cg/map/Shooterlevel0.json"
 # if several levels/maps are created, just copy the previous line and change the .json name with the new level/map
-  DEPENDS 	assets/converters.py
-		assets-cg/ShooterLevel0.tmx
+  DEPENDS 	assets-cg/map/converters.py
+		assets-cg/map/ShooterLevel0.tmx
 )
 
 fxconv_declare_assets(${ASSETS} ${ASSETS_fx} ${ASSETS_cg} WITH_METADATA)

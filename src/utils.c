@@ -6,6 +6,8 @@
 #include <gint/image.h>
 
 #include "utils.h"
+#include "map.h"
+#include "moteur.h"
 
 int cmpfunc (const void * a, const void * b) {
    return ( *(int*)a - *(int*)b );
@@ -16,8 +18,7 @@ int cmpfunc (const void * a, const void * b) {
 // Type 0 = Mobs & Walls; Type 1 = Mobs; Type 2 = Walls
 // ! a tester !
 
-fixed_t raycast(fixed_t posX, fixed_t posY, fixed_t rayDirX, fixed_t rayDirY, fixed_t dist, char type){
-    extern char map_test[map_w][map_h];
+fixed_t raycast(ShooterMap *ShooterLevel, fixed_t posX, fixed_t posY, fixed_t rayDirX, fixed_t rayDirY, fixed_t dist, char type){
     extern char mob_index[map_w][map_h];
     
     fixed_t sideDistX;
@@ -69,7 +70,7 @@ fixed_t raycast(fixed_t posX, fixed_t posY, fixed_t rayDirX, fixed_t rayDirY, fi
             break;
           }
           //Otherwise check if ray has hit a wall/mob
-          else if (map_test[mapX][mapY] != 0 || mob_index[mapX][mapY] != 0) { 
+          else if (ShooterLevel->wall[mapX][mapY] != 0 || mob_index[mapX][mapY] != 0) { 
             hit = 1;
             break;
           }
@@ -95,8 +96,8 @@ fixed_t raycast(fixed_t posX, fixed_t posY, fixed_t rayDirX, fixed_t rayDirY, fi
             hit = 0;
             break;
           }
-          //Otherwise check if ray has hit a wall/mob
-          else if (map_test[mapX][mapY] != 0) { 
+          //Otherwise check if ray has hit a wall
+          else if (ShooterLevel->wall[mapX][mapY] != 0) { 
             hit = 1;
             break;
           }
@@ -121,7 +122,7 @@ fixed_t raycast(fixed_t posX, fixed_t posY, fixed_t rayDirX, fixed_t rayDirY, fi
             hit = 0;
             break;
           }
-          //Otherwise check if ray has hit a wall/mob
+          //Otherwise check if ray has hit a mob
           else if (mob_index[mapX][mapY] != 0) { 
             hit = 1;
             break;

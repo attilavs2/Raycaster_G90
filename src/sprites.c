@@ -19,11 +19,10 @@
 // le mob_index sert a garder une position plus facile a vérifier des mobs, le nombre  dans la matrice 
 // étant leur ID
 //
-extern ShooterMap ShooterLevel0
 
-char mob_index[map_w][map_h] = ; //les pnjs (ennemis)
+char mob_index[map_w][map_h]; //les pnjs (ennemis)
 
-void draw_sprites(image_t *frame_buffer, image_t *sprite) {
+void draw_sprites(image_t *frame_buffer, image_t *sprite, ShooterMap *ShooterLevel) {
 	extern fixed_t posX;
     extern fixed_t posY;
     extern fixed_t dirX;
@@ -35,8 +34,6 @@ void draw_sprites(image_t *frame_buffer, image_t *sprite) {
 
 	struct image_linear_map temp;
 
-	struct Sprite_report sprite_report;
-
 	int sprite_list[max_sprite_search][4];
 	int sprite_list2[max_sprite_search][4];
 	int dist_list[max_sprite_search];
@@ -45,30 +42,23 @@ void draw_sprites(image_t *frame_buffer, image_t *sprite) {
 	fixed_t sprite_ratio;
 	fixed_t sprite_dirX;
 	fixed_t sprite_dirY;
-	
-	// 1 - lister les sprites en render distance
-	// 2 - vérifier la distance/si c'est derrière un mur
-	// 3 - trier par distance
-	// 4 - passage a la moulinette de la perspective de la taille
-	// 5 - dessiner en commençant par derrière
 
 	int mapX = ffloor(posX);
 	int mapY = ffloor(posY);
-	//approche bourrine
 
 	for(i = -12; i <= 12; i++){
 		for(j = -12; j <= 12; j++){
-			if (mob_index[mapX + i][mapY + j] == 0) break;
+			if (ShooterLevel->sprites[mapX + i][mapY + j] == 0) break;
 			
 			if (list_counter > max_sprite_search - 1) break;
 
-			fixed_t sprite_dist = fix((float)sqrt(i*i + j*j));
-			if(sprite_dist >= fix(sprite_max_dist)) break;
+			int sprite_dist = i*i + j*j;
+			if(sprite_dist >= sprite_max_dist*sprite_max_dist) break;
 
-			if(raycast(posX, posY, sprite_dirX, sprite_dirY, sprite_dist, 2) != -1) break;
+			if(raycast(ShooterLevel, posX, posY, sprite_dirX, sprite_dirY, sprite_dist, 2) != -1) break;
 
 			sprite_list[list_counter][0] = sprite_dist;
-			sprite_list[list_counter][1] = mob_index[mapX + i][mapY + j];
+			sprite_list[list_counter][1] = ShooterLevel->sprites[mapX + i][mapY + j];
 			sprite_list[list_counter][2] = i;
 			sprite_list[list_counter][3] = j;
 			list_counter++;
@@ -85,40 +75,40 @@ void draw_sprites(image_t *frame_buffer, image_t *sprite) {
 	if(list_counter > max_sprite_display) list_counter = max_sprite_display;
 
 	for(i = 0; i < list_counter; i++){
-		int* b = *bsearch(&dist_list[i], &sprite_list, list_counter, 4, cmpfunc);
+		int* b = bsearch(&dist_list[i], &sprite_list, list_counter, 4, cmpfunc);
 		int c = (&sprite_list[0][0] - b) / 4;
 		sprite_list2[i][0] = dist_list[i];
 		sprite_list2[i][1] = sprite_list[c][1];
 		sprite_list2[i][2] = sprite_list[c][2];
-		sprite_list2[i][3] = sprite_list[c][3];
+		sprite_list2[i][3] = sprite_list[c][3]; 
 	}
 
-	for(i = 0; i < list_counter; i++) {
+	for(i = list_counter; i >= 0; i--) {
 
 		int spriteX = mapX + sprite_list[i][2];
 		int spriteY = mapY + sprite_list[i][3];
 
-		if (sprite_list[i][2] >= sprite_list[i][3]){
-				sprite_ratio = abs(fdiv(fix(j), fix(i)));
-				sprite_dirX = sprite_ratio * i / abs(i); //pour avoir le signe correct
-				sprite_dirY = (1 - sprite_ratio) * j / abs(j);
+		if (sprite_list2[i][2] >= sprite_list2[i][3]){
+			sprite_ratio = abs(fdiv(fix(sprite_list2[i][3]), fix(sprite_list2[i][2])));
+			sprite_dirX = sprite_ratio * sprite_list2[i][2] / abs(sprite_list2[i][2]); //pour avoir le signe correct
+			sprite_dirY = (1 - sprite_ratio) * sprite_list2[i][3] / abs(sprite_list2[i][3]);
 		}
 		else {
-				sprite_ratio = abs(fdiv(fix(i), fix(j)));
-				sprite_dirX = (1 - sprite_ratio) * i / abs(i);
-				sprite_dirY = sprite_ratio * j / abs(j); //pour avoir le signe correct
+			sprite_ratio = abs(fdiv(fix(sprite_list2[i][2]), fix(sprite_list2[i][3])));
+			sprite_dirX = (1 - sprite_ratio) * sprite_list2[i][2] / abs(sprite_list2[i][2]);
+			sprite_dirY = sprite_ratio * sprite_list2[i][3] / abs(sprite_list2[i][3]); //pour avoir le signe correct
 		}
 
-		sprite_dirX = sprite_dirX - dirX; //Relative direction to the center of screen
+		sprite_dirX = sprite_dirX - dirX;
 		sprite_dirY = sprite_dirY - dirY;
 
 		fixed_t inv_d = 0xFFFF / (fmul(planeX, dirY) - fmul(dirX, planeY));
 		fixed_t transX = inv_d * (fmul(dirY, spriteX) - fmul(dirX, spriteY));
 		fixed_t transY = inv_d * (fmul(-planeY, spriteX) + fmul(planeX, spriteY));
-		int screen_x = (int)(viewport_w * 0.5) * ffloor(0xFFFF + fdvi(transX, transY));
+		int screen_x = (int)(viewport_w * 0.5) * ffloor(0xFFFF + fdiv(transX, transY));
 		if(screen_x <= 0 || screen_x >= viewport_w) break;
 
-		int spriteHeight = f2int(fdiv(fix(viewport_h), sprite_list[i][0])); //Taille en px de la ligne
+		int spriteHeight = f2int(fdiv(fix(viewport_h), fix(sqrt(sprite_list[i][0])))); //Taille en px de la ligne
       	if (spriteHeight < 1) spriteHeight = 1;
       	fixed_t spriteSize = fix(spriteHeight) / 64; //taille proportionelle de la ligne a la tex
 

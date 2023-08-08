@@ -28,8 +28,8 @@
 // "Art" : Fcalva
 // 
 // TODO :
-//	- Sprites ! |~|
-//		-Refaire mieux | |
+//	- Sprites ! |~| 
+//		-Refaire mieux |X|
 //		-Optimiser | |
 //	- Map tiled | |
 // 
@@ -39,7 +39,6 @@
 #error Ce code est pour FXCG50/G90+E uniquement, enlevez ce message a vos riques et périls
 #endif
 
-
 #ifdef USB
 void USB_capture() {
 	if (usb_is_open()) usb_fxlink_screenshot(false);
@@ -48,7 +47,7 @@ void USB_capture() {
 
 #define debug //pour afficher les infos de debug
 
-extern char map_test[map_w][map_h];
+//extern ShooterMap ShooterLevel0;
 
 extern image_t briques0;
 extern image_t buisson0;
@@ -176,9 +175,9 @@ int main(){
 
 		image_clear(&frame_buffer);
 
-		draw_sprite(&frame_buffer, );
+		//draw_sprites(&frame_buffer, &zombard, &ShooterLevel0);
 
-		draw_walls(&buisson0, &briques0, &sky_tex, &WXOR_tex, &D_tex, &frame_buffer);
+		//draw_walls(&buisson0, &briques0, &sky_tex, &WXOR_tex, &D_tex, &ShooterLevel0, &frame_buffer);
 
 		dimage(0, 0, &frame_buffer);
 
