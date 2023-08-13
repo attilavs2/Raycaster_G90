@@ -328,8 +328,8 @@ void draw_walls(image_t *tex_1, image_t *tex_2, image_t *tex_3, image_t *tex_4, 
       fixed_t texSize = fix(lineHeight) / 64; //taille proportionelle de la ligne a la tex
       if (texSize < 0x400) texSize = 0x400; //0x400 = 1/64 * 2^16
       if (texSize > 0x3D000) { //0x3D000 = 3.8125 * 2^16, 3.8125 = viewport_h/64
-        texSample = fceil(fdiv(fix(viewport_h), texSize));
-        texSampleY  = 32 - (int)texSample * 0.5;
+        texSample = ffloor(fdiv(fix(viewport_h), texSize));
+        texSampleY  = 32 - (int)texSample * 0.5 + 1;
       }
       else {
         texSample = 64;

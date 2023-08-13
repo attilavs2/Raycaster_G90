@@ -29,7 +29,7 @@ def convert_map(input, output, params, target):
     structMap += fxconv.u32(1*2**16) #startdir_x
 	structMap += fxconv.u32(0)       #startdir_y
 	structMap += fxconv.u32(0)		 #startplane_x
-	structMap += fxconv.u32(0.66*2**16)
+	structMap += fxconv.u32(0.66*2**16) #startplane_y
 
 	data_f = data["layers"][0]["data"] #Floor data
 	data_w = data["layers"][1]["data"] #Wall data
@@ -47,4 +47,3 @@ def convert_map(input, output, params, target):
 	
 	#generate !
 	fxconv.elf(structMap, output, "_" + params["name"], **target)
-
