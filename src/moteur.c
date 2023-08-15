@@ -328,7 +328,7 @@ void draw_walls(image_t *tex_1, image_t *tex_2, image_t *tex_3, image_t *tex_4, 
       fixed_t texSize = fix(lineHeight) / 64; //taille proportionelle de la ligne a la tex
       if (texSize < 0x400) texSize = 0x400; //0x400 = 1/64 * 2^16
       if (texSize > 0x3D000) { //0x3D000 = 3.8125 * 2^16, 3.8125 = viewport_h/64
-        texSample = ffloor(fdiv(fix(viewport_h), texSize));
+        texSample = fceil(fdiv(fix(viewport_h), texSize));
         texSampleY  = 32 - (int)texSample * 0.5 + 1;
       }
       else {
@@ -340,7 +340,7 @@ void draw_walls(image_t *tex_1, image_t *tex_2, image_t *tex_3, image_t *tex_4, 
       prof_enter(img_drw);
 
       image_clear(&texStripe);
-
+      //a remplacer
       switch(ShooterLevel->wall[mapX][mapY]){
         case 1 : texStripe = *image_sub(tex_1, texX, texSampleY, 1, texSample); break;
         case 2 : texStripe = *image_sub(tex_2, texX, texSampleY, 1, texSample); break;

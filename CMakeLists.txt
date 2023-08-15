@@ -33,7 +33,7 @@ fxconv_declare_converters(assets-cg/map/converters.py)
 
 add_custom_command(
   COMMENT "Convert Tiled TMX map to usable JSON file"
-	COMMAND find | grep .*.tmx | sed 's/.tmx//g' | xargs -l bash -c 'tiled --export-map json $$0.tmx $$0.json'
+	COMMAND 'find | grep .*.tmx | sed 's/.tmx//g' | xargs -l bash -c 'tiled --export-map json $$0.tmx $$0.json''
 	WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/assets-cg/map/  
 
   OUTPUT "${CMAKE_CURRENT_LIST_DIR}/assets-cg/map/Shooterlevel0.json"

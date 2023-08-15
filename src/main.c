@@ -175,7 +175,7 @@ int main(){
 
 		image_clear(&frame_buffer);
 
-		//draw_sprites(&frame_buffer, &zombard, &ShooterLevel0);
+		draw_sprites(&frame_buffer, &zombard, &map_ShooterLevel0);
 
 		draw_walls(&buisson0, &briques0, &sky_tex, &WXOR_tex, &D_tex, &map_ShooterLevel0, &frame_buffer);
 
