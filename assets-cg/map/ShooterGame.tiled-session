@@ -25,13 +25,13 @@
             "scale": 0.22915039062499998,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 4089.0176859151934,
-                "y": 6655.018112081825
+                "x": 5042.539953121671,
+                "y": -161.46601321116555
             }
         }
     },
     "last.exportedFilePath": "/home/fr/Raycaster/assets-cg/map",
-    "last.imagePath": "/home/fr/Raycaster/assets-cg/sprites",
+    "last.imagePath": "/home/fr/Raycaster/assets-cg/textures",
     "map.height": 128,
     "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
     "map.lastUsedFormat": "tmx",
@@ -40,14 +40,13 @@
     "map.width": 128,
     "openFiles": [
         "ShooterLevel0.tmx",
-        "ShooterGameWalls.tsx",
-        "ShooterGameSprites.tsx"
+        "ShooterGameWalls.tsx"
     ],
     "project": "ShooterGame.tiled-project",
     "recentFiles": [
-        "ShooterGameSprites.tsx",
         "ShooterGameWalls.tsx",
-        "ShooterLevel0.tmx"
+        "ShooterLevel0.tmx",
+        "ShooterGameSprites.tsx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.type": 1

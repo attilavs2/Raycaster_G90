@@ -47,7 +47,7 @@ void USB_capture() {
 
 #define debug //pour afficher les infos de debug
 
-//extern ShooterMap ShooterLevel0;
+extern ShooterMap map_ShooterLevel0;
 
 extern image_t briques0;
 extern image_t buisson0;
@@ -73,8 +73,8 @@ int a;
 int raycast_time = 0;
 int draw_time = 0;
 
-void keys_get(){
-	move();
+void keys_get(ShooterMap *ShooterLevel){
+	move(ShooterLevel);
 	pollevent();
 	if (keydown(KEY_F1) && frame_time_timer <= 0) {
 		if (disp_frame_time == 0) {
@@ -177,13 +177,13 @@ int main(){
 
 		//draw_sprites(&frame_buffer, &zombard, &ShooterLevel0);
 
-		//draw_walls(&buisson0, &briques0, &sky_tex, &WXOR_tex, &D_tex, &ShooterLevel0, &frame_buffer);
+		draw_walls(&buisson0, &briques0, &sky_tex, &WXOR_tex, &D_tex, &map_ShooterLevel0, &frame_buffer);
 
 		dimage(0, 0, &frame_buffer);
 
 		if(first_frame == 1) main_menu();
 		
-		keys_get();
+		keys_get(&map_ShooterLevel0);
 
 		//logic(&frame_buffer, &D_tex);
 

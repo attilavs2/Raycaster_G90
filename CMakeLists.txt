@@ -8,8 +8,8 @@ project(ShooterGame)
 
 include(GenerateG3A)
 include(Fxconv)
-find_package(Gint 2.9 REQUIRED)
-find_package(LibProf 2.1 REQUIRED)
+find_package(Gint 2.10 REQUIRED)
+find_package(LibProf 2.4 REQUIRED)
 
 set(SOURCES
   src/main.c
@@ -28,6 +28,8 @@ set(ASSETS
   assets-cg/sprites/zombard1.png
   #assets-cg/skybox0.png
 )
+
+fxconv_declare_converters(assets-cg/map/converters.py)
 
 add_custom_command(
   COMMENT "Convert Tiled TMX map to usable JSON file"
