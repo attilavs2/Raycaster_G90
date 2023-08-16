@@ -77,8 +77,8 @@ void draw_sprites(image_t *frame_buffer, image_t *sprite, ShooterMap *ShooterLev
 	if(list_counter > max_sprite_display) list_counter = max_sprite_display;
 
 	for(i = 0; i < list_counter; i++){
-		int *b = (int*) *bsearch(&dist_list[i], &sprite_list, list_counter, sizeof(int), cmpfunc);
-		int c = (&sprite_list[0][0] - b) / 4;
+		int *b = (int*)bsearch(&dist_list[i], &sprite_list, list_counter, 4 * sizeof(int), cmpfunc);
+		int c = (int)(&sprite_list[0][0] - b) / sizeof(int);
 		sprite_list2[i][0] = dist_list[i];
 		sprite_list2[i][1] = sprite_list[c][1];
 		sprite_list2[i][2] = sprite_list[c][2];
