@@ -53,9 +53,9 @@ void draw_sprites(image_t *frame_buffer, image_t *sprite, ShooterMap *ShooterLev
 			if (list_counter > max_sprite_search - 1) break;
 
 			int sprite_dist = i*i + j*j;
-			if(sprite_dist >= sprite_max_dist*sprite_max_dist) break;
+			//if(sprite_dist >= sprite_max_dist*sprite_max_dist) break;
 
-			if(raycast(ShooterLevel, posX, posY, sprite_dirX, sprite_dirY, sprite_dist, 2) != -1) break;
+			//if(raycast(ShooterLevel, posX, posY, sprite_dirX, sprite_dirY, sprite_dist, 2) != -1) break;
 
 			sprite_list[list_counter][0] = sprite_dist;
 			sprite_list[list_counter][1] = ShooterLevel->sprites[mapX + i][mapY + j];
@@ -66,16 +66,18 @@ void draw_sprites(image_t *frame_buffer, image_t *sprite, ShooterMap *ShooterLev
 		if (list_counter > max_sprite_search - 1) break;
 	}
 
+	if(list_counter == 0) return;
+
 	for(i = 0; i < list_counter; i++){
 		dist_list[i] = sprite_list[i][0];
 	}
 
-	qsort(&dist_list[0], list_counter, 4, cmpfunc);
+	qsort(&dist_list[0], list_counter, sizeof(int), cmpfunc);
 
 	if(list_counter > max_sprite_display) list_counter = max_sprite_display;
 
 	for(i = 0; i < list_counter; i++){
-		int* b = bsearch(&dist_list[i], &sprite_list, list_counter, 4, cmpfunc);
+		int *b = (int*) *bsearch(&dist_list[i], &sprite_list, list_counter, sizeof(int), cmpfunc);
 		int c = (&sprite_list[0][0] - b) / 4;
 		sprite_list2[i][0] = dist_list[i];
 		sprite_list2[i][1] = sprite_list[c][1];
@@ -102,17 +104,17 @@ void draw_sprites(image_t *frame_buffer, image_t *sprite, ShooterMap *ShooterLev
 		sprite_dirX = sprite_dirX - dirX;
 		sprite_dirY = sprite_dirY - dirY;
 
-		fixed_t inv_d = 0xFFFF / (fmul(planeX, dirY) - fmul(dirX, planeY));
+		fixed_t inv_d = fdiv(0xFFFF, (fmul(planeX, dirY) - fmul(dirX, planeY)));
 		fixed_t transX = inv_d * (fmul(dirY, spriteX) - fmul(dirX, spriteY));
 		fixed_t transY = inv_d * (fmul(-planeY, spriteX) + fmul(planeX, spriteY));
 		int screen_x = (int)(viewport_w * 0.5) * ffloor(0xFFFF + fdiv(transX, transY));
-		if(screen_x <= 0 || screen_x >= viewport_w) break;
+		//if(screen_x <= 0 || screen_x >= viewport_w) break;
 
 		int spriteHeight = f2int(fdiv(fix(viewport_h), fix(sqrt(sprite_list[i][0])))); //Taille en px de la ligne
       	if (spriteHeight < 1) spriteHeight = 1;
       	fixed_t spriteSize = fix(spriteHeight) / 64; //taille proportionelle de la ligne a la tex
-
+		
 		image_scale(sprite, spriteSize, spriteSize, &temp);
-      	image_linear(sprite, image_at(frame_buffer, screen_x, (int)(viewport_h * 0.5 - spriteHeight * 0.5)), &temp); 
+      	image_linear(sprite, image_at(frame_buffer, screen_x, (int)(viewport_h * 0.5 - spriteHeight * 0.5)), &temp);
 	}
 }
