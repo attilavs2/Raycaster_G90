@@ -1,4 +1,8 @@
-# Raycaster_prealpha
+# Raycaster_G90
+
+! Attention !
+Le repo a été migré vers https://gitea.planet-casio.com/Fcalva/Raycaster_G90, et celui ci est donc plus mis a jour.
+
 Raycaster texturé écrit en C pour G90+E/FX-CG50 avec Gint  
 Peu de gameplay pour le moment, mais ça ne saurait tarder (En fait si)  
 Touches : F6 pour quitter (bien loin des autres mais facile a appuyer)    
